@@ -18,25 +18,25 @@ class Menu extends CI_Controller {
 						"text":"Respon SPK",
 						"attributes":"ts/realisasi_ts"
 					},{
-						"id":22,
+						"id":13,
 						"text":"Rekap Per Petugas",
 						"attributes":"ts/rekap_petugas_ts"
-					},{
-						"id":13,
-						"text":"Rekap & Laporan",
-						"attributes":"",
-						"children":[{
-								"id":16,
-								"text":"Rekap Tutup Sementara",
-								"attributes":"ts/laporan_ts/rekapTS"
-							},{
-								"id":19,
-								"text":"Detail Realisasi",
-								"attributes":"ts/laporan_ts/detailRealisasiTS"
-							}]
 					}
 					],
 				"attributes":""
+			},{
+				"id":2,
+				"text":"SPI",
+				"attributes":"",
+				"children":[{
+						"id":21,
+						"text":"Kelola Data",
+						"attributes":"ts/kelola_spi_ts"
+					},{
+						"id":22,
+						"text":"Detail Realisasi",
+						"attributes":"ts/laporan_ts/detailRealisasiTS"
+					}]
 			}]
 		';
 		echo $rss;
