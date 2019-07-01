@@ -111,7 +111,7 @@
 	<div class="logo"><img src="<?php echo base_url("dist/ui/img/logo_pdam2.png") ?>" class="pdam"><img class="app" src="<?php echo base_url("dist/ui/img/logo_app.png") ?>"></div>
 	<div class="box">
 		<div class="supTitle"><span>Login</span></div>
-		<div class="titleBox">Aplikasi Buka Tutup</div>
+		<div class="titleBox">Aplikasi Satuan Pengawasan Internal</div>
 		<form id="formLogin">
 			<div class="inputArea">
 				<input type="text" class="inputText" placeholder="Username" name="lName"/>
