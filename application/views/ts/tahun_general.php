@@ -91,7 +91,6 @@
 				updaterow(row.Kd_Tahun,row.Tahun);
 			},
 			showFooter:false
-			
 		});
 		$.extend($.fn.datagrid.defaults.editors, { 
 			numberspinner: {
@@ -202,5 +201,4 @@
 			},
 		});
 	}
-	
 </script>

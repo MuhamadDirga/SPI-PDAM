@@ -25,7 +25,9 @@
 		<input type="hidden" id="row" value=""/>
 		<input type="hidden" id="jen" value=""/>
 		<input type="hidden" id="fieldPB" value=""/> 
+
 	    <div id="jendelaTambahAuditor" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:500px; min-height:300px; padding:5px;">
+
 		</div>
 	</div>
 </div>
@@ -33,6 +35,7 @@
 	function formatAction(value,row,index){
 			var d = '<a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){resetrow(&quot;'+row.No_PKPT+'&quot;)}">Hapus</a> ';
 			return d;
+
 	}
 </script>
 <script>
@@ -52,6 +55,7 @@
 			url:'<?php echo base_url("index.php/ts/auditor_ts/daftarAuditor");?>',
 			method:'post',
 			onDblClickCell: function(index,field,value){
+
 				// $(this).datagrid('beginEdit', index);
 				// var ed = $(this).datagrid('getEditor', {index:index,field:field});
 				// $(ed.target).focus();
@@ -83,8 +87,7 @@
 			onEndEdit:function(index,row){
 				updaterow(row.No_PKPT,row.NIP);
 			},
-			showFooter:false
-			
+			showFooter:fals			
 		});
 		$.extend($.fn.datagrid.defaults.editors, { 
 			numberspinner: {
@@ -123,6 +126,7 @@
 		$('#dgAuditor').datagrid('beginEdit', getRowIndex(target));
 	}
 	
+
 	function resetrow(nopkpt){ 
 		// alert(nama);
 		

@@ -24,6 +24,7 @@ function __construct(){
 		$query = $this->md_auditor->ambilKaryawan();
 		echo json_encode($query->result());
 	}
+
 	public function daftarAuditor(){
 		$result["total"] = 0;
 		
@@ -37,12 +38,12 @@ function __construct(){
 		$view = $this->load->view('ts/formAuditor',null,true);
 		echo $view;
 	}
+
 	public function tambahAuditor(){
 		if($_POST){
 			$no_pkpt = $_POST['no_pkpt'];
 			$nip = $_POST['nip'];
 			$this->md_auditor->tambahAuditor($no_pkpt,$nip);
-			
 			echo '1';
 		}else{
 			echo "Data tidak valid.";
@@ -63,5 +64,6 @@ function __construct(){
 	}
 	
 }
+
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */

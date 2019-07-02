@@ -72,5 +72,6 @@ function __construct(){
 	}
 	
 }
+
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */

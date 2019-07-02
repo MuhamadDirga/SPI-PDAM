@@ -27,6 +27,7 @@ class Menu extends CI_Controller {
 						"attributes":"ts/bagian_ts"
 					}
 					],
+
 				"attributes":""
 			},{
 				"id":2,
