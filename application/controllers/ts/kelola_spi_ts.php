@@ -11,6 +11,7 @@ function __construct(){
 		$this->load->model('master_data/md_auditor_tahunan');
 		$this->load->model('master_data/md_sasaran');
 		$this->load->model('master_data/md_tujuan');
+		$this->load->model('master_data/md_bagian');
     }
 	public function index(){
 		$bag 	= array("1.01", "3.03");
@@ -90,8 +91,17 @@ function __construct(){
 		$query = $this->md_program->ambilProgram();
 		echo json_encode($query->result());
 	}
+	public function daftarBagian(){
+		$query = $this->md_bagian->ambilBagian();
+		echo json_encode($query->result());
+	}
 	public function daftarSemuaAuditor(){
 		$query = $this->md_auditor->ambilAuditor();
+		echo json_encode($query->result());
+	}
+	public function ambilAuditorBy(){
+		$pkpt = $_POST['pkpt'];
+		$query = $this->md_auditor->ambilAuditorBy($pkpt);
 		echo json_encode($query->result());
 	}
 	

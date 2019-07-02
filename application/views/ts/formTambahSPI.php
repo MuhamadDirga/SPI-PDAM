@@ -53,24 +53,56 @@
 					
 				</div>
 				
-				<div title="BAGIAN" style="padding:10px;" id="fotoTab">
+				<div title="BAGIAN" style="padding:10px;" id="bagianTab">
 					Bagian :
-					<table width="100%" border="0">
+					<table>
 						<tr>
-							<td><input class="easyui-radiobutton" type="radio" name="select" value="selct"> Select All</td>
-							<td><input class="easyui-radiobutton" type="radio" name="diselect" value="diselct">Disellect All</td>
+							<td><input class="easyui-radiobutton" type="radio" name="select" value="select"> Select All</td>
+							<td><input class="easyui-radiobutton" type="radio" name="select" value="diselect">Disellect All</td>
 						</tr>
-						<tr>
-							<td><input class="easyui-checkbox" name="fruit" value="Apple" label="Apple:"></td>
+					</table>
+					<?php $dataChk=$this->md_bagian->ambilBagian(); 
+					$i=0;?>
+					<table border="0">
+						<tbody>
+							<tr>
+						<?php foreach ($dataChk->result() as $value){ ?>
+							<?php $i++; ?>
+								<td><input class="easyui-checkbox" type="checkbox" name="chkBag" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
+							<?php if($i == 2) {
+								echo '</tr><tr>';
+								$i = 0;
+    						} ?>
+						<?php } ?>
 						</tr>
+						</tbody>
 					</table>
 				</div>
 				
-				<div title="AUDITOR" style="padding:10px;text-align:center" id="petaTab">
-					<!-- <?php
-					$convSPK = str_replace('\\','~',$dataTabel[0]['NO_SPK']);
-					?>
-					<iframe width="650" height="470" src="http://114.4.37.148/bukatutup/index.php/ts/laporan_ts/genMaps/<?php echo $convSPK; ?>"></iframe> -->
+				<div title="AUDITOR" style="padding:10px;" id="petaTab">
+					<table border="0" width="60%">
+						<tr>
+							<td>Pengawas</td>
+							<td>:</td>
+							<td><input id="cbPengawas" style="width: 300px" class="easyui-combobox" name="cbPengawas" data-options="valueField:'No_PKPT',textField:'Nama',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>'"></input></td>
+							<td><input style="width: 60px" class="easyui-textbox" id="txtPengawas" readonly="true"></td>
+						</tr>
+						<tr>
+							<td colspan="2"></td>
+							<td><span id="nipPengawas"></span></td>
+						</tr>
+						<tr>
+							<td>Ketua</td>
+							<td>:</td>
+							<td><input id="cbKetua" style="width: 300px" class="easyui-combobox" name="cbKetua" data-options="valueField:'No_PKPT',textField:'Nama',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>'"></input></td>
+							<td><input style="width: 60px" class="easyui-textbox" id="txtKetua" readonly="true"></td>
+						</tr>
+						<tr>
+							<td colspan="2"></td>
+							<td><span id="nipKetua"></span></td>
+						</tr>
+						<?php $anggota=1; ?>
+					</table>
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
@@ -103,6 +135,53 @@ $(function(){
     		nomor += $("#cbJenis").combobox('getText');
     		nomor += '/00';
         	$("#txtNomor").textbox('setValue',nomor);
+    	}
+	});
+	$("input:radio[name='select']").change(function(){
+        var flag = $(this).val();
+        if(flag == 'select'){
+        	$('input:checkbox').prop('checked',true);
+        }
+        else{
+        	$('input:checkbox').removeAttr('checked');
+        }
+    });
+    $("#cbPengawas").combobox({
+    	onChange:function(){
+    		No_PKPT = $("#cbPengawas").combobox('getValue');
+    		$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilAuditorBy", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {pkpt:No_PKPT},
+				success: function(response){
+					var auditor = JSON.parse(response);
+					$("#txtPengawas").textbox('setValue',auditor[0].Index_Karyawan);
+					$('#nipPengawas').html(auditor[0].NIP);
+				},
+				error: function(){
+					alert('error');
+				},
+			});
+    	}
+	});
+	$("#cbKetua").combobox({
+    	onChange:function(){
+    		No_PKPT = $("#cbKetua").combobox('getValue');
+    		$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilAuditorBy", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {pkpt:No_PKPT},
+				success: function(response){
+					var auditor = JSON.parse(response);
+					$("#txtKetua").textbox('setValue',auditor[0].Index_Karyawan);
+					$('#nipKetua').html(auditor[0].NIP);
+				},
+				error: function(){
+					alert('error');
+				},
+			});
     	}
 	});
 });
