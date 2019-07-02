@@ -21,6 +21,10 @@ class Menu extends CI_Controller {
 						"id":13,
 						"text":"Auditor",
 						"attributes":"ts/auditor_ts"
+					},{
+						"id":14,
+						"text":"Bagian",
+						"attributes":"ts/bagian_ts"
 					}
 					],
 				"attributes":""
