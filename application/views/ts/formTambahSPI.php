@@ -19,15 +19,15 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td width="20%">Obyek</td>
-							<td><textarea style="max-width:100%; width:100%;" id="obyek" name="obyek"></textarea></td>
+							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:80px"></td>
 						</tr>
 						<tr>
 							<td>Ruang Lingkup</td>
-							<td><textarea style="max-width:100%; width:100%;" id="ruang_lingkup" name="ruang_lingkup"></textarea></td>
+							<td><input class="easyui-textbox"multiline="true" id="ruang_lingkup" style="width:100%;height:80px"></td>
 						</tr>
 						<tr>
 							<td>Dasar Audit / Monev</td>
-							<td><textarea style="max-width:100%; width:100%;" id="dasar" name="dasar"></textarea></td>
+							<td><input class="easyui-textbox"multiline="true" id="dasar" style="width:100%;height:80px"></td>
 						</tr>
 							</table>
 					
@@ -118,7 +118,7 @@
 							<td>:</td>
 							<td>
 								<select id="cbPengawas" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'NIP',
+				                    idField: 'No_PKPT',
 				                    textField: 'Nama',
 				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
 				                    columns: [[
@@ -142,7 +142,7 @@
 							<td>:</td>
 							<td>
 								<select id="cbKetua" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'NIP',
+				                    idField: 'No_PKPT',
 				                    textField: 'Nama',
 				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
 				                    columns: [[
@@ -166,7 +166,7 @@
 							<td>:</td>
 							<td>
 								<select id="cbAnggota1" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'NIP',
+				                    idField: 'No_PKPT',
 				                    textField: 'Nama',
 				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
 				                    columns: [[
@@ -190,7 +190,7 @@
 							<td>:</td>
 							<td>
 								<select id="cbAnggota2" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'NIP',
+				                    idField: 'No_PKPT',
 				                    textField: 'Nama',
 				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
 				                    columns: [[
@@ -214,7 +214,7 @@
 							<td>:</td>
 							<td>
 								<select id="cbAnggota3" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'NIP',
+				                    idField: 'No_PKPT',
 				                    textField: 'Nama',
 				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
 				                    columns: [[
@@ -238,7 +238,7 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
-				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="checkSimpanRealisasiSPK()">SIMPAN</a>
+				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="simpanProgramTahunan()">SIMPAN</a>
 				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaBuatProgramTahunan').window('close')">BATAL</a>
 			</div>
 		</div>
@@ -311,51 +311,51 @@ $(function(){
 	});
 
 	$('#addtarget').click(function(){
-  	count = count + 1;
-  	var html_code = "<tr id='row"+count+"'>";
-   	html_code += "<td contenteditable='true' class='target_sequence'></td>";
-   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='target_fill' name='target_fill'></td>";
-   	html_code += "</tr>";
-   	$('#target_table').append(html_code);  
+	  	count = count + 1;
+	  	var html_code = "<tr id='row"+count+"'>";
+	   	html_code += "<td contenteditable='true' class='target_sequence'></td>";
+	   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='target_fill' name='target_fill'></td>";
+	   	html_code += "</tr>";
+	   	$('#target_table').append(html_code);  
 	});
 
 	$('#addaim').click(function(){
-  	count = count + 1;
-  	var html_code = "<tr id='row"+count+"'>";
-   	html_code += "<td contenteditable='true' class='aim_sequence'></td>";
-   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='aim_fill' name='aim_fill'></td>";
-   	html_code += "</tr>";
-   	$('#aim_table').append(html_code);  
+	  	count = count + 1;
+	  	var html_code = "<tr id='row"+count+"'>";
+	   	html_code += "<td contenteditable='true' class='aim_sequence'></td>";
+	   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='aim_fill' name='aim_fill'></td>";
+	   	html_code += "</tr>";
+	   	$('#aim_table').append(html_code);  
 	});
 
 	$(document).on('click', '.remove', function(){
-  	var delete_row = $(this).data("row");
-  	$('#' + delete_row).remove();
+	  	var delete_row = $(this).data("row");
+	  	$('#' + delete_row).remove();
  	});
 
 	$('#save').click(function(){
-  	var target_sequence = [];
-  	var target_fill = [];
-  	var aim_sequence = [];
-  	var aim_fill = [];
+	  	var target_sequence = [];
+	  	var target_fill = [];
+	  	var aim_sequence = [];
+	  	var aim_fill = [];
 
-  	$('#target_sequence').each(function(){
-   	item_name.push($(this).text());
-  	});
+	  	$('#target_sequence').each(function(){
+	   		item_name.push($(this).text());
+	  	});
 
-  	$('#target_fill').each(function(){
-   	item_code.push($(this).text());
-  	});
+	  	$('#target_fill').each(function(){
+	   		item_code.push($(this).text());
+	  	});
 
-  	$('#aim_sequence').each(function(){
-   	item_name.push($(this).text());
-  	});
+	  	$('#aim_sequence').each(function(){
+	   		item_name.push($(this).text());
+	  	});
 
-  	$('#aim_fill').each(function(){
-   	item_code.push($(this).text());
-  	});
+	  	$('#aim_fill').each(function(){
+	   		item_code.push($(this).text());
+	  	});
 
-  });
+	});
 
 });
 
@@ -384,110 +384,72 @@ $(function(){
 	});
 	
 });
-	// function simpanRealisasiBahan(kode,nama,pakai) {
-	// 	var person = prompt("Pemakaian Bahan\n["+kode+"] "+nama, pakai);
-		
-	// 	if (person != "") {
-	// 		alert(person);
-	// 	}else{
-	// 		alert("Tidak boleh kosong");
-	// 	}
-	// }
-	// function checkSimpanRealisasiSPK(){
-	// 	$("#validation").val("notOK");
-		
-	// 	var petugas3 			= $("#formRealisasiSPK #comboPilihPetugas3").combogrid('getValue').trim();
-	// 	var keteranganRealisasi = $("#formRealisasiSPK #keteranganRealisasi").val().trim();
-	// 	var jenisRea 			= $("#formRealisasiSPK #jenisRealisasi").val().trim();
-	// 	var pasang 				= $("#formRealisasiSPK #pasang_RSPK").val().trim();
-	// 	var tanggal				= $("#formRealisasiSPK #tgl_RSPK").datebox('getValue').trim();
-	// 	var stand				= $("#formRealisasiSPK #stand").textbox('getValue').trim();
-	// 	var noSlag 				= $("#formRealisasiSPK #slag").textbox('getValue').trim();
-	// 	var dim					= $("#formRealisasiSPK #diameter_RSPK").combogrid('getValue').trim();
-	// 	var jenisMTR			= $("#formRealisasiSPK #jenisMeter").combogrid('getValue').trim();
-	// 	var tglTempo			= $("#formRealisasiSPK #tglTempo").textbox('getValue').trim();
-		
-	// 	if (tanggal == "") {
-	// 		alert("Tanggal Realisasi harus diisi!!");
-	// 	} else {
-	// 		if (pasang=="1") {
-	// 			if (stand == "") {
-	// 				alert("Stand Cabut harus diisi!!");
-	// 			} else if (noSlag == "") {
-	// 				alert("No Slag harus diisi!!");
-	// 			} else if (dim == "") {
-	// 				alert("Diameter harus diisi!!");
-	// 			} else if (jenisMTR == "") {
-	// 				alert("Jenis Meter harus diisi!!");
-	// 			} else {
-	// 				$("#validation").val("OK");
-	// 			}
-	// 		} else {
-	// 			$("#validation").val("OK");
-	// 		}
-	// 	}
-	// 	simpanRealisasiSPK();
-	// }
-	// function simpanRealisasiSPK(){
-	// 	// var statusForm = true;
-	// 	// $('#formRealisasiSPK').form('submit',{
-	// 		// onSubmit:function(){
-	// 			// statusForm = $(this).form('enableValidation').form('validate');
-	// 			// return false;
-				
-	// 		// }
-	// 	// });
-	// 	// statusForm = true;
-	// 	//if(statusForm){
-	// 	var val = $("#validation").val();
-	// 	if(val == "OK"){
-	// 		// alert('bb');
-	// 		var nomorTS 			= $("#formRealisasiSPK #nomorTS_RSPK").textbox('getValue');
-	// 		var nosal 				= $("#formRealisasiSPK #nosal_RSPK").textbox('getValue');
-	// 		var petugas3 			= $("#formRealisasiSPK #comboPilihPetugas3").combogrid('getValue');
-	// 		var keteranganRealisasi = $("#formRealisasiSPK #keteranganRealisasi").val();
-	// 		var jenisRea 			= $("#formRealisasiSPK #jenisRealisasi").combogrid('getValue');
-	// 		var pasang 				= $("#formRealisasiSPK #pasang_RSPK").combogrid('getValue');
-	// 		var tanggal				= $("#formRealisasiSPK #tgl_RSPK").datebox('getValue'); 
-	// 		var stand				= $("#formRealisasiSPK #stand").textbox('getValue');
-	// 		var noSlag 				= $("#formRealisasiSPK #slag").textbox('getValue');
-	// 		var dim					= $("#formRealisasiSPK #diameter_RSPK").combogrid('getValue');
-	// 		var jenisMTR			= $("#formRealisasiSPK #jenisMeter").combogrid('getValue');
-	// 		// var noSeg				= $("#formRealisasiSPK #segel_RSPK").combogrid('getValue');
-	// 		// var noSegLama			= $("#formRealisasiSPK #no_segel_lama").combogrid('getValue');
-	// 		var tglTempo			= $("#formRealisasiSPK #tglTempo").textbox('getValue');
-	// 		//alert(tglTempo);
+	function simpanProgramTahunan(){
+			var nomor 				= $("#txtNomor").textbox('getValue');
+			var program 			= $("#cbProgram").combobox('getValue');
+			var jenis 				= $("#cbJenis").combobox('getValue');
+			var tahun 				= $("#cbTahun").combobox('getValue');
+			var obyek 				= $("#obyek").textbox('getValue');
+			var ruang 				= $("#ruang_lingkup").textbox('getValue');
+			var dasar 				= $("#dasar").textbox('getValue');
+			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
+			var ketua				= $("#cbKetua").combogrid('getValue');
+			// var anggota1 			= $("#cbAnggota1").combogrid('getValue');
+			// var anggota2			= $("#cbAnggota2").combogrid('getValue');
+			// var anggota3			= $("#cbAnggota3").combogrid('getValue');
+			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
+			// var tglTempo			= $("#formRealisasiSPK #tglTempo").textbox('getValue');
 			
-	// 		$.ajax({
-	// 			url			: "<?php echo base_url(); ?>"+"index.php/ts/realisasi_ts/realisasiSPK", 
-	// 			type		: "POST", 
-	// 			dataType	: "html",
-	// 			data		: {noTS:nomorTS,nosalTS:nosal,petugas3TS:petugas3,ketRea:keteranganRealisasi,tglRealisasi:tanggal,stand:stand,noSlag:noSlag,diameter:dim,jenisMeter:jenisMTR,jenisRealisasi:jenisRea,pasang:pasang,tglTempo:tglTempo},
-	// 			// data		: $("#formRealisasiSPK").serialize(),
-	// 			beforeSend	: function(){
-	// 				var win = $.messager.progress({
-	// 					title:'Mohon tunggu',
-	// 					msg:'Loading...'
-	// 				});
-	// 			},
-	// 			success: function(response){
-	// 				if(response==1){
-	// 					$('#dgRealisasi').datagrid('reload');
-	// 					$.messager.progress('close'); 
-	// 					$('#jendelaRealisasiSPK').window('close');
-	// 				}else{
-	// 					alert("error ketika menyimpan realisasi");
-	// 				}
-	// 				// alert(response);
-	// 				//$( "#results" ).text( response );
-	// 				//alert(response);$.messager.progress('close');
-	// 			},
-	// 			error: function(){
-	// 				alert('error');
-	// 			},
-	// 		});
-	// 	}	
-	// }
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,dasar:dasar},
+				beforeSend	: function(){
+					var win = $.messager.progress({
+						title:'Mohon tunggu',
+						msg:'Loading...'
+					});
+				},
+				success: function(response){
+					if(response==1){
+						$('#dgProgramTahunan').datagrid('reload');
+						$.messager.progress('close'); 
+						$('#jendelaBuatProgramTahunan').window('close');
+						simpanAuditorProgramTahunan(pengawas,nomor,1);
+						simpanAuditorProgramTahunan(ketua,nomor,2);
+						for (var i = 0; i < anggota.length; i++) {
+							simpanAuditorProgramTahunan(anggota[i],nomor,3);
+						}
+					}else{
+						alert("error ketika menyimpan program tahunan");
+					}
+				},
+				error: function(){
+					alert('error');
+				},
+			});
+	}
+
+	function simpanAuditorProgramTahunan(pkpt,nomor,jab){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahAuditorProgram", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {pkpt:pkpt,nomor:nomor,jab:jab},
+				success: function(response){
+					if(response==1){
+						$('#dgAuditorProgram').datagrid('reload');
+					}else{
+						alert("error ketika menyimpan auditor");
+					}
+				},
+				error: function(){
+					alert('gagal menyimpan auditor');
+				},
+			});
+	}
 	
 	// function changeOpt(val) {
 	// 	$("#jenisRealisasi").empty();
