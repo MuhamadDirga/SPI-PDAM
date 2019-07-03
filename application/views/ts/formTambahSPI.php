@@ -29,8 +29,40 @@
 							<td>Dasar Audit / Monev</td>
 							<td><textarea style="max-width:100%; width:100%;" id="dasar" name="dasar"></textarea></td>
 						</tr>
-					</table>
+							</table>
 					
+						<tr>
+							<table width = "100%" id="target_table">
+     						<tr>
+      						<th width="5%">Urut Sasaran</th>
+      						<th width="100%">Isi Sasaran:</th>
+     						</tr>
+     						<tr>
+      						<td contenteditable="true" id="target_sequence" name="target_sequence"></td>
+      						<td><input class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="target_fill" name="target_fill"></td>
+      						</tr>
+						</tr>
+					</table>
+						<div align="right">
+     					<button type="button" name="addtarget" id="addtarget" class="btn btn-success btn-xs">Tambah sasaran</button>
+    				</div>
+    					<div id="inserted_item_data"></div>
+    					<tr>
+							<table width = "100%"  id="aim_table">
+     						<tr>
+      						<th width="5%">Urut Tujuan</th>
+      						<th width="100%">Isi Tujuan:</th>
+     						</tr>
+     						<tr>
+      						<td contenteditable="true" id="aim_sequence" name="aim_sequence"></td>
+      						<td><input class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="aim_fill" name="aim_fill"></td>
+      						</tr>
+						</tr>
+					</table>
+					<div align="right">
+     					<button type="button" name="addaim" id="addaim" class="btn btn-success btn-xs">Tambah tujuan</button>
+    				</div>
+    				<div id="inserted_item_data"></div>
 					<!-- <hr style="width:100%;margin-top:40px;margin-bottom:40px;background-color:#79afe6;color:#79afe6" />
 					
 					<table width="100%" border="0" cellpadding="2">
@@ -215,6 +247,7 @@
 <div id="piihBPB"></div>
 <script type="text/javascript">
 var nomor = "";
+var count = 1;
 $(function(){
 	$("#cbTahun").combobox({
     	onChange:function(){
@@ -276,6 +309,54 @@ $(function(){
 			$('#nipAnggota3').html(row.NIP);
 		}
 	});
+
+	$('#addtarget').click(function(){
+  	count = count + 1;
+  	var html_code = "<tr id='row"+count+"'>";
+   	html_code += "<td contenteditable='true' class='target_sequence'></td>";
+   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='target_fill' name='target_fill'></td>";
+   	html_code += "</tr>";
+   	$('#target_table').append(html_code);  
+	});
+
+	$('#addaim').click(function(){
+  	count = count + 1;
+  	var html_code = "<tr id='row"+count+"'>";
+   	html_code += "<td contenteditable='true' class='aim_sequence'></td>";
+   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='aim_fill' name='aim_fill'></td>";
+   	html_code += "</tr>";
+   	$('#aim_table').append(html_code);  
+	});
+
+	$(document).on('click', '.remove', function(){
+  	var delete_row = $(this).data("row");
+  	$('#' + delete_row).remove();
+ 	});
+
+	$('#save').click(function(){
+  	var target_sequence = [];
+  	var target_fill = [];
+  	var aim_sequence = [];
+  	var aim_fill = [];
+
+  	$('#target_sequence').each(function(){
+   	item_name.push($(this).text());
+  	});
+
+  	$('#target_fill').each(function(){
+   	item_code.push($(this).text());
+  	});
+
+  	$('#aim_sequence').each(function(){
+   	item_name.push($(this).text());
+  	});
+
+  	$('#aim_fill').each(function(){
+   	item_code.push($(this).text());
+  	});
+
+  });
+
 });
 
 $(function(){
