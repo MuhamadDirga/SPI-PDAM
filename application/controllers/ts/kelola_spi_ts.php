@@ -12,6 +12,7 @@ function __construct(){
 		$this->load->model('master_data/md_sasaran');
 		$this->load->model('master_data/md_tujuan');
 		$this->load->model('master_data/md_bagian');
+		$this->load->model('master_data/md_detail_bagian');
     }
 	public function index(){
 		$bag 	= array("1.01", "3.03");
@@ -49,8 +50,13 @@ function __construct(){
 		$result["total"] = 0;
 		
 		$query = $this->md_auditor_tahunan->ambilAuditor($No_Tahunan);
-		// $result["rows"] = $query;
-		//echo json_encode($result);
+		echo '{"total":1,"rows":'.json_encode($query->result()).',"footer":[]}';
+	}
+	public function daftarDetailBagian(){
+		$No_Tahunan = $_POST['Nomor'];
+		$result["total"] = 0;
+		
+		$query = $this->md_detail_bagian->ambilBagian($No_Tahunan);
 		echo '{"total":1,"rows":'.json_encode($query->result()).',"footer":[]}';
 	}
 	public function daftarSasaran(){
@@ -110,17 +116,89 @@ function __construct(){
 		echo $view;
 	}
 
-	public function tambahJenis(){
+	public function genNo(){
 		
 		if($_POST){
+			$nomor = $_POST['nomor'];
+			$hasil = $this->md_SPITS->checkNomor(substr($nomor, 0,19));
+			
+			echo json_encode($hasil->result());
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
+	public function tambahProgramTahunan(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$program = $_POST['program'];
 			$jenis = $_POST['jenis'];
-			$this->md_jenis->tambahJenis($jenis);
+			$tahun = $_POST['tahun'];
+			$obyek = $_POST['obyek'];
+			$ruang = $_POST['ruang'];
+			$dasar = $_POST['dasar'];
+			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar);
 			
 			echo '1';
 		}else{
 			echo "Data tidak valid.";
 		}
+	}
+
+	public function tambahAuditorProgram(){
 		
+		if($_POST){
+			$pkpt = $_POST['pkpt'];
+			$nomor = $_POST['nomor'];
+			$jab = $_POST['jab'];
+			$this->md_SPITS->simpanAuditorProgram($pkpt,$nomor,$jab);
+			
+			echo '1';
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
+	public function tambahBagianProgram(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$bag = $_POST['bag'];
+			$this->md_SPITS->simpanBagianProgram($nomor,$bag);
+			
+			echo '1';
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
+	public function tambahSasaranProgram(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$urut = $_POST['urut'];
+			$isi = $_POST['isi'];
+			$this->md_SPITS->simpanSasaranProgram($nomor,$urut,$isi);
+			
+			echo '1';
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
+	public function tambahTujuanProgram(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$urut = $_POST['urut'];
+			$isi = $_POST['isi'];
+			$this->md_SPITS->simpanTujuanProgram($nomor,$urut,$isi);
+			
+			echo '1';
+		}else{
+			echo "Data tidak valid.";
+		}
 	}
 
 	public function ubahJenis(){

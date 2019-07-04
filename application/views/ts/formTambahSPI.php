@@ -1,7 +1,7 @@
 <div class="easyui-layout" style="width:100%; min-height:100%; margin-bottom:5px;">
 	<form id="formTambahSPI" class="easyui-form" method="post" data-options="">
 		
-		<div data-options="region:'north'" style="padding:4px;height:560px">
+		<div data-options="region:'north'" style="padding:4px;height:590px">
 			<table width="100%" border="0" style="margin:10px">
 				<tr>
 					<td width="7%">Tahun : </td>
@@ -11,7 +11,7 @@
 					<td width="6%">Jenis : </td>
 					<td width="5%"><input id="cbJenis" class="easyui-combobox" name="cbJenis" data-options="valueField:'Kd_Jenis',textField:'Nama_Jenis',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarJenis");?>'"></input></td>
 					<td width="7%">Nomor : </td>
-					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor" readonly="true"></td>
+					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor"></td>
 				</tr>
 			</table>
 			<div class="easyui-tabs" style="width:100%;">
@@ -19,70 +19,48 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td width="20%">Obyek</td>
-							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:80px"></td>
+							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:60px"></td>
 						</tr>
 						<tr>
 							<td>Ruang Lingkup</td>
-							<td><input class="easyui-textbox"multiline="true" id="ruang_lingkup" style="width:100%;height:80px"></td>
+							<td><input class="easyui-textbox"multiline="true" id="ruang_lingkup" style="width:100%;height:60px"></td>
 						</tr>
 						<tr>
 							<td>Dasar Audit / Monev</td>
-							<td><input class="easyui-textbox"multiline="true" id="dasar" style="width:100%;height:80px"></td>
-						</tr>
-							</table>
-					
-						<tr>
-							<table width = "100%" id="target_table">
-     						<tr>
-      						<th width="5%">Urut Sasaran</th>
-      						<th width="100%">Isi Sasaran:</th>
-     						</tr>
-     						<tr>
-      						<td contenteditable="true" id="target_sequence" name="target_sequence"></td>
-      						<td><input class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="target_fill" name="target_fill"></td>
-      						</tr>
+							<td><input class="easyui-textbox"multiline="true" id="dasar" style="width:100%;height:60px"></td>
 						</tr>
 					</table>
-						<div align="right">
-     					<button type="button" name="addtarget" id="addtarget" class="btn btn-success btn-xs">Tambah sasaran</button>
-    				</div>
-    					<div id="inserted_item_data"></div>
-    					<tr>
-							<table width = "100%"  id="aim_table">
-     						<tr>
-      						<th width="5%">Urut Tujuan</th>
-      						<th width="100%">Isi Tujuan:</th>
-     						</tr>
-     						<tr>
-      						<td contenteditable="true" id="aim_sequence" name="aim_sequence"></td>
-      						<td><input class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="aim_fill" name="aim_fill"></td>
-      						</tr>
-						</tr>
+					
+					<table width = "100%" id="tabelSasaran">
+     					<tr>
+      						<th width="5%" style="text-align: center;">Urut Sasaran</th>
+      						<th width="90%">Isi Sasaran:</th>
+      						<th width="5%"></th>
+     					</tr>
+     					<tr>
+      						<td align="center">1</td>
+      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtSasaran1"></textarea></td>
+      						<td></td>
+      					</tr>
 					</table>
 					<div align="right">
-     					<button type="button" name="addaim" id="addaim" class="btn btn-success btn-xs">Tambah tujuan</button>
+     					<button type="button" id="addSasaran" style="margin-right: 10px">Tambah sasaran</button>
     				</div>
-    				<div id="inserted_item_data"></div>
-					<!-- <hr style="width:100%;margin-top:40px;margin-bottom:40px;background-color:#79afe6;color:#79afe6" />
-					
-					<table width="100%" border="0" cellpadding="2">
-						<tr>
-							<td width="15%">Stand Cabut</td>
-							<td width="35%"><input class="easyui-textbox" type="text" id="stand" name="stand" value="<?php echo $dataTabel[0]['STAND']; ?>" style="height:28px; width:100px;"></td>
-							<td width="15%">Jenis Meter</td>
-							<td width="35%"><input id="jenisMeter" name="jenisMeter" style="width:100px; height:28px;"></td>
-						</tr>
-						<tr>
-							<td>No. Slag</td>
-							<td><input class="easyui-textbox" type="text" id="slag" name="slag" value="<?php echo $dataTabel[0]['NO_SLAG']; ?>" style="height:28px; width:100px;"></td>
-							<td>Diameter</td>
-							<td><input id="diameter_RSPK" name="diameter_RSPK" style="width:100px; height:28px;"></td>
-						</tr>
+    				<table width = "100%" id="tabelTujuan">
+     					<tr>
+      						<th width="5%" style="text-align: center;">Urut Tujuan</th>
+      						<th width="90%">Isi Tujuan:</th>
+      						<th width="5%"></th>
+     					</tr>
+     					<tr>
+      						<td align="center">1</td>
+      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtTujuan1"></textarea></td>
+      						<td></td>
+      					</tr>
 					</table>
-					
-					<input type="hidden" id="no_segel_lama" value="<?php echo $dataTabel[0]['NO_SEGEL']; ?>">
-					<input type="hidden" id="validation" value="notOK"> -->
-					
+					<div align="right">
+     					<button type="button" id="addTujuan" style="margin-right: 10px">Tambah tujuan</button>
+    				</div>
 				</div>
 				
 				<div title="BAGIAN" style="padding:10px;" id="bagianTab">
@@ -100,7 +78,7 @@
 							<tr>
 						<?php foreach ($dataChk->result() as $value){ ?>
 							<?php $i++; ?>
-								<td><input class="easyui-checkbox" type="checkbox" name="chkBag" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
+								<td><input type="checkbox" id="chkBag" name="bagian[]" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
 							<?php if($i == 2) {
 								echo '</tr><tr>';
 								$i = 0;
@@ -246,29 +224,50 @@
 </div>
 <div id="piihBPB"></div>
 <script type="text/javascript">
-var nomor = "";
-var count = 1;
+var totalSasaran = 1;
+var totalTujuan = 1;
 $(function(){
-	$("#cbTahun").combobox({
-    	onChange:function(){
-    		nomor += $("#cbTahun").combobox('getText');
-    		nomor += '/00/';
-        	$("#txtNomor").textbox('setValue',nomor);
-    	}
-	});
-	$("#cbProgram").combobox({
-    	onChange:function(){
-        	nomor += $("#cbProgram").combobox('getText');
-    		nomor += '/';
-        	$("#txtNomor").textbox('setValue',nomor);
-    	}
-	});
-	$("#cbJenis").combobox({
-    	onChange:function(){
-    		nomor += $("#cbJenis").combobox('getText');
-    		nomor += '/00';
-        	$("#txtNomor").textbox('setValue',nomor);
-    	}
+	var brSasaran = 1;
+	var brTujuan = 1;
+	$('#txtNomor').textbox({
+	    editable:false,
+	    icons:[{
+	    	iconCls:'icon-ok',
+	        handler:function(){
+	        	var nomor = "";
+	        	nomor += $("#cbTahun").combobox('getText');
+	        	if ($("#cbJenis").combobox('getText') == 'A-MDR'){
+    				nomor += '/01/';
+    			}else{
+    				nomor += '/00/';
+    			}
+    			if ($("#cbProgram").combobox('getText') == 'PKPT') {
+    				nomor += '_'
+    			}
+    			nomor += $("#cbProgram").combobox('getText');
+    			nomor += '/';
+    			nomor += $("#cbJenis").combobox('getText');
+    			nomor += '/';
+    			$.ajax({
+					url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/genNo", 
+					type		: "POST", 
+					dataType	: "json",
+					data		: {nomor:nomor},
+					success: function(response){
+						if (!$.trim(response)){
+							nomor += '00';
+							$("#txtNomor").textbox('setValue',nomor);
+						}else{
+							var last = response[0].Nomor.substr(response[0].Nomor.length - 2);
+							last++;
+							var number = ("0" + last).slice(-2);
+							nomor += number;
+							$("#txtNomor").textbox('setValue',nomor);
+						}
+					},
+				});
+	        }
+	    }]
 	});
 	$("input:radio[name='select']").change(function(){
         var flag = $(this).val();
@@ -310,53 +309,41 @@ $(function(){
 		}
 	});
 
-	$('#addtarget').click(function(){
-	  	count = count + 1;
-	  	var html_code = "<tr id='row"+count+"'>";
-	   	html_code += "<td contenteditable='true' class='target_sequence'></td>";
-	   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='target_fill' name='target_fill'></td>";
+	$('#addSasaran').click(function(){
+	  	brSasaran++;
+	  	var html_code = "<tr id='row"+brSasaran+"'>";
+	   	html_code += "<td align='center'>"+brSasaran+"</td>";
+	   	html_code += "<td><textarea class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='txtSasaran"+brSasaran+"'></textarea></td>";
+	   	html_code += "<td align='center'><button type='button' data-row='row"+brSasaran+"' class='removeSasaran'>-</button></td>";
 	   	html_code += "</tr>";
-	   	$('#target_table').append(html_code);  
+	   	$('#tabelSasaran').append(html_code);  
+	   	totalSasaran = brSasaran;
 	});
 
-	$('#addaim').click(function(){
-	  	count = count + 1;
-	  	var html_code = "<tr id='row"+count+"'>";
-	   	html_code += "<td contenteditable='true' class='aim_sequence'></td>";
-	   	html_code += "<td><input class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='aim_fill' name='aim_fill'></td>";
+	$('#addTujuan').click(function(){
+	  	brTujuan++;
+	  	var html_code = "<tr id='row"+brTujuan+"'>";
+	   	html_code += "<td align='center'>"+brTujuan+"</td>";
+	   	html_code += "<td><textarea class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='txtTujuan"+brTujuan+"'></textarea></td>";
+	   	html_code += "<td align='center'><button type='button' data-row='row"+brTujuan+"' class='removeTujuan'>-</button></td>";
 	   	html_code += "</tr>";
-	   	$('#aim_table').append(html_code);  
+	   	$('#tabelTujuan').append(html_code);  
+	   	totalTujuan = brTujuan;
 	});
 
-	$(document).on('click', '.remove', function(){
+	$(document).on('click', '.removeSasaran', function(){
 	  	var delete_row = $(this).data("row");
 	  	$('#' + delete_row).remove();
+	  	brSasaran = brSasaran - 1;
+	  	totalSasaran = brSasaran;
  	});
 
-	$('#save').click(function(){
-	  	var target_sequence = [];
-	  	var target_fill = [];
-	  	var aim_sequence = [];
-	  	var aim_fill = [];
-
-	  	$('#target_sequence').each(function(){
-	   		item_name.push($(this).text());
-	  	});
-
-	  	$('#target_fill').each(function(){
-	   		item_code.push($(this).text());
-	  	});
-
-	  	$('#aim_sequence').each(function(){
-	   		item_name.push($(this).text());
-	  	});
-
-	  	$('#aim_fill').each(function(){
-	   		item_code.push($(this).text());
-	  	});
-
-	});
-
+ 	$(document).on('click', '.removeTujuan', function(){
+	  	var delete_row = $(this).data("row");
+	  	$('#' + delete_row).remove();
+	  	brTujuan = brTujuan - 1;
+	  	totalTujuan = brTujuan;
+ 	});
 });
 
 $(function(){
@@ -394,11 +381,21 @@ $(function(){
 			var dasar 				= $("#dasar").textbox('getValue');
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
 			var ketua				= $("#cbKetua").combogrid('getValue');
-			// var anggota1 			= $("#cbAnggota1").combogrid('getValue');
-			// var anggota2			= $("#cbAnggota2").combogrid('getValue');
-			// var anggota3			= $("#cbAnggota3").combogrid('getValue');
 			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
-			// var tglTempo			= $("#formRealisasiSPK #tglTempo").textbox('getValue');
+			var all_bagian_id = document.querySelectorAll('input[name="bagian[]"]:checked');
+			var aIds = [];
+			for(var x = 0, l = all_bagian_id.length; x < l;  x++)
+			{
+			    aIds.push(all_bagian_id[x].value);
+			}
+			var sasaran = [];
+			for (var i = 1; i < (totalSasaran+1); i++) {
+				sasaran.push($("#txtSasaran"+i).val());
+			}
+			var tujuan = [];
+			for (var i = 1; i < (totalTujuan+1); i++) {
+				tujuan.push($("#txtTujuan"+i).val());
+			}
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
@@ -420,6 +417,15 @@ $(function(){
 						simpanAuditorProgramTahunan(ketua,nomor,2);
 						for (var i = 0; i < anggota.length; i++) {
 							simpanAuditorProgramTahunan(anggota[i],nomor,3);
+						}
+						for (var i = 0; i < aIds.length; i++) {
+							simpanBagianProgramTahunan(nomor,aIds[i]);
+						}
+						for (var i = 0; i < sasaran.length; i++) {
+							simpanSasaranProgramTahunan(nomor,i+1,sasaran[i]);
+						}
+						for (var i = 0; i < tujuan.length; i++) {
+							simpanTujuanProgramTahunan(nomor,i+1,tujuan[i]);
 						}
 					}else{
 						alert("error ketika menyimpan program tahunan");
@@ -450,49 +456,64 @@ $(function(){
 				},
 			});
 	}
-	
-	// function changeOpt(val) {
-	// 	$("#jenisRealisasi").empty();
-	// 	if (val=="1") { 
-	// 		var option = $("<option></option>").attr("value", "1. Melepas Meter").text("1. Melepas Meter");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "2. Kopling").text("2. Kopling");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "3. DOP").text("3. DOP");
-	// 		$("#jenisRealisasi").append(option);
-	// 	} else if (val=="0") {
-	// 		var option = $("<option></option>").attr("value", "1. Alamat Tidak Ketemu").text("1. Alamat Tidak Ketemu");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "2. Rumah Kosong").text("2. Rumah Kosong");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "3. Tempo").text("3. Tempo");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "4. Titip Bayar").text("4. Titip Bayar");
-	// 		$("#jenisRealisasi").append(option);
-	// 		var option = $("<option></option>").attr("value", "5. Lain-lain").text("5. Lain-lain");
-	// 		$("#jenisRealisasi").append(option);
-	// 	}
-	// }
-	
-	// <?php
-	// if (trim($dataTabel[0]['TGL_TEMPO']) != '') { 
-	// 	echo  '$("#addingT").show();';
-	// }
-	// if (trim($dataTabel[0]['TGL_BAYAR']) != '') { 
-	// 	echo  '
-	// 		$("#addingB").show();
-	// 		$("#simpanBtn").hide();
-	// 	';
-	// }
-	// ?>
-		
-	// function show(val) {
-	// 	$("#addingT").hide();
-	// 	$("#addingB").hide();
-	// 	if (val == "3. Tempo"){
-	// 		$("#addingT").show();
-	// 	} else if (val == "4. Titip Bayar") {
-	// 		$("#addingB").show();
-	// 	}
-	// }
+
+	function simpanBagianProgramTahunan(nomor,bag){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahBagianProgram", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor,bag:bag},
+				success: function(response){
+					if(response==1){
+						// $('#dgAuditorProgram').datagrid('reload');
+					}else{
+						alert("error ketika menyimpan bagian");
+					}
+				},
+				error: function(){
+					alert('gagal menyimpan bagian');
+				},
+			});
+	}
+
+	function simpanSasaranProgramTahunan(nomor,urut,isi){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahSasaranProgram",
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor,urut:urut,isi:isi},
+				success: function(response){
+					if(response==1){
+						$('#dgSasaran').datagrid('reload');
+					}else{
+						alert("error ketika menyimpan sasaran");
+					}
+				},
+				error: function(){
+					alert('gagal menyimpan sasaran');
+				},
+			});
+	}
+
+	function simpanTujuanProgramTahunan(nomor,urut,isi){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahTujuanProgram",
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor,urut:urut,isi:isi},
+				success: function(response){
+					if(response==1){
+						$('#dgTujuan').datagrid('reload');
+					}else{
+						alert("error ketika menyimpan tujuan");
+					}
+				},
+				error: function(){
+					alert('gagal menyimpan tujuan');
+				},
+			});
+	}
 </script>

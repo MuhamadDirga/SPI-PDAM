@@ -4,11 +4,21 @@ class Md_SPITS extends CI_Model {
     function __construct(){
         parent::__construct();
     }
+
+    function checkNomor($nomor){
+		$this->db->select("TOP 1 *");
+		$this->db->from("Program_Tahunan");
+		$this->db->where('LEFT(Nomor,19)', $nomor);
+		$this->db->order_by('Nomor', 'desc');
+		$hasil=$this->db->get ('');
+        return $hasil;
+
+    }
+
 	function ambilDaftarSPITS($page,$rows,$type=null,$tahun=null,$program=null,$jenis=null){
         $offset = ($page-1)*$rows;
         $this->limit = $rows;
         $this->offset = $offset;
-        // $this->offset = $page;
 		
 		$this->db->select("pt.Nomor,pt.Obyek,pt.Ruang_Lingkup,pt.Kd_Jenis,j.Nama_Jenis Jenis,pt.Waktu,pt.Tgl_Mulai,pt.Tgl_LHA,pt.Kd_Program,p.Nama_Program Program,pt.No_Tugas,pt.Dasar,pt.Periode_Audit,pt.Tgl_Selesai,pt.Tgl_Audit_Meeting,pt.Tgl_Ke_Direksi,pt.Tgl_Dari_Direksi,pt.Disposisi_Direksi,pt.Kd_Tahun,t.Tahun
 		");
@@ -23,60 +33,65 @@ class Md_SPITS extends CI_Model {
 		
         if($type=='total'){
 			$hasil=$this->db->get('')->num_rows();
-			// $hasil=$this->db->count_all_results();
         }else{
 			$hasil=$this->db->get ('',$this->limit, $this->offset)->result_array();
-			// $hasil=$this->db->query('EXECUTE GetProgramTahunanAktiv '.$this->limit.','.$this->offset.',null,null,null')->result_array();
         }
         return $hasil;
 
     }
 	
-	// function getRekapPerDesaOrderTS(){
-	// 	$query = $this->db->query("
-	// 			SELECT t.desa KODE, 
-	// 				max(d.KETERANGAN) DESA, 
-	// 				count(t.nomor) ORDERS,
-	// 				sum(CASE WHEN t.TGL_SPK is not null and TGL_BAYAR is null and TGL_TEMPO is null THEN 1 ELSE 0 END) SPK,
-	// 				sum(CASE WHEN t.TGL_BAYAR is not null THEN 1 ELSE 0 END) BAYAR,
-	// 				sum(CASE WHEN t.TGL_TEMPO is not null or TGL_TEMPO < convert(varchar(10),getdate(),120) THEN 1 ELSE 0 END) TEMPO,
-	// 				sum(CASE WHEN t.TGL_SPK is null and TGL_BAYAR is null THEN 1 ELSE 0 END) SISA
-	// 			FROM tutupan t
-	// 				LEFT JOIN DESA d ON t.desa=d.kode
-	// 				LEFT JOIN jadwal_desa_ts j ON d.kode=j.kode_desa
-	// 			where t.desa != '' and
-	// 			t.PERIODE='".date('Ym')."' 
-	// 			GROUP BY t.desa
-	// 			ORDER BY t.desa
-	// 	");
-	// 	//and (TGL_TEMPO is null or TGL_TEMPO >= convert(varchar(10),getdate(),120) ) 
-		
-	// 	return $query;
- //    }
-	
-	// function getRekapPerBukuOrderTS($desa){
-	// 	$query = $this->db->query("
-	// 			SELECT t.NO_BUKU, 
-	// 				max(t.DESA) DESA,
-	// 				max(t.PETUGAS) PETUGAS,
-	// 				'0' JMLSPK,
-	// 				count(t.nomor) ORDERS,
-	// 				sum(CASE WHEN t.TGL_SPK is not null and TGL_BAYAR is null and TGL_TEMPO is null THEN 1 ELSE 0 END) SPK,
-	// 				sum(CASE WHEN t.TGL_BAYAR is not null THEN 1 ELSE 0 END) BAYAR,
-	// 				sum(CASE WHEN t.TGL_TEMPO is not null or TGL_TEMPO < convert(varchar(10),getdate(),120) THEN 1 ELSE 0 END) TEMPO,
-	// 				sum(CASE WHEN t.TGL_SPK is null and TGL_BAYAR is null THEN 1 ELSE 0 END) SISA,
-	// 				t.NO_BUKU productid
-	// 			FROM tutupan t
-	// 			where 
-	// 			t.tgl_realisasi is null and
-	// 			t.desa = '".$desa."' and
-	// 			t.PERIODE='".date('Ym')."' 
-	// 			GROUP BY t.PETUGAS,t.NO_BUKU
-	// 			ORDER BY t.NO_BUKU,t.PETUGAS
-	// 	");
-	// 	//and (TGL_TEMPO is null or TGL_TEMPO >= convert(varchar(10),getdate(),120) ) 
-	// 	//return $query->result_array();
-	// 	return $query;
- //    }
+	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar){
+		$data = array(
+        	'Nomor' => $nomor,
+        	'Kd_Tahun' => $tahun,
+        	'Kd_Jenis' => $jenis,
+        	'Kd_Program' => $program,
+        	'Obyek' => $obyek,
+        	'Ruang_Lingkup' => $ruang,
+        	'Dasar' => $dasar,
+        	'Status' => '1'
+		);
+
+		$this->db->insert('Program_Tahunan', $data);
+	}
+
+	function simpanAuditorProgram($nopkpt,$nomor,$jab){
+		$data = array(
+        	'No_PKPT' => $nopkpt,
+        	'Nomor' => $nomor,
+        	'Kd_Jab' => $jab
+		);
+
+		$this->db->insert('Auditor_Program_Tahunan', $data);
+	}
+
+	function simpanBagianProgram($nomor,$bag){
+		$data = array(
+        	'Nomor' => $nomor,
+        	'Kd_Bag' => $bag
+		);
+
+		$this->db->insert('Detail_Bagian', $data);
+	}
+
+	function simpanSasaranProgram($nomor,$urut,$isi){
+		$data = array(
+        	'Nomor' => $nomor,
+        	'Urut_Sasaran' => $urut,
+        	'Isi_Sasaran' => $isi
+		);
+
+		$this->db->insert('Sasaran', $data);
+	}
+
+	function simpanTujuanProgram($nomor,$urut,$isi){
+		$data = array(
+        	'Nomor' => $nomor,
+        	'Urut_Tujuan' => $urut,
+        	'Isi_Tujuan' => $isi
+		);
+
+		$this->db->insert('Tujuan', $data);
+	}
 }
 ?>

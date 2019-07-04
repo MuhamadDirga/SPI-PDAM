@@ -18,6 +18,15 @@
 				</tr>
 			</thead>
 		</table>
+		<table id="dgDetailBagian" style="width:100%;height:35%;" title="Detail Bagian" rownumbers="true" pagination="false" idField="Kd_Bag">
+			<thead>
+				<tr>
+					<th field="Nama_Bag" width="7%">Bagian</th>
+					<th data-options="field:'Detail'" width="7%">Detail</th>
+					<!-- <th data-options="field:'SET'" formatter="formatAudit" field="productid" width="7%">Set</th> -->
+				</tr>
+			</thead>
+		</table>
 		<table id="dgAuditorProgram" style="width:100%;height:35%;" title="Auditor" rownumbers="true" pagination="false" idField="No_PKPT">
 			<thead>
 				<tr>
@@ -101,7 +110,7 @@
 		<input type="hidden" id="buk" value=""/> 
 		<input type="hidden" id="ptg" value=""/> 
 		<input type="hidden" id="fieldPB" value=""/> 
-	    <div id="jendelaBuatProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:600px; padding:5px;">
+	    <div id="jendelaBuatProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 		</div>
 	</div>
 </div>
@@ -151,12 +160,92 @@
 			onClickRow:function(index,row){
 				$('#row').val(row.Nomor);
 				//alert(row.KODE);
+				showBagian();
 				showAuditor();
 				showSasaran();
 				showTujuan();
 			},
 			showFooter:true
 			
+		});
+		
+	});
+
+	$(function(){
+		$("#dgDetailBagian").datagrid({
+			singleSelect:true,
+			checkOnSelect:false,
+			collapsible:true,
+			pageSize:20,
+			pageList:pList,
+			toolbar:'#tbDetailBagian',
+			footer:'#ftDetailBagian',
+			url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarDetailBagian");?>',
+			method:'post',
+			onDblClickCell: function(index,field,value){
+				$(this).datagrid('beginEdit', index);
+				var ed = $(this).datagrid('getEditor', {index:index,field:field});
+				$(ed.target).focus();
+			},
+			onRowContextMenu : function(e,field){
+				//e.preventDefault();
+				$('#mmUser').menu('show', {
+					left: e.pageX,
+					top: e.pageY
+				});
+			},
+			onClickCell:function(index,field,val){
+				$('#fieldPB').val(field);
+				// alert(index+field+val);
+			},
+			onClickRow:function(index,row){
+				
+			},
+			
+			onBeforeEdit:function(index,row){
+				row.editing = true;
+				updateAudit(index);
+			},
+			
+			onBeginEdit:function(index,row){
+				var editors = $('#dgAuditorProgram').datagrid('getEditors', index);
+				var n1 = $(editors[0].target);
+				// var n2 = $(editors[1].target);
+			},
+			onAfterEdit:function(index,row){
+				row.editing = false;
+				updateAudit(index);
+			},
+			onCancelEdit:function(index,row){
+				row.editing = false;
+				updateAudit(index);
+			},
+			onEndEdit:function(index,row){
+				
+			},
+			showFooter:false
+
+			
+		});
+		$.extend($.fn.datagrid.defaults.editors, { 
+			numberspinner: {
+				init: function(container, options){
+					var input = $('<input type="text">').appendTo(container);
+					return input.numberspinner(options);
+				},
+				destroy: function(target){
+					$(target).numberspinner('destroy');
+				},
+				getValue: function(target){
+					return $(target).numberspinner('getValue');
+				},
+				setValue: function(target, value){
+					$(target).numberspinner('setValue',value);
+				},
+				resize: function(target, width){
+					$(target).numberspinner('resize',width);
+				}
+			}
 		});
 		
 	});
@@ -602,6 +691,13 @@
 	// 	});
 		
 	// });
+
+	function showBagian(){
+		var row = $('#row').val();
+		$('#dgDetailBagian').datagrid('load',{
+			Nomor: row
+		});
+	}
 	
 	function showAuditor(){
 		var row = $('#row').val();
