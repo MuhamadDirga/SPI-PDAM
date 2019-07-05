@@ -215,11 +215,11 @@ function __construct(){
 		
 	}
 
-	public function hapusJenis(){
+	public function hapusProgramTahunan(){
 		
 		if($_POST){
-			$kd = $_POST['kd'];
-			$this->md_jenis->hapusJenis($kd);
+			$nomor = $_POST['nomor'];
+			$this->md_SPITS->hapusProgramTahunan($nomor);
 			
 			echo 'Data Berhasil Dihapus';
 		}else{

@@ -93,5 +93,9 @@ class Md_SPITS extends CI_Model {
 
 		$this->db->insert('Tujuan', $data);
 	}
+	function hapusProgramTahunan($nomor){
+		$this->db->where('Nomor', $nomor);
+		$this->db->delete('Program_Tahunan');
+    }
 }
 ?>

@@ -15,6 +15,7 @@
 					<th data-options="field:'Jenis'" width="7%">Jenis</th>
 					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
 					<th data-options="field:'Tahun'" width="10%">Tahun</th>
+					<th data-options="field:'SET'" formatter="formatProgramTahunan" width="7%">Set</th>
 				</tr>
 			</thead>
 		</table>
@@ -115,6 +116,17 @@
 	</div>
 </div>
 <script type="text/javascript">
+	function formatProgramTahunan(value,row,index){
+		if (row.editing){
+			var c = '<a href="#" onclick="cancelaudit(this)">Batal</a>';
+			var s = ' | <a href="#" onclick="saveaudit(this)">Simpan</a> ';
+			return s+c;
+		} else {
+			var e = '<a href="#" onclick="editaudit(this)">Set</a>';
+			var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){hapusProgram(&quot;'+row.Nomor+'&quot;)}">Hapus</a> ';
+			return e+d;
+		}
+	}
 	function formatAudit(value,row,index){
 		if (row.editing){
 			var c = '<a href="#" onclick="cancelaudit(this)">Batal</a>';
@@ -593,75 +605,46 @@
 	function editaudit(target){ 
 		$('#dgAuditorProgram').datagrid('beginEdit', getRowIndex(target));
 	}
-	// function resetrow(ptg,desa,buku){ 
-	// 	alert(ptg+desa+buku);
+	function hapusProgram(nomor){ 
 		
-	// 	$.ajax({
-	// 		url			: "<?php echo base_url(); ?>"+"index.php/ts/order_ts/resetPenjadwalan", 
-	// 		type		: "POST", 
-	// 		dataType	: "html",
-	// 		data		: {ptg:ptg,desa:desa,buku:buku},
-	// 		beforeSend	: function(){
-	// 				var win = $.messager.progress({
-	// 						title:'Mohon tunggu',
-	// 						msg:'Dalam proses...'
-	// 					});
-	// 		},
-	// 		success: function(response){
-	// 			$.messager.progress('close'); 
-	// 			alert(response);
-	// 			$('#dgRekapPerBuku').datagrid('reload');
-	// 			$('#dgRekapPerDesa').datagrid('reload');
-				
-	// 		},
-	// 		error: function(){
-	// 			alert('error');
-	// 		}
-	// 	});
-	// }
-	// function deleterow(target){
-	// 	$.messager.confirm('Confirm','Are you sure?',function(r){
-	// 		if (r){
-	// 			$('#dgRekapPerBuku').datagrid('deleteRow', getRowIndex(target));
-	// 		}
-	// 	});
-	// }
+		$.ajax({
+			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusProgramTahunan", 
+			type		: "POST", 
+			dataType	: "html",
+			data		: {nomor:nomor},
+			beforeSend	: function(){
+					var win = $.messager.progress({
+							title:'Mohon tunggu',
+							msg:'Dalam proses...'
+						});
+			},
+			success: function(response){
+				$.messager.progress('close'); 
+				alert(response);
+				$('#dgProgramTahunan').datagrid('reload');
+				$('#dgDetailBagian').datagrid('reload');
+				$('#dgAuditorProgram').datagrid('reload');
+				$('#dgSasaran').datagrid('reload');
+				$('#dgTujuan').datagrid('reload');
+			},
+			error: function(){
+				alert('error');
+			}
+		});
+	}
+	function deleterow(target){
+		$.messager.confirm('Confirm','Are you sure?',function(r){
+			if (r){
+				$('#dgRekapPerBuku').datagrid('deleteRow', getRowIndex(target));
+			}
+		});
+	}
 	function saveaudit(target){
 		$('#dgAuditorProgram').datagrid('endEdit', getRowIndex(target));
 	}
 	function cancelaudit(target){
 		$('#dgAuditorProgram').datagrid('cancelEdit', getRowIndex(target));
 	}
-	// function toomuch(index,val){
-	// 	alert("Tidak boleh lebih besar dari sisa");
-	// 	$('#dgRekapPerBuku').datagrid('updateRow',{
-	// 	index: index,
-	// 	row: {
-	// 		JMLSPK: val,
-	// 		SISA: 0
-	// 	}
-	// 	});
-	// }
-	// function counts(){
-	// 	var rows = $('#dgRekapPerBuku').datagrid('getData');
-	// 	var totOrd=0;
-	// 	var totSpk=0;
-	// 	var totByr=0;
-	// 	var totSis=0;
-	// 	var totSet=0;
-		
-	// 	var len=rows['rows'].length;
-	// 	for(var i=0; i<len ; i++) {
-	// 		totOrd = parseInt(totOrd) + parseInt(rows['rows'][i]['ORDERS']);
-	// 		totSpk = parseInt(totSpk) + parseInt(rows['rows'][i]['SPK']);
-	// 		totByr = parseInt(totByr) + parseInt(rows['rows'][i]['BAYAR']);
-	// 		totSis = parseInt(totSis) + parseInt(rows['rows'][i]['SISA']);
-	// 		totSet = parseInt(totSet) + parseInt(rows['rows'][i]['JMLSPK']);
-	// 	}
-	// 	$('#dgRekapPerBuku').datagrid('reloadFooter',[
-	// 		{"DESA":"TOTAL","NO_BUKU":"","PETUGAS":"","ORDERS":totOrd,"SPK":totSpk,"BAYAR":totByr,"SISA":totSis,"JMLSPK":totSet,"SET":""}
-	// 	]);
-	// }
 	
 	// $(function(){
 	// 	$("#dgOrder").datagrid({
