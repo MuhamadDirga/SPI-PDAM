@@ -466,7 +466,7 @@ $(function(){
 				data		: {nomor:nomor,bag:bag},
 				success: function(response){
 					if(response==1){
-						// $('#dgAuditorProgram').datagrid('reload');
+						$('#dgDetailBagian').datagrid('reload');
 					}else{
 						alert("error ketika menyimpan bagian");
 					}
