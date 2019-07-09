@@ -11,7 +11,7 @@
 					<td width="6%">Jenis : </td>
 					<td width="5%"><input id="cbJenis" class="easyui-combobox" name="cbJenis" data-options="valueField:'Kd_Jenis',textField:'Nama_Jenis',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarJenis");?>'"></input></td>
 					<td width="7%">Nomor : </td>
-					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor"></td>
+					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor" required=""></td>
 				</tr>
 			</table>
 			<div class="easyui-tabs" style="width:100%;">
@@ -19,15 +19,15 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td width="20%">Obyek</td>
-							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:60px"></td>
+							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:60px" required=""></td>
 						</tr>
 						<tr>
 							<td>Ruang Lingkup</td>
-							<td><input class="easyui-textbox"multiline="true" id="ruang_lingkup" style="width:100%;height:60px"></td>
+							<td><input class="easyui-textbox"multiline="true" id="ruang_lingkup" style="width:100%;height:60px" required=""></td>
 						</tr>
 						<tr>
 							<td>Dasar Audit / Monev</td>
-							<td><input class="easyui-textbox"multiline="true" id="dasar" style="width:100%;height:60px"></td>
+							<td><input class="easyui-textbox"multiline="true" id="dasar" style="width:100%;height:60px" required=""></td>
 						</tr>
 					</table>
 					
@@ -39,7 +39,7 @@
      					</tr>
      					<tr>
       						<td align="center">1</td>
-      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtSasaran1"></textarea></td>
+      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtSasaran1" required=""></textarea></td>
       						<td></td>
       					</tr>
 					</table>
@@ -54,7 +54,7 @@
      					</tr>
      					<tr>
       						<td align="center">1</td>
-      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtTujuan1"></textarea></td>
+      						<td><textarea class="easyui-textbox" multiline="true" style="width:100%;height:45px" id="txtTujuan1" required=""></textarea></td>
       						<td></td>
       					</tr>
 					</table>
@@ -106,7 +106,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	">
+				                	" required>
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtPengawas" readonly="true"></td>
@@ -130,7 +130,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	">
+				                	" required>
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtKetua" readonly="true"></td>
@@ -154,7 +154,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	">
+				                	" required>
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota1" readonly="true"></td>
@@ -178,7 +178,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	">
+				                	" required>
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota2" readonly="true"></td>
@@ -202,7 +202,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	">
+				                	" required>
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota3" readonly="true"></td>
@@ -216,7 +216,7 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
-				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="simpanProgramTahunan()">SIMPAN</a>
+				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="validation()">SIMPAN</a>
 				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaBuatProgramTahunan').window('close')">BATAL</a>
 			</div>
 		</div>
@@ -272,7 +272,7 @@ $(function(){
 	$("input:radio[name='select']").change(function(){
         var flag = $(this).val();
         if(flag == 'select'){
-        	$('input:checkbox').prop('checked',true);
+        	$("input:checkbox[name='bagian[]']").prop('checked',true);
         }
         else{
         	$('input:checkbox').removeAttr('checked');
@@ -371,6 +371,21 @@ $(function(){
 	});
 	
 });
+
+	function validation(){
+		var statusForm = false;
+		$('#formTambahSPI').form('submit',{
+			onSubmit:function(){
+				statusForm = $(this).form('enableValidation').form('validate');
+				return false;
+			}
+		});
+		if(statusForm){
+			simpanProgramTahunan();
+		}else{
+			alert("Pastikan semua field isian di isi terlebih dahulu.");
+		}
+	}
 	function simpanProgramTahunan(){
 			var nomor 				= $("#txtNomor").textbox('getValue');
 			var program 			= $("#cbProgram").combobox('getValue');

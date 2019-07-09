@@ -72,7 +72,7 @@
 							<tr>
 						<?php foreach ($dataChk->result() as $value){ ?>
 							<?php $i++; ?>
-								<td><input type="checkbox" id="chkBag<?php echo $value->Kd_Bag; ?>" name="bagian[]" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
+								<td><input type="checkbox" id="chkBag<?php echo $value->Kd_Bag; ?>" name="bagianEdit[]" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
 							<?php if($i == 2) {
 								echo '</tr><tr>';
 								$i = 0;
@@ -438,7 +438,7 @@ $(function(){
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
 			var ketua				= $("#cbKetua").combogrid('getValue');
 			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
-			var all_bagian_id = document.querySelectorAll('input[name="bagian[]"]:checked');
+			var all_bagian_id = document.querySelectorAll('input[name="bagianEdit[]"]:checked');
 			var aIds = [];
 			for(var x = 0, l = all_bagian_id.length; x < l;  x++)
 			{
