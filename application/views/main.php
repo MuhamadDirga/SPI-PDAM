@@ -14,6 +14,9 @@
 	<script type="text/javascript" src="<?php echo base_url("dist/ui/jquery.easyui.min.js"); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url("dist/js/datagrid-groupview.js"); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url("dist/js/jquery.jQueryRotate.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/pdfmake/build/pdfmake.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/pdfmake/build/vfs_fonts.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/ui/src/datagrid-export.js"); ?>"></script>
 	<script>var the_url = "<?php base_url(); ?>";</script>
 </head>
 <body class="easyui-layout">

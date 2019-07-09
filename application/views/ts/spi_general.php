@@ -15,8 +15,6 @@
 					<th data-options="field:'Jenis'" width="7%">Jenis</th>
 					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
 					<th data-options="field:'Tahun'" width="10%">Tahun</th>
-					<th data-options="field:'Tgl_Pembuaan'" width="12%">Tgl Pembuatan</th>
-					<th data-options="field:'Credit'" width="10%">Credit</th>
 					<th data-options="field:'SET'" formatter="formatProgramTahunan" width="7%">Set</th>
 				</tr>
 			</thead>
@@ -24,8 +22,9 @@
 		<table id="dgDetailBagian" style="width:100%;height:35%;" title="Detail Bagian" rownumbers="true" pagination="false" idField="Kd_Bag">
 			<thead>
 				<tr>
-					<th field="Nama_Bag" width="15%">Bagian</th>
+					<th field="Nama_Bag" width="7%">Bagian</th>
 					<th data-options="field:'Detail'" width="7%">Detail</th>
+					<!-- <th data-options="field:'SET'" formatter="formatAudit" field="productid" width="7%">Set</th> -->
 				</tr>
 			</thead>
 		</table>
@@ -36,6 +35,7 @@
 					<th data-options="field:'Nama'" editor="{type:'combobox',id:'petugasSPK',options:{url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',valueField:'NIP',textField:'Nama'}}" width="20%">Nama Lengkap</th>
 					<th data-options="field:'Jabatan'" width="7%">Jabatan</th>
 					<th data-options="field:'Index_Karyawan'" align="right"  width="10%">Index</th>
+					<th data-options="field:'SET'" formatter="formatAudit" field="productid" width="7%">Set</th>
 				</tr>
 			</thead>
 		</table>
@@ -103,6 +103,7 @@
 					</div>
 					<div data-options="region:'center'" style="padding:4px;">
 						<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahProgThn()">Tambah Program Tahunan</a>
+						<a href="#" class="easyui-linkbutton" onclick="CetakPKPT()"><i class="fa fa-print"></i> Cetak PKPT</a>
 					</div>
 				</div>
 		</div>
@@ -112,15 +113,31 @@
 		<input type="hidden" id="ptg" value=""/> 
 		<input type="hidden" id="fieldPB" value=""/> 
 	    <div id="jendelaBuatProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
-	    <div id="jendelaUbahProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	function formatProgramTahunan(value,row,index){
-		var e = '<a href="#" onclick="ubahProgThn()">Set</a>';
-		var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){hapusProgram(&quot;'+row.Nomor+'&quot;)}">Hapus</a> ';
-		return e+d;
+		if (row.editing){
+			var c = '<a href="#" onclick="cancelaudit(this)">Batal</a>';
+			var s = ' | <a href="#" onclick="saveaudit(this)">Simpan</a> ';
+			return s+c;
+		} else {
+			//var e = '<a href="#" onclick="editaudit(this)">Set</a>';
+			var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){hapusProgram(&quot;'+row.Nomor+'&quot;)}">Hapus</a> ';
+			return d;
+		}
+	}
+	function formatAudit(value,row,index){
+		if (row.editing){
+			var c = '<a href="#" onclick="cancelaudit(this)">Batal</a>';
+			var s = ' | <a href="#" onclick="saveaudit(this)">Simpan</a> ';
+			return s+c;
+		} else {
+			var e = '<a href="#" onclick="editaudit(this)">Set</a>';
+			var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){resetrow(&quot;'+row.PETUGAS+'&quot;,&quot;'+row.DESA+'&quot;,&quot;'+row.NO_BUKU+'&quot;)}">Hapus</a> ';
+			return e+d;
+		}
 	}
 </script>
 <script>
@@ -147,9 +164,7 @@
 					top: e.pageY
 				});
 			},
-			onDblClickCell: function(index,field,value){
-				ubahProgThn();
-			},
+			
 			onClickCell:function(index,field,val){
 				$('#col').val(field);
 				//alert(index+field+val);
@@ -696,6 +711,23 @@
 		});
 	}
 	
+	function CetakPKPT(){
+		var body = $('#dgProgramTahunan').datagrid('toArray');
+		console.log(body);
+		var docDefinition = {
+    	content: [{
+        table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: [
+            ['Nomor', 'Obyek', 'Ruang Lingkup', 'Dasar Audit/Monev', 'Program', 'Jenis', 'Nomor Tugas', 'Tahun', 'Set']
+            ]
+        }
+    		}]
+		};
+		pdfMake.createPdf(docDefinition).download();
+	}
+
 	function tambahProgThn(){
 		var target = "#jendelaBuatProgramTahunan";
 		$.ajax({
@@ -715,27 +747,34 @@
 			},
 		});
 	}
-
-	function ubahProgThn(){
-		var target = "#jendelaUbahProgramTahunan";
-		var nompk = $('#row').val();
-		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/formUbahProgram", 
-			type		: "POST", 
-			dataType	: "html",
-			data 		: {nomor:nompk},
-			beforeSend	: function(){
-				$(target).html('Loading . . . ');
-			},
-			success: function(response){
-				$(target).html(response);
-				$.parser.parse(target);
-				$(target).window('open');
-			},
-			error: function(){
-				alert('error');
-			},
-		});
-	}
+	
+	// function simpanPenjadwalan(){
+	// 	var datebox = $('#datebox').datebox('getValue');
+	// 	//alert(datebox);
+	// 	var rows = $('#dgRekapPerBuku').datagrid('getData');
+	// 	var target = "#jendelaBuatSPK";
+	// 	$.ajax({
+	// 		url			: "<?php echo base_url(); ?>"+"index.php/ts/order_ts/simpanPenjadwalan", 
+	// 		type		: "POST", 
+	// 		dataType	: "html",
+	// 		data		: {selected:rows,datebox:datebox},
+	// 		beforeSend	: function(){
+	// 				var win = $.messager.progress({
+	// 						title:'Mohon tunggu',
+	// 						msg:'Menyimpan SPK'
+	// 					});
+	// 		},
+	// 		success: function(response){
+	// 			$.messager.progress('close'); 
+	// 			alert(response);
+	// 			$('#dgRekapPerBuku').datagrid('reload');
+	// 			$('#dgRekapPerDesa').datagrid('reload');
+				
+	// 		},
+	// 		error: function(){
+	// 			alert('error');
+	// 		},
+	// 	});
+	// }
 	
 </script>
