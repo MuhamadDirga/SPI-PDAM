@@ -376,7 +376,7 @@ $(function(){
 	}
 
 	$('#addTujuan').click(function(){
-	  	tabelTujuan();
+	  	tambahTujuan();
 	});
 
 	function tambahTujuan(){
@@ -448,15 +448,10 @@ $(function(){
 			for (var i = 1; i < (totalSasaran+1); i++) {
 				sasaran.push($("#txtSasaran"+i).val());
 			}
-			console.log(pengawas);
-			console.log(ketua);
-			console.log(anggota);
-			console.log(aIds);
-			console.log(sasaran);
-			// var tujuan = [];
-			// for (var i = 1; i < (totalTujuan+1); i++) {
-			// 	tujuan.push($("#txtTujuan"+i).val());
-			// }
+			var tujuan = [];
+			for (var i = 1; i < (totalTujuan+1); i++) {
+				tujuan.push($("#txtTujuan"+i).val());
+			}
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ubahProgram", 
@@ -509,6 +504,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {pkpt:pkpt,nomor:nomor,jab:jab},
+				async		: false,
 				success: function(response){
 					if(response==1){
 						$('#dgAuditorProgram').datagrid('reload');
@@ -529,6 +525,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor},
+				async		: false,
 				success: function(response){
 					
 				},
@@ -545,6 +542,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor,bag:bag},
+				async		: false,
 				success: function(response){
 					if(response==1){
 						$('#dgDetailBagian').datagrid('reload');
@@ -565,6 +563,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor},
+				async		: false,
 				success: function(response){
 					
 				},
@@ -581,6 +580,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor,urut:urut,isi:isi},
+				async		: false,
 				success: function(response){
 					if(response==1){
 						$('#dgSasaran').datagrid('reload');
@@ -601,6 +601,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor},
+				async		: false,
 				success: function(response){
 					
 				},
@@ -617,6 +618,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor,urut:urut,isi:isi},
+				async		: false,
 				success: function(response){
 					if(response==1){
 						$('#dgTujuan').datagrid('reload');
@@ -637,6 +639,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {nomor:nomor},
+				async		: false,
 				success: function(response){
 					
 				},
