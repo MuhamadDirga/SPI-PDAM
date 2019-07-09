@@ -12,5 +12,9 @@ class Md_detail_bagian extends CI_Model {
 		$this->db->order_by("b.Kd_Bag",'asc');
 		return $this->db->get();
     }
+    function hapusDetailBagian($nomor){
+		$this->db->where('Nomor', $nomor);
+		$this->db->delete('Detail_Bagian');
+    }
 }
 ?>

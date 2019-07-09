@@ -14,5 +14,19 @@ class Md_auditor_tahunan extends CI_Model {
 		$this->db->order_by("j.Kd_Jab",'asc');
 		return $this->db->get();
     }
+    function ambilAuditorByNomor($nomor){
+		$this->db->select("a.No_PKPT,a.NIP,CONVERT(varchar,k.Nama_Karyawan,255) Nama,j.Kd_Jab,k.Index_Karyawan");
+		$this->db->from("Auditor_Program_Tahunan apt");
+		$this->db->join('Auditor a', 'apt.No_PKPT = a.No_PKPT');
+		$this->db->join('Karyawan k', 'a.NIP = k.NIP');
+		$this->db->join('Jab j', 'apt.Kd_Jab = j.Kd_Jab');
+		$this->db->where('apt.Nomor', $nomor);
+		$this->db->order_by("j.Kd_Jab",'asc');
+		return $this->db->get();
+    }
+    function hapusAuditorTahunan($nomor){
+		$this->db->where('Nomor', $nomor);
+		$this->db->delete('Auditor_Program_Tahunan');
+    }
 }
 ?>

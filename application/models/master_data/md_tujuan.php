@@ -20,5 +20,17 @@ class Md_tujuan extends CI_Model {
         }
         return $hasil;
     }
+    function ambilTujuanBy($Nomor){
+		$this->db->select("t.Nomor,t.Urut_Tujuan,t.Isi_Tujuan");
+		$this->db->from("Tujuan t");
+		$this->db->join('Program_Tahunan pt', 'pt.Nomor = t.Nomor');
+		$this->db->where('pt.Nomor', $Nomor);
+		$this->db->order_by('t.Urut_Tujuan', 'asc');
+		return $this->db->get();
+    }
+    function hapusTujuan($nomor){
+		$this->db->where('Nomor', $nomor);
+		$this->db->delete('Tujuan');
+    }
 }
 ?>

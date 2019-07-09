@@ -20,7 +20,7 @@ class Md_SPITS extends CI_Model {
         $this->limit = $rows;
         $this->offset = $offset;
 		
-		$this->db->select("pt.Nomor,pt.Obyek,pt.Ruang_Lingkup,pt.Kd_Jenis,j.Nama_Jenis Jenis,pt.Waktu,pt.Tgl_Mulai,pt.Tgl_LHA,pt.Kd_Program,p.Nama_Program Program,pt.No_Tugas,pt.Dasar,pt.Periode_Audit,pt.Tgl_Selesai,pt.Tgl_Audit_Meeting,pt.Tgl_Ke_Direksi,pt.Tgl_Dari_Direksi,pt.Disposisi_Direksi,pt.Kd_Tahun,t.Tahun
+		$this->db->select("pt.Nomor,pt.Obyek,pt.Ruang_Lingkup,pt.Kd_Jenis,j.Nama_Jenis Jenis,pt.Waktu,pt.Tgl_Mulai,pt.Tgl_LHA,pt.Kd_Program,p.Nama_Program Program,pt.No_Tugas,pt.Dasar,pt.Periode_Audit,pt.Tgl_Selesai,pt.Tgl_Audit_Meeting,pt.Tgl_Ke_Direksi,pt.Tgl_Dari_Direksi,pt.Disposisi_Direksi,pt.Kd_Tahun,t.Tahun,pt.Tgl_Pembuaan,pt.Credit
 		");
 		$this->db->from("Program_Tahunan pt");
 		$this->db->join("Tahun t","pt.Kd_Tahun = t.Kd_Tahun");
@@ -39,8 +39,15 @@ class Md_SPITS extends CI_Model {
         return $hasil;
 
     }
+
+    function ambilProgramBy($nomor){
+		$this->db->select("Obyek,Ruang_Lingkup,Dasar");
+		$this->db->from("Program_Tahunan");
+		$this->db->where('Nomor', $nomor);
+		return $this->db->get();
+    }
 	
-	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar){
+	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar,$credit){
 		$data = array(
         	'Nomor' => $nomor,
         	'Kd_Tahun' => $tahun,
@@ -49,10 +56,21 @@ class Md_SPITS extends CI_Model {
         	'Obyek' => $obyek,
         	'Ruang_Lingkup' => $ruang,
         	'Dasar' => $dasar,
-        	'Status' => '1'
+        	'Status' => '1',
+        	'Credit' => $credit
 		);
 
 		$this->db->insert('Program_Tahunan', $data);
+	}
+
+	function ubahProgTahunan($nomor,$obyek,$ruang,$dasar){
+		$data = array(
+        	'Obyek' => $obyek,
+        	'Ruang_Lingkup' => $ruang,
+        	'Dasar' => $dasar
+		);
+		$this->db->where('Nomor', $nomor);
+		$this->db->update('Program_Tahunan', $data);
 	}
 
 	function simpanAuditorProgram($nopkpt,$nomor,$jab){

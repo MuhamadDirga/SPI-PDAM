@@ -20,5 +20,17 @@ class Md_sasaran extends CI_Model {
         }
         return $hasil;
     }
+    function ambilSasaranBy($Nomor){
+		$this->db->select("s.Nomor,s.Urut_Sasaran,s.Isi_Sasaran");
+		$this->db->from("Sasaran s");
+		$this->db->join('Program_Tahunan pt', 'pt.Nomor = s.Nomor');
+		$this->db->where('pt.Nomor', $Nomor);
+		$this->db->order_by('s.Urut_Sasaran', 'asc');
+		return $this->db->get();
+    }
+    function hapusSasaran($nomor){
+		$this->db->where('Nomor', $nomor);
+		$this->db->delete('Sasaran');
+    }
 }
 ?>

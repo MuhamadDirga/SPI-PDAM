@@ -110,9 +110,39 @@ function __construct(){
 		$query = $this->md_auditor->ambilAuditorBy($pkpt);
 		echo json_encode($query->result());
 	}
+	public function ambilProgramBy(){
+		$nomor = $_POST['nomor'];
+		$query = $this->md_SPITS->ambilProgramBy($nomor);
+		echo json_encode($query->result());
+	}
+	public function ambilBagianBy(){
+		$nomor = $_POST['nomor'];
+		$query = $this->md_detail_bagian->ambilBagian($nomor);
+		echo json_encode($query->result());
+	}
 	
 	public function formTambahProgram(){
 		$view = $this->load->view('ts/formTambahSPI',null,true);
+		echo $view;
+	}
+	public function ambilAuditorByNomor(){
+		$nomor = $_POST['nomor'];
+		$query = $this->md_auditor_tahunan->ambilAuditorByNomor($nomor);
+		echo json_encode($query->result());
+	}
+	public function ambilSasaranBy(){
+		$nomor = $_POST['nomor'];
+		$query = $this->md_sasaran->ambilSasaranBy($nomor);
+		echo json_encode($query->result());
+	}
+	public function ambilTujuanBy(){
+		$nomor = $_POST['nomor'];
+		$query = $this->md_tujuan->ambilTujuanBy($nomor);
+		echo json_encode($query->result());
+	}
+	public function formUbahProgram(){
+		$data['nomor'] = $_POST['nomor'];
+		$view = $this->load->view('ts/formUbahSPI',$data,true);
 		echo $view;
 	}
 
@@ -138,7 +168,8 @@ function __construct(){
 			$obyek = $_POST['obyek'];
 			$ruang = $_POST['ruang'];
 			$dasar = $_POST['dasar'];
-			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar);
+			$credit = $_POST['credit'];
+			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar,$credit);
 			
 			echo '1';
 		}else{
@@ -160,6 +191,19 @@ function __construct(){
 		}
 	}
 
+	public function hapusAuditorProgram(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$this->md_auditor_tahunan->hapusAuditorTahunan($nomor);
+			
+			echo 'Data Berhasil Dihapus';
+		}else{
+			echo "Data tidak valid.";
+		}
+		
+	}
+
 	public function tambahBagianProgram(){
 		
 		if($_POST){
@@ -171,6 +215,19 @@ function __construct(){
 		}else{
 			echo "Data tidak valid.";
 		}
+	}
+
+	public function hapusDetailBagian(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$this->md_detail_bagian->hapusDetailBagian($nomor);
+			
+			echo 'Data Berhasil Dihapus';
+		}else{
+			echo "Data tidak valid.";
+		}
+		
 	}
 
 	public function tambahSasaranProgram(){
@@ -187,6 +244,19 @@ function __construct(){
 		}
 	}
 
+	public function hapusSasaran(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$this->md_sasaran->hapusSasaran($nomor);
+			
+			echo 'Data Berhasil Dihapus';
+		}else{
+			echo "Data tidak valid.";
+		}
+		
+	}
+
 	public function tambahTujuanProgram(){
 		
 		if($_POST){
@@ -201,12 +271,27 @@ function __construct(){
 		}
 	}
 
-	public function ubahJenis(){
+	public function hapusTujuan(){
 		
 		if($_POST){
-			$kd = $_POST['kd'];
-			$nama = $_POST['nama'];
-			$this->md_jenis->ubahJenis($kd,$nama);
+			$nomor = $_POST['nomor'];
+			$this->md_tujuan->hapusTujuan($nomor);
+			
+			echo 'Data Berhasil Dihapus';
+		}else{
+			echo "Data tidak valid.";
+		}
+		
+	}
+
+	public function ubahProgram(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$obyek = $_POST['obyek'];
+			$ruang = $_POST['ruang'];
+			$dasar = $_POST['dasar'];
+			$this->md_SPITS->ubahProgTahunan($nomor,$obyek,$ruang,$dasar);
 			
 			echo 'Data Berhasil Diubah';
 		}else{

@@ -1,17 +1,11 @@
 <div class="easyui-layout" style="width:100%; min-height:100%; margin-bottom:5px;">
-	<form id="formTambahSPI" class="easyui-form" method="post" data-options="">
+	<form id="formUbahSPI" class="easyui-form" method="post" data-options="">
 		<input type="hidden" id="credit" value="<?php echo $this->session->userdata('nama_lengkap');?>"/>
 		<div data-options="region:'north'" style="padding:4px;height:590px">
 			<table width="100%" border="0" style="margin:10px">
 				<tr>
-					<td width="7%">Tahun : </td>
-					<td width="5%"><input style="width: 80px" id="cbTahun" class="easyui-combobox" name="cbTahun" data-options="valueField:'Kd_Tahun',textField:'Tahun',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarTahun");?>'"></input></td>
-					<td width="7%">Program : </td>
-					<td width="5%"><input id="cbProgram" class="easyui-combobox" name="cbProgram" data-options="valueField:'Kd_Program',textField:'Nama_Program',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarProgram");?>'"></input></td>
-					<td width="6%">Jenis : </td>
-					<td width="5%"><input id="cbJenis" class="easyui-combobox" name="cbJenis" data-options="valueField:'Kd_Jenis',textField:'Nama_Jenis',url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarJenis");?>'"></input></td>
 					<td width="7%">Nomor : </td>
-					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor"></td>
+					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor" value="<?php echo $nomor; ?>" readonly></td>
 				</tr>
 			</table>
 			<div class="easyui-tabs" style="width:100%;">
@@ -78,7 +72,7 @@
 							<tr>
 						<?php foreach ($dataChk->result() as $value){ ?>
 							<?php $i++; ?>
-								<td><input type="checkbox" id="chkBag" name="bagian[]" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
+								<td><input type="checkbox" id="chkBag<?php echo $value->Kd_Bag; ?>" name="bagian[]" value="<?php echo $value->Kd_Bag; ?>"><?php echo $value->Nama_Bag;?></td>
 							<?php if($i == 2) {
 								echo '</tr><tr>';
 								$i = 0;
@@ -216,8 +210,8 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
-				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="simpanProgramTahunan()">SIMPAN</a>
-				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaBuatProgramTahunan').window('close')">BATAL</a>
+				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="ubahProgramTahunan()">UBAH</a>
+				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaUbahProgramTahunan').window('close')">BATAL</a>
 			</div>
 		</div>
 	</form>
@@ -227,47 +221,82 @@
 var totalSasaran = 1;
 var totalTujuan = 1;
 $(function(){
+	var no = $("#txtNomor").val();
 	var brSasaran = 1;
 	var brTujuan = 1;
-	$('#txtNomor').textbox({
-	    editable:false,
-	    icons:[{
-	    	iconCls:'icon-ok',
-	        handler:function(){
-	        	var nomor = "";
-	        	nomor += $("#cbTahun").combobox('getText');
-	        	if ($("#cbJenis").combobox('getText') == 'A-MDR'){
-    				nomor += '/01/';
-    			}else{
-    				nomor += '/00/';
-    			}
-    			if ($("#cbProgram").combobox('getText') == 'PKPT') {
-    				nomor += '_'
-    			}
-    			nomor += $("#cbProgram").combobox('getText');
-    			nomor += '/';
-    			nomor += $("#cbJenis").combobox('getText');
-    			nomor += '/';
-    			$.ajax({
-					url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/genNo", 
-					type		: "POST", 
-					dataType	: "json",
-					data		: {nomor:nomor},
-					success: function(response){
-						if (!$.trim(response)){
-							nomor += '01';
-							$("#txtNomor").textbox('setValue',nomor);
-						}else{
-							var last = response[0].Nomor.substr(response[0].Nomor.length - 2);
-							last++;
-							var number = ("0" + last).slice(-2);
-							nomor += number;
-							$("#txtNomor").textbox('setValue',nomor);
-						}
-					},
-				});
-	        }
-	    }]
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilProgramBy", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			$("#obyek").textbox('setValue',response[0].Obyek);
+			$("#ruang_lingkup").textbox('setValue',response[0].Ruang_Lingkup);
+			$("#dasar").textbox('setValue',response[0].Dasar);
+		},
+		error: function(){
+			
+		},
+	});
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilBagianBy", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			if (!$.trim(response)){
+				
+			}else{
+				for (var i = 0; i < response.length; i++) {
+					$('#chkBag'+response[i].Kd_Bag).prop('checked', true);
+				}
+			}
+		},
+		error: function(){
+			
+		},
+	});
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilSasaranBy", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			for (var i = 0; i < response.length-1; i++) {
+				tambahSasaran();
+			}
+			for (var i = 0; i < response.length; i++) {
+				if (i == 0) {
+					$("#txtSasaran"+response[i].Urut_Sasaran).textbox('setValue',response[i].Isi_Sasaran);
+				}else{
+					$("#txtSasaran"+response[i].Urut_Sasaran).val(response[i].Isi_Sasaran);
+				}
+			}
+		},
+		error: function(){
+			
+		},
+	});
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilTujuanBy", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			for (var i = 0; i < response.length-1; i++) {
+				tambahTujuan();
+			}
+			for (var i = 0; i < response.length; i++) {
+				if (i == 0) {
+					$("#txtTujuan"+response[i].Urut_Tujuan).textbox('setValue',response[i].Isi_Tujuan);
+				}else{
+					$("#txtTujuan"+response[i].Urut_Tujuan).val(response[i].Isi_Tujuan);
+				}
+			}
+		},
+		error: function(){
+			
+		},
 	});
 	$("input:radio[name='select']").change(function(){
         var flag = $(this).val();
@@ -308,9 +337,35 @@ $(function(){
 			$('#nipAnggota3').html(row.NIP);
 		}
 	});
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilAuditorByNomor", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			var a = 1;
+			for (var i = 0; i < response.length; i++) {
+				if (response[i].Kd_Jab == 1) {
+					$('#cbPengawas').combogrid('setValue', response[i].No_PKPT);
+				}else if (response[i].Kd_Jab == 2) {
+					$('#cbKetua').combogrid('setValue', response[i].No_PKPT);
+				}else {
+					$('#cbAnggota'+a).combogrid('setValue', response[i].No_PKPT);
+					a++;
+				}
+			}
+		},
+		error: function(){
+			
+		},
+	});
 
 	$('#addSasaran').click(function(){
-	  	brSasaran++;
+	  	tambahSasaran();
+	});
+
+	function tambahSasaran(){
+		brSasaran++;
 	  	var html_code = "<tr id='row"+brSasaran+"'>";
 	   	html_code += "<td align='center'>"+brSasaran+"</td>";
 	   	html_code += "<td><textarea class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='txtSasaran"+brSasaran+"'></textarea></td>";
@@ -318,10 +373,14 @@ $(function(){
 	   	html_code += "</tr>";
 	   	$('#tabelSasaran').append(html_code);  
 	   	totalSasaran = brSasaran;
-	});
+	}
 
 	$('#addTujuan').click(function(){
-	  	brTujuan++;
+	  	tabelTujuan();
+	});
+
+	function tambahTujuan(){
+		brTujuan++;
 	  	var html_code = "<tr id='row"+brTujuan+"'>";
 	   	html_code += "<td align='center'>"+brTujuan+"</td>";
 	   	html_code += "<td><textarea class='easyui-textbox' multiline='true' style='width:100%;height:45px' id='txtTujuan"+brTujuan+"'></textarea></td>";
@@ -329,7 +388,7 @@ $(function(){
 	   	html_code += "</tr>";
 	   	$('#tabelTujuan').append(html_code);  
 	   	totalTujuan = brTujuan;
-	});
+	}
 
 	$(document).on('click', '.removeSasaran', function(){
 	  	var delete_row = $(this).data("row");
@@ -371,15 +430,11 @@ $(function(){
 	});
 	
 });
-	function simpanProgramTahunan(){
+	function ubahProgramTahunan(){
 			var nomor 				= $("#txtNomor").textbox('getValue');
-			var program 			= $("#cbProgram").combobox('getValue');
-			var jenis 				= $("#cbJenis").combobox('getValue');
-			var tahun 				= $("#cbTahun").combobox('getValue');
 			var obyek 				= $("#obyek").textbox('getValue');
 			var ruang 				= $("#ruang_lingkup").textbox('getValue');
 			var dasar 				= $("#dasar").textbox('getValue');
-			var credit 				= $("#credit").val();
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
 			var ketua				= $("#cbKetua").combogrid('getValue');
 			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
@@ -393,16 +448,21 @@ $(function(){
 			for (var i = 1; i < (totalSasaran+1); i++) {
 				sasaran.push($("#txtSasaran"+i).val());
 			}
-			var tujuan = [];
-			for (var i = 1; i < (totalTujuan+1); i++) {
-				tujuan.push($("#txtTujuan"+i).val());
-			}
+			console.log(pengawas);
+			console.log(ketua);
+			console.log(anggota);
+			console.log(aIds);
+			console.log(sasaran);
+			// var tujuan = [];
+			// for (var i = 1; i < (totalTujuan+1); i++) {
+			// 	tujuan.push($("#txtTujuan"+i).val());
+			// }
 			
 			$.ajax({
-				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ubahProgram", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,dasar:dasar,credit:credit},
+				data		: {nomor:nomor,obyek:obyek,ruang:ruang,dasar:dasar},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',
@@ -410,21 +470,25 @@ $(function(){
 					});
 				},
 				success: function(response){
-					if(response==1){
+					if(response=='Data Berhasil Diubah'){
 						$('#dgProgramTahunan').datagrid('reload');
 						$.messager.progress('close'); 
-						$('#jendelaBuatProgramTahunan').window('close');
+						$('#jendelaUbahProgramTahunan').window('close');
+						hapusSemuaAuditor(nomor);
 						simpanAuditorProgramTahunan(pengawas,nomor,1);
 						simpanAuditorProgramTahunan(ketua,nomor,2);
 						for (var i = 0; i < anggota.length; i++) {
 							simpanAuditorProgramTahunan(anggota[i],nomor,3);
 						}
+						hapusSemuaBagian(nomor);
 						for (var i = 0; i < aIds.length; i++) {
 							simpanBagianProgramTahunan(nomor,aIds[i]);
 						}
+						hapusSemuaSasaran(nomor);
 						for (var i = 0; i < sasaran.length; i++) {
 							simpanSasaranProgramTahunan(nomor,i+1,sasaran[i]);
 						}
+						hapusSemuaTujuan(nomor);
 						for (var i = 0; i < tujuan.length; i++) {
 							simpanTujuanProgramTahunan(nomor,i+1,tujuan[i]);
 						}
@@ -458,6 +522,22 @@ $(function(){
 			});
 	}
 
+	function hapusSemuaAuditor(nomor){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusAuditorProgram", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor},
+				success: function(response){
+					
+				},
+				error: function(){
+					alert('gagal update auditor');
+				},
+			});
+	}
+
 	function simpanBagianProgramTahunan(nomor,bag){
 			
 			$.ajax({
@@ -474,6 +554,22 @@ $(function(){
 				},
 				error: function(){
 					alert('gagal menyimpan bagian');
+				},
+			});
+	}
+
+	function hapusSemuaBagian(nomor){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusDetailBagian", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor},
+				success: function(response){
+					
+				},
+				error: function(){
+					alert('gagal update bagian');
 				},
 			});
 	}
@@ -498,6 +594,22 @@ $(function(){
 			});
 	}
 
+	function hapusSemuaSasaran(nomor){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusSasaran", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor},
+				success: function(response){
+					
+				},
+				error: function(){
+					alert('gagal update sasaran');
+				},
+			});
+	}
+
 	function simpanTujuanProgramTahunan(nomor,urut,isi){
 			
 			$.ajax({
@@ -514,6 +626,22 @@ $(function(){
 				},
 				error: function(){
 					alert('gagal menyimpan tujuan');
+				},
+			});
+	}
+
+	function hapusSemuaTujuan(nomor){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusTujuan", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor},
+				success: function(response){
+					
+				},
+				error: function(){
+					alert('gagal update tujuan');
 				},
 			});
 	}
