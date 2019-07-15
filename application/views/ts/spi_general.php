@@ -8,13 +8,17 @@
 			<thead>
 				<tr>
 					<th data-options="field:'Nomor'" width="15%">Nomor</th>
+					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
 					<th data-options="field:'Obyek'" width="15%">Obyek</th>
 					<th data-options="field:'Ruang_Lingkup'" width="20%">Ruang Lingkup</th>
 					<th data-options="field:'Dasar'" width="12%">Dasar Audit/Monev</th>
 					<th data-options="field:'Program'" width="7%">Program</th>
 					<th data-options="field:'Jenis'" width="7%">Jenis</th>
-					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
 					<th data-options="field:'Tahun'" width="10%">Tahun</th>
+					<th data-options="field:'Mulai'" formatter="formatTanggalMulai" width="9%">Tanggal Mulai</th>
+					<th data-options="field:'Selesai'" formatter="formatTanggalSelesai" width="9%">Tgl Selesai</th>
+					<th data-options="field:'Periode_Audit'" width="15%">Periode Audit</th>
+					<th data-options="field:'Waktu'" width="5%">Waktu</th>
 					<th data-options="field:'Tgl_Pembuaan'" width="12%">Tgl Pembuatan</th>
 					<th data-options="field:'Credit'" width="10%">Credit</th>
 					<th data-options="field:'SET'" formatter="formatProgramTahunan" width="7%">Set</th>
@@ -121,6 +125,20 @@
 		var e = '<a href="#" onclick="ubahProgThn()">Set</a>';
 		var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){hapusProgram(&quot;'+row.Nomor+'&quot;)}">Hapus</a> ';
 		return e+d;
+	}
+</script>
+<script type="text/javascript">
+	function formatTanggalMulai(value,row,index){
+		var s = row.Tgl_Mulai;
+		s = formatTanggal(String(s));
+		return s;
+	}
+</script>
+<script type="text/javascript">
+	function formatTanggalSelesai(value,row,index){
+		var s = row.Tgl_Selesai;
+		s = formatTanggal(String(s));
+		return s;
 	}
 </script>
 <script>
@@ -484,99 +502,6 @@
 		
 	});
 	
-	// $(function(){
-	// 	$("#dgRekapPerBuku").datagrid({
-	// 		singleSelect:true,
-	// 		checkOnSelect:false,
-	// 		collapsible:true,
-	// 		pageSize:20,
-	// 		pageList:pList,
-	// 		toolbar:'#tbSPI',
-	// 		footer:'#ftSPI',
-	// 		url:'<?php echo base_url("index.php/ts/order_ts/rekapPerBukuOrderTS");?>',
-	// 		method:'post',
-	// 		onDblClickCell: function(index,field,value){
-	// 			$(this).datagrid('beginEdit', index);
-	// 			var ed = $(this).datagrid('getEditor', {index:index,field:field});
-	// 			$(ed.target).focus();
-	// 		},
-	// 		onRowContextMenu : function(e,field){
-	// 			//e.preventDefault();
-	// 			$('#mmUser').menu('show', {
-	// 				left: e.pageX,
-	// 				top: e.pageY
-	// 			});
-	// 		},
-	// 		onClickCell:function(index,field,val){
-	// 			$('#fieldPB').val(field);
-	// 			// alert(index+field+val);
-	// 		},
-	// 		onClickRow:function(index,row){
-	// 			$('#des').val(row.DESA);
-	// 			$('#buk').val(row.NO_BUKU);
-	// 			$('#ptg').val(row.PETUGAS);
-	// 			// alert(row.PETUGAS);
-	// 			showNosal();
-	// 		},
-			
-	// 		onBeforeEdit:function(index,row){
-	// 			row.editing = true;
-	// 			updateActions(index);
-	// 		},
-			
-	// 		onBeginEdit:function(index,row){
-	// 			var editors = $('#dgRekapPerBuku').datagrid('getEditors', index);
-	// 			var n1 = $(editors[0].target);
-	// 			var n2 = $(editors[1].target);
-	// 			var n3 = $(editors[2].target);
-	// 			n3.numberbox({
-	// 				onChange:function(){
-	// 					var cost = row.ORDERS - row.SPK - row.BAYAR - n3.numberbox('getValue');
-	// 					n2.numberbox('setValue',cost);
-	// 				}
-	// 			})
-	// 		},
-	// 		onAfterEdit:function(index,row){
-	// 			row.editing = false;
-	// 			updateActions(index);
-	// 		},
-	// 		onCancelEdit:function(index,row){
-	// 			row.editing = false;
-	// 			updateActions(index);
-	// 		},
-	// 		onEndEdit:function(index,row){
-	// 			if (row.JMLSPK > (row.ORDERS - row.SPK - row.BAYAR)) {
-	// 				toomuch(index,(row.ORDERS - row.SPK - row.BAYAR));
-	// 			}
-	// 			counts();
-	// 		},
-	// 		showFooter:true
-
-			
-	// 	});
-	// 	$.extend($.fn.datagrid.defaults.editors, { 
-	// 		numberspinner: {
-	// 			init: function(container, options){
-	// 				var input = $('<input type="text">').appendTo(container);
-	// 				return input.numberspinner(options);
-	// 			},
-	// 			destroy: function(target){
-	// 				$(target).numberspinner('destroy');
-	// 			},
-	// 			getValue: function(target){
-	// 				return $(target).numberspinner('getValue');
-	// 			},
-	// 			setValue: function(target, value){
-	// 				$(target).numberspinner('setValue',value);
-	// 			},
-	// 			resize: function(target, width){
-	// 				$(target).numberspinner('resize',width);
-	// 			}
-	// 		}
-	// 	});
-		
-	// });
-	
 	function updateAudit(index){
 		$('#dgAuditorProgram').datagrid('updateRow',{
 			index:index,
@@ -631,34 +556,16 @@
 		$('#dgAuditorProgram').datagrid('cancelEdit', getRowIndex(target));
 	}
 	
-	// $(function(){
-	// 	$("#dgOrder").datagrid({
-	// 		singleSelect:false,
-	// 		checkOnSelect:false,
-	// 		collapsible:true,
-	// 		pageSize:20,
-	// 		pageList:pList,
-	// 		toolbar:'#tbOrder',
-	// 		footer:'#ftOrder',
-	// 		url:'<?php echo base_url("index.php/ts/order_ts/daftarOrderTS");?>',
-	// 		method:'post',
-	// 		onRowContextMenu : function(e,field){
-	// 			//e.preventDefault();
-	// 			$('#mmUser').menu('show', {
-	// 				left: e.pageX,
-	// 				top: e.pageY
-	// 			});
-	// 		},
-	// 		rowStyler:function(index,row){
-	// 			// if (row.TGL_SPK != ''){
-	// 				// return 'background-color:cyan;color:black;';
-	// 			// }if (index == '9'){
-	// 				// return 'text-align:right';
-	// 			// }
-	// 		}
-	// 	});
-		
-	// });
+	function formatTanggal(tanggal){
+		var bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+		var ss = tanggal.split('-');
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		m -= 1;
+		var bulan = bulan[m];
+		return d+' '+bulan+' '+y;
+	}
 
 	function showBagian(){
 		var row = $('#row').val();

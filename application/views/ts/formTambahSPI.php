@@ -61,6 +61,12 @@
 					<div align="right">
      					<button type="button" id="addTujuan" style="margin-right: 10px">Tambah tujuan</button>
     				</div>
+    				<table width="100%" border="0" cellpadding="2">
+						<tr>
+							<td width="20%">Periode Audit</td>
+							<td><input class="easyui-textbox" id="periode" style="width:40%;" required=""></td>
+						</tr>
+					</table>
 				</div>
 				
 				<div title="BAGIAN" style="padding:10px;" id="bagianTab">
@@ -213,6 +219,20 @@
 						</tr>
 						<?php $anggota=1; ?>
 					</table>
+					<table width="100%" border="0" cellpadding="2">
+						<tr>
+							<td width="10%">Tanggal Mulai</td>
+							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_mulai" required=""></td>
+						</tr>
+						<tr>
+							<td width="10%">Tanggal Selesai</td>
+							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_selesai" required=""></td>
+						</tr>
+						<tr>
+							<td width="10%">Nomor Tugas</td>
+							<td><input style="width: 230px" class="easyui-textbox" id="txtNoTugas" required=""></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
@@ -263,6 +283,39 @@ $(function(){
 							var number = ("0" + last).slice(-2);
 							nomor += number;
 							$("#txtNomor").textbox('setValue',nomor);
+						}
+					},
+				});
+	        }
+	    }]
+	});
+	$('#txtNoTugas').textbox({
+	    editable:false,
+	    icons:[{
+	    	iconCls:'icon-ok',
+	        handler:function(){
+	        	var nomor = "";
+	        	var mulai = $("#tgl_mulai").datebox('getValue');
+	        	var ss = mulai.split('/');
+				var y = parseInt(ss[2],10);
+				var m = parseInt(ss[1],10);
+				m = ("0" + m).slice(-2);
+	        	nomor += 'ST/'+y+'/'+m+'/';
+    			$.ajax({
+					url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/genNoTugas", 
+					type		: "POST", 
+					dataType	: "json",
+					data		: {tugas:nomor},
+					success: function(response){
+						if (!$.trim(response)){
+							nomor += '001';
+							$("#txtNoTugas").textbox('setValue',nomor);
+						}else{
+							var last = response[0].No_Tugas.substr(response[0].No_Tugas.length - 3);
+							last++;
+							var number = ("00" + last).slice(-3);
+							nomor += number;
+							$("#txtNoTugas").textbox('setValue',nomor);
 						}
 					},
 				});
@@ -393,6 +446,10 @@ $(function(){
 			var tahun 				= $("#cbTahun").combobox('getValue');
 			var obyek 				= $("#obyek").textbox('getValue');
 			var ruang 				= $("#ruang_lingkup").textbox('getValue');
+			var periode 			= $("#periode").textbox('getValue');
+			var mulai 				= $("#tgl_mulai").datebox('getValue');
+			var selesai 			= $("#tgl_selesai").datebox('getValue');
+			var tugas 				= $("#txtNoTugas").textbox('getValue');
 			var dasar 				= $("#dasar").textbox('getValue');
 			var credit 				= $("#credit").val();
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
@@ -412,12 +469,20 @@ $(function(){
 			for (var i = 1; i < (totalTujuan+1); i++) {
 				tujuan.push($("#txtTujuan"+i).val());
 			}
+			selesai = ubahTanggal(selesai);
+	        var se = new Date(selesai).getTime();
+	        mulai = ubahTanggal(mulai);
+	        var mu = new Date(mulai).getTime();
+	        var waktu = se - mu;
+	        var dtPerHari = 1000 * 60 * 60 * 24;
+	        var days = waktu / dtPerHari;
+	        days = Math.floor(days);
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,dasar:dasar,credit:credit},
+				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,periode:periode,tugas:tugas,tgl_mulai:mulai,tgl_selesai:selesai,waktu:days,dasar:dasar,credit:credit},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',
@@ -531,5 +596,13 @@ $(function(){
 					alert('gagal menyimpan tujuan');
 				},
 			});
+	}
+
+	function ubahTanggal(tanggal){
+		var ss = tanggal.split('/');
+		var temp = ss[0];
+		ss[0] = ss[1];
+		ss[1] = temp;
+		return ss.join('/');
 	}
 </script>

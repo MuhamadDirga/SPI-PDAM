@@ -158,6 +158,18 @@ function __construct(){
 		}
 	}
 
+	public function genNoTugas(){
+		
+		if($_POST){
+			$tugas = $_POST['tugas'];
+			$hasil = $this->md_SPITS->checkTugas(substr($tugas, 0,11));
+			
+			echo json_encode($hasil->result());
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
 	public function tambahProgramTahunan(){
 		
 		if($_POST){
@@ -167,9 +179,14 @@ function __construct(){
 			$tahun = $_POST['tahun'];
 			$obyek = $_POST['obyek'];
 			$ruang = $_POST['ruang'];
+			$periode = $_POST['periode'];
+			$tugas = $_POST['tugas'];
+			$tgl_mulai = $_POST['tgl_mulai'];
+			$tgl_selesai = $_POST['tgl_selesai'];
+			$waktu = $_POST['waktu'];
 			$dasar = $_POST['dasar'];
 			$credit = $_POST['credit'];
-			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar,$credit);
+			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$periode,$tugas,$tgl_mulai,$tgl_selesai,$waktu,$dasar,$credit);
 			
 			echo '1';
 		}else{
@@ -291,7 +308,8 @@ function __construct(){
 			$obyek = $_POST['obyek'];
 			$ruang = $_POST['ruang'];
 			$dasar = $_POST['dasar'];
-			$this->md_SPITS->ubahProgTahunan($nomor,$obyek,$ruang,$dasar);
+			$periode = $_POST['periode'];
+			$this->md_SPITS->ubahProgTahunan($nomor,$obyek,$ruang,$dasar,$periode);
 			
 			echo 'Data Berhasil Diubah';
 		}else{

@@ -55,6 +55,12 @@
 					<div align="right">
      					<button type="button" id="addTujuan" style="margin-right: 10px">Tambah tujuan</button>
     				</div>
+    				<table width="100%" border="0" cellpadding="2">
+						<tr>
+							<td width="20%">Periode Audit</td>
+							<td><input class="easyui-textbox" id="periode" style="width:40%;"></td>
+						</tr>
+					</table>
 				</div>
 				
 				<div title="BAGIAN" style="padding:10px;" id="bagianTab">
@@ -218,6 +224,7 @@
 </div>
 <div id="piihBPB"></div>
 <script type="text/javascript">
+$("#formUbahSPI").trigger('reset');
 var totalSasaran = 1;
 var totalTujuan = 1;
 $(function(){
@@ -233,6 +240,7 @@ $(function(){
 			$("#obyek").textbox('setValue',response[0].Obyek);
 			$("#ruang_lingkup").textbox('setValue',response[0].Ruang_Lingkup);
 			$("#dasar").textbox('setValue',response[0].Dasar);
+			$("#periode").textbox('setValue',response[0].Periode_Audit);
 		},
 		error: function(){
 			
@@ -435,6 +443,7 @@ $(function(){
 			var obyek 				= $("#obyek").textbox('getValue');
 			var ruang 				= $("#ruang_lingkup").textbox('getValue');
 			var dasar 				= $("#dasar").textbox('getValue');
+			var periode 			= $("#periode").textbox('getValue');
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
 			var ketua				= $("#cbKetua").combogrid('getValue');
 			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
@@ -457,7 +466,7 @@ $(function(){
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ubahProgram", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,obyek:obyek,ruang:ruang,dasar:dasar},
+				data		: {nomor:nomor,obyek:obyek,ruang:ruang,dasar:dasar,periode:periode},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',

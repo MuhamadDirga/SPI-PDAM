@@ -12,7 +12,15 @@ class Md_SPITS extends CI_Model {
 		$this->db->order_by('Nomor', 'desc');
 		$hasil=$this->db->get ('');
         return $hasil;
+    }
 
+    function checkTugas($tugas){
+		$this->db->select("TOP 1 *");
+		$this->db->from("Program_Tahunan");
+		$this->db->where('LEFT(No_Tugas,11)', $tugas);
+		$this->db->order_by('No_Tugas', 'desc');
+		$hasil=$this->db->get ('');
+        return $hasil;
     }
 
 	function ambilDaftarSPITS($page,$rows,$type=null,$tahun=null,$program=null,$jenis=null){
@@ -41,13 +49,13 @@ class Md_SPITS extends CI_Model {
     }
 
     function ambilProgramBy($nomor){
-		$this->db->select("Obyek,Ruang_Lingkup,Dasar");
+		$this->db->select("Obyek,Ruang_Lingkup,Dasar,Periode_Audit");
 		$this->db->from("Program_Tahunan");
 		$this->db->where('Nomor', $nomor);
 		return $this->db->get();
     }
 	
-	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar,$credit){
+	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$periode,$tugas,$tgl_mulai,$tgl_selesai,$waktu,$dasar,$credit){
 		$data = array(
         	'Nomor' => $nomor,
         	'Kd_Tahun' => $tahun,
@@ -55,6 +63,11 @@ class Md_SPITS extends CI_Model {
         	'Kd_Program' => $program,
         	'Obyek' => $obyek,
         	'Ruang_Lingkup' => $ruang,
+        	'Periode_Audit' => $periode,
+        	'No_Tugas' => $tugas,
+        	'Tgl_Mulai' => $tgl_mulai,
+        	'Tgl_Selesai' => $tgl_selesai,
+        	'Waktu' => $waktu,
         	'Dasar' => $dasar,
         	'Status' => '1',
         	'Credit' => $credit
@@ -63,11 +76,12 @@ class Md_SPITS extends CI_Model {
 		$this->db->insert('Program_Tahunan', $data);
 	}
 
-	function ubahProgTahunan($nomor,$obyek,$ruang,$dasar){
+	function ubahProgTahunan($nomor,$obyek,$ruang,$dasar,$periode){
 		$data = array(
         	'Obyek' => $obyek,
         	'Ruang_Lingkup' => $ruang,
-        	'Dasar' => $dasar
+        	'Dasar' => $dasar,
+        	'Periode_Audit' => $periode
 		);
 		$this->db->where('Nomor', $nomor);
 		$this->db->update('Program_Tahunan', $data);
