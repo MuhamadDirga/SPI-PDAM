@@ -49,9 +49,15 @@ class Md_SPITS extends CI_Model {
     }
 
     function ambilProgramBy($nomor){
-		$this->db->select("Obyek,Ruang_Lingkup,Dasar,Periode_Audit");
+		$this->db->select("Obyek,Ruang_Lingkup,Dasar,Periode_Audit,No_Tugas,Tgl_Mulai,Tgl_Selesai,Waktu");
 		$this->db->from("Program_Tahunan");
 		$this->db->where('Nomor', $nomor);
+		return $this->db->get();
+    }
+
+    function daftarNomorTugas(){
+		$this->db->select("Nomor,No_Tugas,Tgl_Mulai,Tgl_Selesai,Waktu,Obyek");
+		$this->db->from("Program_Tahunan");
 		return $this->db->get();
     }
 	
