@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>App Tutup Sementara</title>
+	<title>App Satuan Pengawas Internal</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("dist/ui/themes/default/easyui.css"); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("dist/ui/themes/icon.css"); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("dist/ui/themes/color.css"); ?>">

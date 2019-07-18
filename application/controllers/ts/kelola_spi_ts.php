@@ -30,6 +30,21 @@ function __construct(){
 		echo $view;
 	}
 
+	function viewDaftarCetakPKPT(){
+		$view = $this->load->view('ts/daftarCetakPKPT',null,true);
+		echo $view;
+	}
+
+		function CetakPKPT() {
+		require_once(APPPATH. '/libraries/mpdf/mpdf.php');
+		define('_MPDF_TTFONTPATH', APPPATH. 'libraries/mpdf/font');
+		//echo (APPPATH. 'libraries/mpdf/font');
+		$mpdf = new mpdf('','A4',14,'CTimes',15,15,16,16,9,9,'P');
+		$data = $this->load->view('ts/cetak_PKPT',null, true);
+		$mpdf->WriteHTML($data);
+		$mpdf->Output();
+	}
+
 	public function daftarSPITS(){
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 20;
