@@ -107,6 +107,7 @@
 					</div>
 					<div data-options="region:'center'" style="padding:4px;">
 						<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahProgThn()">Tambah Program Tahunan</a>
+						<a href="#" class="easyui-linkbutton" onclick="daftarCetakPKPT()"><i class="fa fa-print"></i> Cetak PKPT</a>
 					</div>
 				</div>
 		</div>
@@ -114,7 +115,8 @@
 		<input type="hidden" id="des" value=""/>
 		<input type="hidden" id="buk" value=""/> 
 		<input type="hidden" id="ptg" value=""/> 
-		<input type="hidden" id="fieldPB" value=""/> 
+		<input type="hidden" id="fieldPB" value=""/>
+		<div id="jendelaDaftarCetakPKPT" class="easyui-window" title="Cetak PKPT" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:80%; min-height:500px; padding:5px;"> 
 	    <div id="jendelaBuatProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 	    <div id="jendelaUbahProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 		</div>
@@ -623,6 +625,26 @@
 		});
 	}
 
+function daftarCetakPKPT(){
+		var target = "#jendelaDaftarCetakPKPT";
+		$.ajax({
+			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/viewDaftarCetakPKPT", 
+			type		: "POST", 
+			dataType	: "html",
+			beforeSend	: function(){
+				$(target).html('Loading . . . ');
+			},
+			success: function(response){
+				$(target).html(response);
+				$.parser.parse(target);
+				$(target).window('open');
+			},
+			error: function(){
+				alert('error');
+			}
+		});
+	}
+	
 	function ubahProgThn(){
 		var target = "#jendelaUbahProgramTahunan";
 		var nompk = $('#row').val();
