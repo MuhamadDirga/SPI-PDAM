@@ -16,10 +16,10 @@
 		</table>
 		<div id="tbTemua" style="padding:5px;">
 			    <div class="easyui-layout" style="width:100%; height:36px;">
-					<div data-options="region:'east'" style="width:400px; text-align:left; padding:4px;">
+					<div data-options="region:'east'" style="width:430px; text-align:left; padding:4px;">
 						<form id="formFilterTemua">
 						
-						Tahun&nbsp; : &nbsp;&nbsp;	
+						No Tugas&nbsp; : &nbsp;&nbsp;	
 						<input class="easyui-combobox" id="filterTugasTemuan"
 							name="language"
 							data-options="
