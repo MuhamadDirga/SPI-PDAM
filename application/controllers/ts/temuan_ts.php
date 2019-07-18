@@ -67,10 +67,20 @@ function __construct(){
 		echo json_encode($query->result());
 	}
 
-	public function simpanTemuan(){
+	public function hapusTemuan(){
 		if($_POST){
 			$tugas = $_POST['tugas'];
 			$this->md_temuanTS->hapusTemuan($tugas);
+			
+			echo '1';
+		}else{
+			echo "Data tidak valid.";
+		}
+	}
+
+	public function simpanTemuan(){
+		if($_POST){
+			$tugas = $_POST['tugas'];
 			$bag = $_POST['bag'];
 			$isi = $_POST['isi'];
 			$urut = $_POST['urut'];

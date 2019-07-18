@@ -210,7 +210,7 @@ $(function(){
 		$('#formTemuan').form({
 			url:'<?php echo base_url();?>index.php/ts/temuan_ts/uploadLHA',
             success:function(response){
-                $.messager.alert('Info', response, 'info');
+                
             }
         });
 	});
@@ -256,20 +256,26 @@ $(function(){
 		var nomor = $('#nomor').textbox('getValue');
 		var tugas = $('#cbTugas').combobox('getText');
 		var data = $('#dgDaftarTemuan').datagrid('getData');
+		// hapusSemuaTemuan(tugas);
 		$.map(data, function(row) {
 			for (var i = 0; i < row.length; i++) {
-				// console.log(row[i].Isi);
+				console.log(row[i].Isi);
+				// simpanTemuan(tugas,row[i].Kd_Bag,row[i].Isi,row[i].Urut);
 				$.ajax({
 					url			: "<?php echo base_url(); ?>"+"index.php/ts/temuan_ts/simpanTemuan", 
 					type		: "POST", 
 					dataType	: "html",
-					data 		: {nomor:nomor,tugas:tugas,bag:row[i].Kd_Bag,isi:row[i].Isi,urut:row[i].Urut},
+					data 		: {tugas:tugas,bag:row[i].Kd_Bag,isi:row[i].Isi,urut:row[i].Urut},
+					async		: false,
 					success: function(response){
-						
+								
 					},
 				});
 			}
 		});
+		$('#dgTemua').datagrid('reload');
+		$.messager.progress('close'); 
+		$('#jendelaTemuan').window('close');
 	}
 	function validasi(){
 		var nomor = $('#nomor').textbox('getValue');
@@ -288,6 +294,17 @@ $(function(){
 		}else if($.trim(file_temuan) == '') {
 			$.messager.alert('Info', 'data tidak boleh kosong!', 'info');
 		}else{
+			var tugas = $('#cbTugas').combobox('getText');
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/temuan_ts/hapusTemuan", 
+				type		: "POST", 
+				dataType	: "html",
+				data 		: {tugas:tugas},
+				async		: false,
+				success: function(response){
+							
+				},
+			});
 			uploadLHA();
 		}
 	}
