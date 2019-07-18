@@ -5,6 +5,32 @@ class Md_temuanTS extends CI_Model {
         parent::__construct();
     }
 
+    function ambilDaftarTemuanTS($page,$rows,$type=null,$nomor=null){
+        $offset = ($page-1)*$rows;
+        $this->limit = $rows;
+        $this->offset = $offset;
+		
+		$this->db->select("Nomor,Urut,t.Kd_Bag,Nama_Bag,Isi");
+		$this->db->from("Temuan t");
+		$this->db->join('Bagian b', 't.Kd_Bag = b.Kd_Bag');
+			if($nomor!=null)$this->db->where('Nomor', $nomor);
+		
+        if($type=='total'){
+			$hasil=$this->db->get('')->num_rows();
+        }else{
+			$hasil=$this->db->get ('',$this->limit, $this->offset)->result_array();
+        }
+        return $hasil;
+
+    }
+
+    function ambilNoTugas(){
+		$this->db->select("Nomor,No_Tugas");
+		$this->db->from("Program_Tahunan");
+		$this->db->order_by("No_Tugas");
+		return $this->db->get();
+    }
+
     function ambilTemuanAll(){
 		$this->db->select("Nomor,Urut,t.Kd_Bag,Nama_Bag,Isi");
 		$this->db->from("Temuan t");

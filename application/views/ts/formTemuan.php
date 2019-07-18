@@ -85,6 +85,7 @@
 			</div>
 			<div style="text-align:center;margin-top:20px;">
 				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="validasi()">SIMPAN</a>
+				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaTemuan').window('close')">BATAL</a>
 			</div>
 			<div id="jendelaTambahTemuan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:600px; min-height:200px; padding:5px;">
 		</div>

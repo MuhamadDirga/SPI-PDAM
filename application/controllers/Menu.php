@@ -34,7 +34,7 @@ class Menu extends CI_Controller {
 				"attributes":"",
 				"children":[{
 						"id":21,
-						"text":"Kelola Data",
+						"text":"Program Tahunan",
 						"attributes":"ts/kelola_spi_ts"
 					},{
 						"id":22,
