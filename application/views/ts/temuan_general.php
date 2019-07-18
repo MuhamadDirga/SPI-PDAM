@@ -30,7 +30,7 @@
 									width:150,
 									panelHeight:300,
 							">
-						<a href="#" class="easyui-linkbutton" iconCls="icon-clear" onclick="$('#formFilterTahunan').form('clear');">CLEAR FILTER</a>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-clear" onclick="$('#formFilterTemua').form('clear');">CLEAR FILTER</a>
 						<a href="#" class="easyui-linkbutton c1" iconCls="icon-search" onclick="pencarian()">CARI</a>
 						</form>
 					</div>
