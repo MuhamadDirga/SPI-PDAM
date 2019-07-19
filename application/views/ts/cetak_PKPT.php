@@ -54,28 +54,30 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tbody>
 	</table>
 	<hr />
+	 <span style="font-style: CTime; font-size: 14;">Kepala Satuan Pengawasan Internal PDAM Kota Malang memberi tugas kepada auditor Internal berikut ini :</span> 
+	 <table  border="1" cellpadding="1" style=" width: 350px; font-style: CTime; font-size: 14;">
+	 <tbody>
+	 <tr>
+	 	<td>
+	 		<b>NAMA</b> 
+	 	</td>
+	 	<td>
+	 		<b>BAGIAN</b> 
+	 	</td>
+	 </tr>
+	 <?php foreach( $auditor as $audit){ ?>
+	 	<tr>
+	 		<td>
+	 			<?php echo $audit->Nama; ?>
+	 		</td>
+	 		<td>
+	 			<?php echo $audit->N_Jab; ?>
+	 		</td>
+	 	</tr>
+	 	<?php } ?>
+	 </tbody>
+	 </table>
 	<table border="0" cellpadding="1" style=" width: 100%; font-style: CTime; font-size: 14;"><tbody>
-	<tr>
-		<td>Kepala Satuan Pengawasan Internal PDAM Kota Malang memberi tugas kepada auditor Internal berikut ini :
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<table style="font-style: CTime; font-size: 14;">
-			<td><?php foreach( $auditor as $audit){ ?>
-				<tr>
-					<td>
-						<?php echo $audit->Nama; ?>
-					</td>
-					<td>
-						<?php echo $audit->N_Jab; ?>
-					</td>
-				</tr>
-			<?php } ?>
-			</td>
-			</table>
-		</td>
-	</tr>
 		<tr>
 		<td style="font-family: CTime; font-size: 14;">
 		<b>
