@@ -35,5 +35,23 @@ class Md_printTS extends CI_Model {
         $hasil=$this->db->get ('');
         return $hasil->result();
     }
+
+    function getSasaran($nomor){
+        $this->db->select("Urut_Sasaran,Isi_Sasaran");
+        $this->db->from("Sasaran");
+        $this->db->where('Nomor', $nomor);
+        $this->db->order_by('Urut_Sasaran', 'asc');
+        $hasil=$this->db->get ('');
+        return $hasil->result();
+    }
+
+    function getTujuan($nomor){
+        $this->db->select("Urut_Tujuan,Isi_Tujuan");
+        $this->db->from("Tujuan");
+        $this->db->where('Nomor', $nomor);
+        $this->db->order_by('Urut_Tujuan', 'asc');
+        $hasil=$this->db->get ('');
+        return $hasil->result();
+    }
 }
 ?>

@@ -120,7 +120,19 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			"ISI Sasaran Audit / Monev"	
+			<table style="font-style: CTime; font-size: 14;">
+			<td><?php foreach( $sasaran as $sas){ ?>
+				<tr>
+					<td>
+						<?php echo $sas->Urut_Sasaran; ?>
+					</td>
+					<td>
+						<?php echo $sas->Isi_Sasaran; ?>
+					</td>
+				</tr>
+			<?php } ?>
+			</td>
+			</table>
 		</td>
 	</tr>
 	<tr>
@@ -132,7 +144,19 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			"ISI Tujuan Audit / Monev"	
+			<table style="font-style: CTime; font-size: 14;">
+			<td><?php foreach( $tujuan as $tuj){ ?>
+				<tr>
+					<td>
+						<?php echo $tuj->Urut_Tujuan; ?>
+					</td>
+					<td>
+						<?php echo $tuj->Isi_Tujuan; ?>
+					</td>
+				</tr>
+			<?php } ?>
+			</td>
+			</table>
 		</td>
 	</tr>
 	<tr>
