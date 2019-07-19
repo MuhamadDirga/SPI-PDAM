@@ -112,7 +112,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	" required>
+				                	">
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtPengawas" readonly="true"></td>
@@ -136,7 +136,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	" required>
+				                	">
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtKetua" readonly="true"></td>
@@ -160,7 +160,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	" required>
+				                	">
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota1" readonly="true"></td>
@@ -184,7 +184,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	" required>
+				                	">
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota2" readonly="true"></td>
@@ -208,7 +208,7 @@
 				                        {field:'Index_Karyawan',title:'Index'}
 				                    ]],
 				                    fitColumns: true
-				                	" required>
+				                	">
 				            	</select>
 							</td>
 							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota3" readonly="true"></td>
@@ -497,10 +497,16 @@ $(function(){
 						$('#dgProgramTahunan').datagrid('reload');
 						$.messager.progress('close'); 
 						$('#jendelaBuatProgramTahunan').window('close');
-						simpanAuditorProgramTahunan(pengawas,nomor,1);
-						simpanAuditorProgramTahunan(ketua,nomor,2);
+						if (!isEmptyOrSpaces(pengawas)) {
+							simpanAuditorProgramTahunan(pengawas,nomor,1);
+						}
+						if (!isEmptyOrSpaces(ketua)) {
+							simpanAuditorProgramTahunan(ketua,nomor,2);
+						}
 						for (var i = 0; i < anggota.length; i++) {
-							simpanAuditorProgramTahunan(anggota[i],nomor,3);
+							if (!isEmptyOrSpaces(anggota[i])) {
+								simpanAuditorProgramTahunan(anggota[i],nomor,3);
+							}
 						}
 						for (var i = 0; i < aIds.length; i++) {
 							simpanBagianProgramTahunan(nomor,aIds[i]);
@@ -607,5 +613,9 @@ $(function(){
 		ss[0] = ss[1];
 		ss[1] = temp;
 		return ss.join('/');
+	}
+
+	function isEmptyOrSpaces(str){
+	    return str === null || str.match(/^ *$/) !== null;
 	}
 </script>
