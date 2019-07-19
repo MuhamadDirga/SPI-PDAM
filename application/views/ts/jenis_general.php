@@ -7,8 +7,7 @@
 		<table id="dgJenis" style="width:100%;height:100%;" title="Jenis" rownumbers="true" pagination="false">
 			<thead>
 				<tr>
-					<th data-options="field:'Kd_Jenis'" width="7%">Kode</th>
-					<th data-options="field:'Nama_Jenis'" editor="{type:'textbox'}" width="20%">Nama</th>
+					<th data-options="field:'Nama_Jenis'" editor="{type:'textbox'}" width="20%">Jenis</th>
 					<th data-options="field:'SET'" formatter="formatAction" field="productid" width="15%">Set</th>
 				</tr>
 			</thead>

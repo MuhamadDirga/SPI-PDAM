@@ -86,7 +86,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	 		<b>NAMA</b> 
 	 	</td>
 	 	<td>
-	 		<b>BAGIAN</b> 
+	 		<b>JABATAN</b> 
 	 	</td>
 	 </tr>
 	 <?php foreach( $auditor as $audit){ ?>
@@ -226,7 +226,8 @@ SATUAN PENGAWASAN INTERNAL</b>
 		<tbody>
 			<tr>
 				<td style="text-align: center;">
-					Malang, "Tanggal Dibuat" &nbsp; Kepala Satuan Pengawas Internal
+					Malang, <?php echo tgl_indo($prog[0]->Tgl_Mulai);?> 
+					<br>Kepala Satuan Pengawas Internal
 				</td>
 			</tr>
 			<tr>

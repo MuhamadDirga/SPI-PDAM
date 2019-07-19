@@ -7,7 +7,6 @@
 		<table id="dgTahun" style="width:100%;height:100%;" title="Tahun" rownumbers="true" pagination="false">
 			<thead>
 				<tr>
-					<th data-options="field:'Kd_Tahun'" width="20%">Kode</th>
 					<th data-options="field:'Tahun'" editor="{type:'textbox'}" width="20%">Tahun</th>
 					<th data-options="field:'SET'" formatter="formatAction" field="productid" width="15%">Set</th>
 				</tr>
