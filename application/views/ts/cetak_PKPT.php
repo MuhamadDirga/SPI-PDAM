@@ -1,5 +1,9 @@
 <html> 
 <head>
+	<script type="text/javascript" src="<?php echo base_url("dist/ui/jquery.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/ui/jquery.easyui.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/js/jquery.jQueryRotate.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("dist/js/moment-with-locales.js"); ?>"></script>
 </head>
 <body>
 	<table border="0" cellpadding="1" style="width: 100%;"><tbody>
@@ -33,6 +37,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 				:
 		</td>
 		<td style="width: 200px;">
+			<?php echo $prog[0]->No_Tugas; ?>
 		</td>
 	</tr>
 	<tr>
@@ -43,6 +48,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 				:
 		</td>
 		<td style="width: 200px;">
+			<?php echo $prog[0]->Nomor; ?>
 		</td>
 	</tr>		
 	</tbody>
@@ -54,18 +60,31 @@ SATUAN PENGAWASAN INTERNAL</b>
 		</td>
 	</tr>
 	<tr>
-		<td>Tabel data grid
+		<td>
+			<table style="font-style: CTime; font-size: 14;">
+			<td><?php foreach( $auditor as $audit){ ?>
+				<tr>
+					<td>
+						<?php echo $audit->Nama; ?>
+					</td>
+					<td>
+						<?php echo $audit->N_Jab; ?>
+					</td>
+				</tr>
+			<?php } ?>
+			</td>
+			</table>
 		</td>
 	</tr>
 		<tr>
-		<td style="font-family: CTime; font-size: 14; text-align: right;">
+		<td style="font-family: CTime; font-size: 14;">
 		<b>
-			Audit &nbsp; &nbsp; &nbsp; : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			Audit : 
 		</b>
 		</td>
 	</tr>
 	<tr>
-		<td>Untuk melakukan "Jenis" di bagian :
+		<td style="font-family: CTime; font-size: 14;">Untuk melakukan <?php echo $prog[0]->Nama_Jenis; ?> di bagian : <?php foreach( $bagian as $bag){ echo $bag->Nama_Bag.', '; }?>
 		</td>
 	</tr>
 	<tr>
@@ -77,7 +96,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			"ISI Obyek Audit / Monev"	
+			<?php echo $prog[0]->Obyek; ?>
 		</td>
 	</tr>
 	<tr>
@@ -89,7 +108,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			"ISI Ruang lingkup Audit / Monev"	
+			<?php echo $prog[0]->Ruang_Lingkup; ?>
 		</td>
 	</tr>
 	<tr>
@@ -125,7 +144,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			"Tanggal"	
+			<?php echo $prog[0]->Periode_Audit; ?>
 		</td>
 	</tr>
 	<br>
@@ -139,7 +158,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			Mulai tanggal : "Tanggal Mulai" sampai dengan tanggal : "Tanggal Selesai" , selama : " " hari kerja	
+			Mulai tanggal : <span id="lblmulai"></span> sampai dengan tanggal : <span id="lblselesai"></span> , selama : <?php echo $prog[0]->Waktu; ?> hari kerja	
 		</td>
 	</tr>
 	<br>
@@ -183,5 +202,17 @@ SATUAN PENGAWASAN INTERNAL</b>
 			</tr>
 		</tbody>
 	</table>
+	<input type="hidden" id="mulai" value="<?php echo $prog[0]->Tgl_Mulai; ?>">
+	<input type="hidden" id="selesai" value="<?php echo $prog[0]->Tgl_Selesai; ?>">
+	<script type="text/javascript">
+		$(function(){
+			var mulai = $("#mulai").val();
+			var selesai = $("#selesai").val();
+			var mulai = moment(mulai, "YYYY-MM-DD","id");
+			var selesai = moment(selesai, "YYYY-MM-DD","id");
+			$('#lblmulai').text(mulai.format('LL'));
+			$('#lblselesai').text(selesai.format('LL'));
+		});
+	</script>
 </body>
 </html>
