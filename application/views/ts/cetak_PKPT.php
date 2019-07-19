@@ -159,6 +159,8 @@ SATUAN PENGAWASAN INTERNAL</b>
 	<tr>
 		<td>
 			Mulai tanggal : <span id="lblmulai"></span> sampai dengan tanggal : <span id="lblselesai"></span> , selama : <?php echo $prog[0]->Waktu; ?> hari kerja	
+			<span id="mulai" style="visibility: hidden;"><?php echo $prog[0]->Tgl_Mulai; ?></span>
+			<span id="selesai" style="visibility: hidden;"><?php echo $prog[0]->Tgl_Selesai; ?></span>
 		</td>
 	</tr>
 	<br>
@@ -202,12 +204,10 @@ SATUAN PENGAWASAN INTERNAL</b>
 			</tr>
 		</tbody>
 	</table>
-	<input type="hidden" id="mulai" value="<?php echo $prog[0]->Tgl_Mulai; ?>">
-	<input type="hidden" id="selesai" value="<?php echo $prog[0]->Tgl_Selesai; ?>">
 	<script type="text/javascript">
 		$(function(){
-			var mulai = $("#mulai").val();
-			var selesai = $("#selesai").val();
+			var mulai = $("#mulai").text();
+			var selesai = $("#selesai").text();
 			var mulai = moment(mulai, "YYYY-MM-DD","id");
 			var selesai = moment(selesai, "YYYY-MM-DD","id");
 			$('#lblmulai').text(mulai.format('LL'));

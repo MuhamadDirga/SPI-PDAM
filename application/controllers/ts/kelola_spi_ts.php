@@ -48,6 +48,7 @@ function __construct(){
 		$data = $this->load->view('ts/cetak_PKPT',$row, true);
 		$mpdf->WriteHTML($data);
 		$mpdf->Output();
+		// $this->load->view('ts/cetak_PKPT',$row);
 	}
 
 	public function daftarSPITS(){
