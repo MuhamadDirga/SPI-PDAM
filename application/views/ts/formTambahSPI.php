@@ -478,6 +478,8 @@ $(function(){
 				}
 				tgl = moment(tgl, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
 			}
+			mulai = moment(mulai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
+			selesai = moment(selesai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
