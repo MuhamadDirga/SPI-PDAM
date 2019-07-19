@@ -469,20 +469,21 @@ $(function(){
 			for (var i = 1; i < (totalTujuan+1); i++) {
 				tujuan.push($("#txtTujuan"+i).val());
 			}
-			selesai = ubahTanggal(selesai);
-	        var se = new Date(selesai).getTime();
-	        mulai = ubahTanggal(mulai);
-	        var mu = new Date(mulai).getTime();
-	        var waktu = se - mu;
-	        var dtPerHari = 1000 * 60 * 60 * 24;
-	        var days = waktu / dtPerHari;
-	        days = Math.floor(days);
+			var tgl = moment(mulai, "DD-MM-YYYY","id");
+			var tgl2 = moment(selesai, "DD-MM-YYYY","id");
+			var weekdayCounter = 0;
+			while (tgl <= tgl2) {
+				if (tgl.format('ddd') !== 'Sab' && tgl.format('ddd') !== 'Min'){
+					weekdayCounter++; //add 1 to your counter if its not a weekend day
+				}
+				tgl = moment(tgl, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
+			}
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,periode:periode,tugas:tugas,tgl_mulai:mulai,tgl_selesai:selesai,waktu:days,dasar:dasar,credit:credit},
+				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,periode:periode,tugas:tugas,tgl_mulai:mulai,tgl_selesai:selesai,waktu:weekdayCounter,dasar:dasar,credit:credit},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',

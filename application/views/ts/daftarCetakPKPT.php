@@ -93,17 +93,12 @@
 	function cetak(){
 		var rows = $('#dgCetakPKPT').datagrid('getChecked');
 		//alert(rows);
-		// var tgl = moment("2011/11/11", "YYYY-MM-DD","id");
-		// console.log(tgl.format('LL'));
-		// console.log(rows[0].Nomor);
 		if (rows.length == 0) {
-			// alert('Tidak Ada Data Yang Akan Dicetak');
 			$.messager.alert('Warning','Tidak Ada Data Yang Akan Dicetak');
 		}else{
 			$("#nomor_cetak").val(rows[0].Nomor);
 			// $( "#vars" ).val(JSON.stringify(rows));
 			$( "#cetakForm" ).submit();
-			// console.log(rows[0].Nomor);
 		}
 	}
 </script>

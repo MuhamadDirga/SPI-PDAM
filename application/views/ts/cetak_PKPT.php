@@ -6,6 +6,30 @@
 	<script type="text/javascript" src="<?php echo base_url("dist/js/moment-with-locales.js"); ?>"></script>
 </head>
 <body>
+	<?php
+	function tgl_indo($tanggal){
+		$bulan = array (
+			1 =>   'Januari',
+			'Februari',
+			'Maret',
+			'April',
+			'Mei',
+			'Juni',
+			'Juli',
+			'Agustus',
+			'September',
+			'Oktober',
+			'November',
+			'Desember'
+		);
+		$pecahkan = explode('-', $tanggal);
+		
+		// variabel pecahkan 0 = tanggal
+		// variabel pecahkan 1 = bulan
+		// variabel pecahkan 2 = tahun
+	 
+		return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+	} ?>
 	<table border="0" cellpadding="1" style="width: 100%;"><tbody>
 		<tr>    
 		<td rowspan="2">
@@ -184,9 +208,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	<tr>
 		<td>
-			Mulai tanggal : <span id="lblmulai"></span> sampai dengan tanggal : <span id="lblselesai"></span> , selama : <?php echo $prog[0]->Waktu; ?> hari kerja	
-			<span id="mulai" style="visibility: hidden;"><?php echo $prog[0]->Tgl_Mulai; ?></span>
-			<span id="selesai" style="visibility: hidden;"><?php echo $prog[0]->Tgl_Selesai; ?></span>
+			Mulai tanggal : <?php echo tgl_indo($prog[0]->Tgl_Mulai); ?> sampai dengan tanggal : <?php echo tgl_indo($prog[0]->Tgl_Selesai); ?> , selama : <?php echo $prog[0]->Waktu; ?> hari kerja	
 		</td>
 	</tr>
 	<br>
@@ -198,7 +220,6 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tr>
 	</tbody>
 	</table>
-	<br>
 	<br>
 	<br>
 	<table align="right" border="0" cellpadding="1" style=" width: 200px; font-style: CTime; font-size: 14;">
@@ -230,15 +251,5 @@ SATUAN PENGAWASAN INTERNAL</b>
 			</tr>
 		</tbody>
 	</table>
-	<script type="text/javascript">
-		$(function(){
-			var mulai = $("#mulai").text();
-			var selesai = $("#selesai").text();
-			var mulai = moment(mulai, "YYYY-MM-DD","id");
-			var selesai = moment(selesai, "YYYY-MM-DD","id");
-			$('#lblmulai').text(mulai.format('LL'));
-			$('#lblselesai').text(selesai.format('LL'));
-		});
-	</script>
 </body>
 </html>

@@ -40,7 +40,7 @@ function __construct(){
 		require_once(APPPATH. '/libraries/mpdf/mpdf.php');
 		define('_MPDF_TTFONTPATH', APPPATH. 'libraries/mpdf/font');
 		//echo (APPPATH. 'libraries/mpdf/font');
-		$Nomor = '2013/00/_PKPT/MONEV/00';
+		$Nomor = $this->input->post('nomor_cetak');
 		$row['prog'] = $this->md_printTS->getData($Nomor);
 		$row['auditor'] = $this->md_printTS->getAuditor($Nomor);
 		$row['bagian'] = $this->md_printTS->getBagian($Nomor);
