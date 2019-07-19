@@ -60,8 +60,8 @@
 						<a href="#" class="easyui-linkbutton" iconCls="icon-print" onclick="cetak()">CETAK</a>
 					</form>
 				<form id="cetakForm" action="<?php echo base_url("index.php/ts/kelola_spi_ts/CetakPKPT"); ?>" target="_blank" method="post">
-				<input type="hidden" id="vars" name="vars[]" value="" />
-			</form>
+				<input type="hidden" id="nomor_cetak" name="nomor_cetak" value="" />
+				</form>
 		</div>
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 	
 	$(function(){
 		$("#dgCetakPKPT").datagrid({
-			singleSelect:false,
+			singleSelect:true,
 			pageSize:20,
 			pageList:pList,
 			toolbar:'#tbCetakPKPT',
@@ -93,7 +93,17 @@
 	function cetak(){
 		var rows = $('#dgCetakPKPT').datagrid('getChecked');
 		//alert(rows);
-		$( "#vars" ).val(JSON.stringify(rows));
-		$( "#cetakForm" ).submit();
+		// var tgl = moment("2011/11/11", "YYYY-MM-DD","id");
+		// console.log(tgl.format('LL'));
+		// console.log(rows[0].Nomor);
+		if (rows.length == 0) {
+			// alert('Tidak Ada Data Yang Akan Dicetak');
+			$.messager.alert('Warning','Tidak Ada Data Yang Akan Dicetak');
+		}else{
+			$("#nomor_cetak").val(rows[0].Nomor);
+			// $( "#vars" ).val(JSON.stringify(rows));
+			$( "#cetakForm" ).submit();
+			// console.log(rows[0].Nomor);
+		}
 	}
 </script>

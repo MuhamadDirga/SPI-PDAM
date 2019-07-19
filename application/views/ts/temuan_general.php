@@ -7,10 +7,10 @@
 		<table id="dgTemua" style="width:100%;height:100%;" title="Temuan" rownumbers="true" pagination="true">
 			<thead>
 				<tr>
-					<th data-options="field:'Nomor'" width="15%">Nomor Tugas</th>
-					<th data-options="field:'Urut'" width="15%">No Urut</th>
+					<th data-options="field:'Nomor'" width="10%">Nomor Tugas</th>
+					<th data-options="field:'Urut'" width="5%" align="center">No Urut</th>
 					<th data-options="field:'Nama_Bag'" width="15%">Bagian</th>
-					<th data-options="field:'Isi'" width="20%">Isi Temuan</th>
+					<th data-options="field:'Isi'" width="68%">Isi Temuan</th>
 				</tr>
 			</thead>
 		</table>

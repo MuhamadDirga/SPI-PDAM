@@ -4,6 +4,7 @@ class Kelola_spi_ts extends CI_Controller {
 function __construct(){
     parent::__construct();
 		$this->load->model('ts/md_SPITS');
+		$this->load->model('ts/md_printTS');
 		$this->load->model('master_data/md_tahun');
 		$this->load->model('master_data/md_program');
 		$this->load->model('master_data/md_jenis');
@@ -35,14 +36,19 @@ function __construct(){
 		echo $view;
 	}
 
-		function CetakPKPT() {
+	function CetakPKPT() {
 		require_once(APPPATH. '/libraries/mpdf/mpdf.php');
 		define('_MPDF_TTFONTPATH', APPPATH. 'libraries/mpdf/font');
 		//echo (APPPATH. 'libraries/mpdf/font');
+		$Nomor = '2013/00/_PKPT/MONEV/00';
+		$row['prog'] = $this->md_printTS->getData($Nomor);
+		$row['auditor'] = $this->md_printTS->getAuditor($Nomor);
+		$row['bagian'] = $this->md_printTS->getBagian($Nomor);
 		$mpdf = new mpdf('','A4',14,'CTimes',15,15,16,16,9,9,'P');
-		$data = $this->load->view('ts/cetak_PKPT',null, true);
+		$data = $this->load->view('ts/cetak_PKPT',$row, true);
 		$mpdf->WriteHTML($data);
 		$mpdf->Output();
+		// $this->load->view('ts/cetak_PKPT',$row);
 	}
 
 	public function daftarSPITS(){

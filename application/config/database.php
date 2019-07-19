@@ -50,8 +50,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = '127.0.0.1';
-$db['default']['username'] = 'ltrafalgar';
-$db['default']['password'] = '@dmin1234';
+$db['default']['username'] = 'sa';
+$db['default']['password'] = '@dmin';
 $db['default']['database'] = 'SPI';
 $db['default']['dbdriver'] = 'mssql';
 $db['default']['dbprefix'] = '';
