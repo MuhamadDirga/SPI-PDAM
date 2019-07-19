@@ -44,6 +44,8 @@ function __construct(){
 		$row['prog'] = $this->md_printTS->getData($Nomor);
 		$row['auditor'] = $this->md_printTS->getAuditor($Nomor);
 		$row['bagian'] = $this->md_printTS->getBagian($Nomor);
+		$row['sasaran'] = $this->md_printTS->getSasaran($Nomor);
+		$row['tujuan'] = $this->md_printTS->getTujuan($Nomor);
 		$mpdf = new mpdf('','A4',14,'CTimes',15,15,16,16,9,9,'P');
 		$data = $this->load->view('ts/cetak_PKPT',$row, true);
 		$mpdf->WriteHTML($data);
