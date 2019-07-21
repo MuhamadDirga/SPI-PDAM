@@ -222,7 +222,7 @@ $(function(){
                 	$.messager.alert('Info', response, 'info');
                 }else{
                 	insertTemuan();
-                	$('#dgTemua').datagrid('reload');
+                	$('#dgTemu').datagrid('reload');
 					$.messager.progress('close'); 
 					$('#jendelaTemuan').window('close');
                 }
