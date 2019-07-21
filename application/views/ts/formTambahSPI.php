@@ -19,7 +19,7 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td width="20%">Obyek</td>
-							<td><input class="easyui-textbox"multiline="true" id="obyek" style="width:100%;height:60px" required=""></td>
+							<td><input class="easyui-textbox"multiline="true" id="oby" style="width:100%;height:60px" required=""></td>
 						</tr>
 						<tr>
 							<td>Ruang Lingkup</td>
@@ -444,7 +444,7 @@ $(function(){
 			var program 			= $("#cbProgram").combobox('getValue');
 			var jenis 				= $("#cbJenis").combobox('getValue');
 			var tahun 				= $("#cbTahun").combobox('getValue');
-			var obyek 				= $("#obyek").textbox('getValue');
+			var obyek 				= $("#oby").textbox('getValue');
 			var ruang 				= $("#ruang_lingkup").textbox('getValue');
 			var periode 			= $("#periode").textbox('getValue');
 			var mulai 				= $("#tgl_mulai").datebox('getValue');

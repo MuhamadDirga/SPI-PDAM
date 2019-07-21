@@ -16,6 +16,7 @@
 	<!-- <script type="text/javascript" src="<?php echo base_url("dist/js/datagrid-filter.js"); ?>"></script> -->
 	<script type="text/javascript" src="<?php echo base_url("dist/js/jquery.jQueryRotate.js"); ?>"></script>
 	<!-- <script type="text/javascript" src="<?php echo base_url("dist/js/moment.js"); ?>"></script> -->
+	<script type="text/javascript" src="<?php echo base_url("dist/js/datagrid-detailview.js"); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url("dist/js/moment-with-locales.js"); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url("dist/ui/src/jquery.datebox.js"); ?>"></script>
 	<script>var the_url = "<?php base_url(); ?>";</script>

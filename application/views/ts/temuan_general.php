@@ -4,17 +4,17 @@
 	</div>
 	
 	<div data-options="region:'center'" style="padding:5px;">
-		<table id="dgTemua" style="width:100%;height:100%;" title="Temuan" rownumbers="true" pagination="true">
+		<table id="dgTemu" style="width:100%;height:100%;" title="Temuan" rownumbers="true" pagination="true">
 			<thead>
 				<tr>
-					<th data-options="field:'Nomor'" width="10%">Nomor Tugas</th>
-					<th data-options="field:'Urut'" width="5%" align="center">No Urut</th>
-					<th data-options="field:'Nama_Bag'" width="15%">Bagian</th>
-					<th data-options="field:'Isi'" width="68%">Isi Temuan</th>
+					<th data-options="field:'Nomor'" width="15%">Nomor</th>
+					<th data-options="field:'No_Tugas'" width="10%" align="center">Nomor Tugas</th>
+					<th data-options="field:'Meeting'" formatter="formatTanggalMeeting" width="12%">Tgl Audit Meeting</th>
+					<th data-options="field:'LHA'" formatter="formatTanggalLHA" width="12%">Tgl LHA</th>
 				</tr>
 			</thead>
 		</table>
-		<div id="tbTemua" style="padding:5px;">
+		<div id="tbTemu" style="padding:5px;">
 			    <div class="easyui-layout" style="width:100%; height:36px;">
 					<div data-options="region:'east'" style="width:430px; text-align:left; padding:4px;">
 						<form id="formFilterTemua">
@@ -46,23 +46,79 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function formatTanggalMeeting(value,row,index){
+		var s = row.Tgl_Audit_Meeting;
+		if (s == null) {
+			return '';
+		}
+		else{
+			s = moment(s, "YYYY-MM-DD","id").format('LL');
+			return s;
+		}
+	}
+</script>
+<script type="text/javascript">
+	function formatTanggalLHA(value,row,index){
+		var s = row.Tgl_LHA;
+		if (s == null) {
+			return '';
+		}
+		else{
+			s = moment(s, "YYYY-MM-DD","id").format('LL');
+			return s;
+		}
+	}
+</script>
 <script>
 	var pList=[];
 	for(var i=0;i<100;i++){
 		pList[i]=i+1;
 	}
-	
+
 	$(function(){
-		$("#dgTemua").datagrid({
+		$("#dgTemu").datagrid({
 			singleSelect:true,
 			checkOnSelect:false,
 			collapsible:true,
 			pageSize:20,
 			pageList:pList,
-			toolbar:'#tbTemua',
-			footer:'#ftTemua',
-			url:'<?php echo base_url("index.php/ts/temuan_ts/daftarTemuanTS");?>',
+			view: detailview,
+			toolbar:'#tbTemu',
+			footer:'#ftTemu',
+			url:'<?php echo base_url("index.php/ts/temuan_ts/daftarTemuTS");?>',
 			method:'post',
+			detailFormatter:function(index,row){
+		        return '<div style="padding:2px"><table class="ddv"></table></div>';
+		    },
+		    onExpandRow: function(index,row){
+		        var ddv = $(this).datagrid('getRowDetail',index).find('table.ddv');
+		        ddv.datagrid({
+		            url:'<?php echo base_url("index.php/ts/temuan_ts/daftarTemuan");?>',
+		            fitColumns:true,
+		            singleSelect:true,
+		            rownumbers:true,
+		            queryParams:{
+					    tugas:row.No_Tugas,
+					},
+		            loadMsg:'',
+		            height:'auto',
+		            columns:[[
+		                {field:'Urut',title:'Urut',width:100},
+		                {field:'Nama_Bag',title:'Bagian',width:100},
+		                {field:'Isi',title:'Isi',width:100}
+		            ]],
+		            onResize:function(){
+		                $('#temua').datagrid('fixDetailRowHeight',index);
+		            },
+		            onLoadSuccess:function(){
+		                setTimeout(function(){
+		                    $('#temua').datagrid('fixDetailRowHeight',index);
+		                },0);
+		            }
+		        });
+		        $('#temua').datagrid('fixDetailRowHeight',index);
+		    },
 			onRowContextMenu : function(e,field){
 				//e.preventDefault();
 				$('#mmUser').menu('show', {
@@ -80,10 +136,6 @@
 			onClickRow:function(index,row){
 				$('#row').val(row.Nomor);
 				//alert(row.KODE);
-				// showBagian();
-				// showAuditor();
-				// showSasaran();
-				// showTujuan();
 			},
 			showFooter:false
 			
@@ -108,7 +160,7 @@
 	}
 	
 	function pencarian(){
-		$('#dgTemua').datagrid('load',{
+		$('#dgTemu').datagrid('load',{
 			nomor: $('#filterTugasTemuan').combobox('getText')
 		});
 	}

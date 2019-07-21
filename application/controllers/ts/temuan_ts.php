@@ -27,15 +27,15 @@ function __construct(){
 		echo $view;
 	}
 
-	public function daftarTemuanTS(){
+	public function daftarTemuTS(){
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 20;
 		$filterNomor = isset($_POST['nomor']) ? $_POST['nomor'] : null;
 		
-		$rs = $this->md_temuanTS->ambilDaftarTemuanTS(null,null,"total",$filterNomor);
+		$rs = $this->md_temuanTS->ambilDaftarTemuTS(null,null,"total",$filterNomor);
 		$result["total"] = $rs;
 		
-		$query = $this->md_temuanTS->ambilDaftarTemuanTS($page,$rows,null,$filterNomor);
+		$query = $this->md_temuanTS->ambilDaftarTemuTS($page,$rows,null,$filterNomor);
 		$result["rows"] = $query;
 		
 		echo json_encode($result);

@@ -209,8 +209,23 @@ $(function(){
 		});
 		$('#formTemuan').form({
 			url:'<?php echo base_url();?>index.php/ts/temuan_ts/uploadLHA',
+			beforeSend	: function(){
+				var win = $.messager.progress({
+					title:'Mohon tunggu',
+					msg:'Loading...'
+				});
+			},
             success:function(response){
-                
+            	if (response == "upload file Temuan error, tipe data harus pdf!") {
+                	$.messager.alert('Info', response, 'info');
+                }else if(response == "upload file LHA error, tipe data harus pdf!") {
+                	$.messager.alert('Info', response, 'info');
+                }else{
+                	insertTemuan();
+                	$('#dgTemua').datagrid('reload');
+					$.messager.progress('close'); 
+					$('#jendelaTemuan').window('close');
+                }
             }
         });
 	});
@@ -253,14 +268,13 @@ $(function(){
 	}
 	function uploadLHA(){
 		$('#formTemuan').form('submit');
+	}
+	function insertTemuan(){
 		var nomor = $('#nomor').textbox('getValue');
 		var tugas = $('#cbTugas').combobox('getText');
 		var data = $('#dgDaftarTemuan').datagrid('getData');
-		// hapusSemuaTemuan(tugas);
 		$.map(data, function(row) {
 			for (var i = 0; i < row.length; i++) {
-				console.log(row[i].Isi);
-				// simpanTemuan(tugas,row[i].Kd_Bag,row[i].Isi,row[i].Urut);
 				$.ajax({
 					url			: "<?php echo base_url(); ?>"+"index.php/ts/temuan_ts/simpanTemuan", 
 					type		: "POST", 
@@ -273,9 +287,6 @@ $(function(){
 				});
 			}
 		});
-		$('#dgTemua').datagrid('reload');
-		$.messager.progress('close'); 
-		$('#jendelaTemuan').window('close');
 	}
 	function validasi(){
 		var nomor = $('#nomor').textbox('getValue');
