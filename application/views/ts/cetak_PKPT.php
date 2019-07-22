@@ -30,17 +30,18 @@
 	 
 		return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
 	} ?>
+
 	<table border="0" cellpadding="1" style="width: 100%;"><tbody>
 		<tr>    
 		<td rowspan="2">
-		<img style="width:200px; height: 110px; " src="<?php echo base_url("dist/ui/img/logo_header.png");?> ">		
+		<img style="width:150px; height: 85px; " src="<?php echo base_url("dist/ui/img/logo_header.png");?> ">		
 		</td>> 
-			<td style="font-family: CTime; font-size: 17; text-align: center;"><b>PERUSAHAAN DAERAH AIR MINUM KOTA MALANG
+			<td style="font-family: CTime; font-size: 18; text-align: center;"><b>PERUSAHAAN DAERAH AIR MINUM KOTA MALANG
 SATUAN PENGAWASAN INTERNAL</b>
 			</td>
 		</tr>
 		<tr>
-			<td style="font-family: CTime; font-size: 15; text-align: center;">
+			<td style="font-family: CTime; font-size: 16; text-align: center;">
 				Jl. Ters. Danau Sentani No 100 Telp (0341) 715103 (hunting)
 			</td>
 		</tr>
@@ -86,7 +87,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	 		<b>NAMA</b> 
 	 	</td>
 	 	<td>
-	 		<b>JABATAN</b> 
+	 		<b>BAGIAN</b> 
 	 	</td>
 	 </tr>
 	 <?php foreach( $auditor as $audit){ ?>
@@ -226,8 +227,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 		<tbody>
 			<tr>
 				<td style="text-align: center;">
-					Malang, <?php echo tgl_indo($prog[0]->Tgl_Mulai);?> 
-					<br>Kepala Satuan Pengawas Internal
+					Malang, <?php echo tgl_indo($prog[0]->Tgl_Mulai); ?> <br> Kepala Satuan Pengawas Internal
 				</td>
 			</tr>
 			<tr>
@@ -252,5 +252,15 @@ SATUAN PENGAWASAN INTERNAL</b>
 			</tr>
 		</tbody>
 	</table>
+	<script type="text/javascript">
+		$(function(){
+			var mulai = $("#mulai").text();
+			var selesai = $("#selesai").text();
+			var mulai = moment(mulai, "YYYY-MM-DD","id");
+			var selesai = moment(selesai, "YYYY-MM-DD","id");
+			$('#lblmulai').text(mulai.format('LL'));
+			$('#lblselesai').text(selesai.format('LL'));
+		});
+	</script>
 </body>
 </html>

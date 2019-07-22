@@ -65,17 +65,6 @@
 								<form id="formFilterTemuan">
 								File (softcopy) Temuan&nbsp; : &nbsp;&nbsp;	
 								<input id="fileTemuan" class="easyui-filebox" name="fileTemuan" data-options="prompt:'Choose a file...'" style="width:30%" accept=".pdf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								Bagian&nbsp; : &nbsp;&nbsp;	
-								<input class="easyui-combobox" id="filterBagianTemuan"
-									name="language"
-									data-options="
-											url:'<?php echo base_url("index.php/ts/temuan_ts/daftarSemuaBagian");?>',
-											method:'post',
-											valueField:'Kd_Bag',
-											textField:'Nama_Bag',
-											width:200,
-											panelHeight:300,
-									">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahBaris()">Tambah Temuan</a>
 								</form>
 							</div>

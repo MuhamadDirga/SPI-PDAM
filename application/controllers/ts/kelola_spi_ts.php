@@ -47,9 +47,10 @@ function __construct(){
 		$row['sasaran'] = $this->md_printTS->getSasaran($Nomor);
 		$row['tujuan'] = $this->md_printTS->getTujuan($Nomor);
 		$mpdf = new mpdf('','A4',14,'CTimes',15,15,16,16,9,9,'P');
+		$mpdf->SetTitle($Nomor);
 		$data = $this->load->view('ts/cetak_PKPT',$row, true);
 		$mpdf->WriteHTML($data);
-		$mpdf->Output();
+		$mpdf->Output($Nomor.'.pdf','I');
 		// $this->load->view('ts/cetak_PKPT',$row);
 	}
 
@@ -68,6 +69,23 @@ function __construct(){
 		
 		echo json_encode($result);
 	}
+
+	public function daftarSPITSDesc(){
+		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 20;
+		$filterTahun = isset($_POST['tahun']) ? $_POST['tahun'] : null;
+		$filterProgram = isset($_POST['program']) ? $_POST['program'] : null;
+		$filterJenis = isset($_POST['jenis']) ? $_POST['jenis'] : null;
+		
+		$rs = $this->md_SPITS->SPITSOrderByDesc(null,null,"total",$filterTahun,$filterProgram,$filterJenis);
+		$result["total"] = $rs;
+		
+		$query = $this->md_SPITS->SPITSOrderByDesc($page,$rows,null,$filterTahun,$filterProgram,$filterJenis);
+		$result["rows"] = $query;
+		
+		echo json_encode($result);
+	}
+
 	public function daftarAuditor(){
 		$No_Tahunan = $_POST['Nomor'];
 		$result["total"] = 0;

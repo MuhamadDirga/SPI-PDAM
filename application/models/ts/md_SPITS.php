@@ -48,6 +48,31 @@ class Md_SPITS extends CI_Model {
 
     }
 
+    function SPITSOrderByDesc($page,$rows,$type=null,$tahun=null,$program=null,$jenis=null){
+        $offset = ($page-1)*$rows;
+        $this->limit = $rows;
+        $this->offset = $offset;
+		
+		$this->db->select("pt.Nomor,pt.Obyek,pt.Ruang_Lingkup,pt.Kd_Jenis,j.Nama_Jenis Jenis,pt.Waktu,pt.Tgl_Mulai,pt.Tgl_LHA,pt.Kd_Program,p.Nama_Program Program,pt.No_Tugas,pt.Dasar,pt.Periode_Audit,pt.Tgl_Selesai,pt.Tgl_Audit_Meeting,pt.Tgl_Ke_Direksi,pt.Tgl_Dari_Direksi,pt.Disposisi_Direksi,pt.Kd_Tahun,t.Tahun,pt.Tgl_Pembuaan,pt.Credit
+		");
+		$this->db->from("Program_Tahunan pt");
+		$this->db->join("Tahun t","pt.Kd_Tahun = t.Kd_Tahun");
+		$this->db->join("Program p","pt.Kd_Program = p.Kd_Program");
+		$this->db->join("Jenis j","pt.Kd_Jenis=j.Kd_Jenis");
+			$this->db->where('pt.Status',1);
+			if($tahun!=null)$this->db->where('pt.Kd_Tahun', $tahun);
+			if($program!=null)$this->db->where('pt.Kd_Program', $program);
+			if($jenis!=null)$this->db->where('pt.Kd_Jenis', $jenis);
+        if($type=='total'){
+			$hasil=$this->db->get('')->num_rows();
+        }else{
+        	$this->db->order_by('Nomor', 'desc');
+			$hasil=$this->db->get ('',$this->limit, $this->offset)->result_array();
+        }
+        return $hasil;
+
+    }
+
     function ambilProgramBy($nomor){
 		$this->db->select("Obyek,Ruang_Lingkup,Dasar,Periode_Audit,No_Tugas,Tgl_Mulai,Tgl_Selesai,Waktu");
 		$this->db->from("Program_Tahunan");
@@ -58,6 +83,7 @@ class Md_SPITS extends CI_Model {
     function daftarNomorTugas(){
 		$this->db->select("Nomor,No_Tugas,Tgl_Mulai,Tgl_Selesai,Waktu,Obyek");
 		$this->db->from("Program_Tahunan");
+		$this->db->order_by('No_Tugas', 'desc');
 		return $this->db->get();
     }
 	
