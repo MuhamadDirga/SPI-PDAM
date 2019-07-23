@@ -79,15 +79,17 @@ SATUAN PENGAWASAN INTERNAL</b>
 	</tbody>
 	</table>
 	<hr />
-	 <span style="font-style: CTime; font-size: 14;">Kepala Satuan Pengawasan Internal PDAM Kota Malang memberi tugas kepada auditor Internal berikut ini :</span> 
-	 <table  border="1" cellpadding="1" style=" width: 350px; font-style: CTime; font-size: 14;">
+	 <span style="font-style: CTime; font-size: 14;">Kepala Satuan Pengawasan Internal PDAM Kota Malang memberi tugas kepada auditor Internal berikut ini :</span>
+	 <br>
+	 <br> 
+	 <table  border="1" cellpadding="0" style=" width: 350px; font-style: CTime; font-size: 14;">
 	 <tbody>
 	 <tr>
 	 	<td>
 	 		<b>NAMA</b> 
 	 	</td>
 	 	<td>
-	 		<b>BAGIAN</b> 
+	 		<b>JABATAN</b> 
 	 	</td>
 	 </tr>
 	 <?php foreach( $auditor as $audit){ ?>
@@ -102,6 +104,7 @@ SATUAN PENGAWASAN INTERNAL</b>
 	 	<?php } ?>
 	 </tbody>
 	 </table>
+	 <br>
 	<table border="0" cellpadding="1" style=" width: 100%; font-style: CTime; font-size: 14;"><tbody>
 		<tr>
 		<td style="font-family: CTime; font-size: 14;">
@@ -114,10 +117,11 @@ SATUAN PENGAWASAN INTERNAL</b>
 		<td style="font-family: CTime; font-size: 14;">Untuk melakukan <?php echo $prog[0]->Nama_Jenis; ?> di bagian : <?php foreach( $bagian as $bag){ echo $bag->Nama_Bag.', '; }?>
 		</td>
 	</tr>
+	<br>
 	<tr>
 		<td>
 		<b>
-			Obyek Audit / Monev :	
+			Obyek <?php echo $prog[0]->Nama_Jenis; ?> :	
 		</b>
 		</td>
 	</tr>
@@ -126,10 +130,11 @@ SATUAN PENGAWASAN INTERNAL</b>
 			<?php echo $prog[0]->Obyek; ?>
 		</td>
 	</tr>
+	<br>
 	<tr>
 		<td>
 		<b>
-			Ruang lingkup Audit / Monev :	
+			Ruang lingkup <?php echo $prog[0]->Nama_Jenis; ?> :	
 		</b>
 		</td>
 	</tr>
@@ -138,17 +143,27 @@ SATUAN PENGAWASAN INTERNAL</b>
 			<?php echo $prog[0]->Ruang_Lingkup; ?>
 		</td>
 	</tr>
+	<br>
 	<tr>
 		<td>
 		<b>
-			Sasaran Audit / Monev :	
+			Sasaran <?php echo $prog[0]->Nama_Jenis; ?> :	
 		</b>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<table style="font-style: CTime; font-size: 14;">
+			<table border="0" style="font-style: CTime; font-size: 14;">
 			<td><?php foreach( $sasaran as $sas){ ?>
+				<?php
+				if(count($sasaran) <= 1){?>
+				<tr>
+					<td>
+						<?php echo $sas->Isi_Sasaran; ?>
+					</td>
+				</tr>
+				<?php
+			}else{?>
 				<tr>
 					<td>
 						<?php echo $sas->Urut_Sasaran; ?>
@@ -157,23 +172,35 @@ SATUAN PENGAWASAN INTERNAL</b>
 						<?php echo $sas->Isi_Sasaran; ?>
 					</td>
 				</tr>
+			<?php
+		}?>
 			<?php } ?>
 			</td>
 			</table>
 		</td>
 	</tr>
+	<br>
 	<tr>
 		<td>
 		<b>
-			Tujuan Audit / Monev :
+			Tujuan Audit <?php echo $prog[0]->Nama_Jenis; ?> :
 		</b>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<table style="font-style: CTime; font-size: 14;">
+			<table border="0" style="font-style: CTime; font-size: 14;">
 			<td><?php foreach( $tujuan as $tuj){ ?>
+				<?php
+				if(count($tujuan) <= 1){ ?>
 				<tr>
+					<td>
+						<?php echo $tuj->Isi_Tujuan; ?>
+					</td>
+				</tr>
+			<?php
+			}else{?>
+					<tr>
 					<td>
 						<?php echo $tuj->Urut_Tujuan; ?>
 					</td>
@@ -181,15 +208,18 @@ SATUAN PENGAWASAN INTERNAL</b>
 						<?php echo $tuj->Isi_Tujuan; ?>
 					</td>
 				</tr>
+		<?php
+		}?>
 			<?php } ?>
 			</td>
 			</table>
 		</td>
 	</tr>
+	<br>
 	<tr>
 		<td>
 		<b>
-			Periode yang di Audit / Monev :
+			Periode yang di <?php echo $prog[0]->Nama_Jenis; ?> :
 		</b>
 		</td>
 	</tr>
@@ -199,11 +229,10 @@ SATUAN PENGAWASAN INTERNAL</b>
 		</td>
 	</tr>
 	<br>
-	<br>
 	<tr>
 		<td>
 		<b>
-			Waktu Audit / Monev :
+			Waktu <?php echo $prog[0]->Nama_Jenis; ?> :
 		</b>
 		</td>
 	</tr>
@@ -252,15 +281,5 @@ SATUAN PENGAWASAN INTERNAL</b>
 			</tr>
 		</tbody>
 	</table>
-	<script type="text/javascript">
-		$(function(){
-			var mulai = $("#mulai").text();
-			var selesai = $("#selesai").text();
-			var mulai = moment(mulai, "YYYY-MM-DD","id");
-			var selesai = moment(selesai, "YYYY-MM-DD","id");
-			$('#lblmulai').text(mulai.format('LL'));
-			$('#lblselesai').text(selesai.format('LL'));
-		});
-	</script>
 </body>
 </html>

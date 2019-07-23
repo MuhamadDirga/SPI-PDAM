@@ -8,17 +8,13 @@
 			<thead>
 				<tr>
 					<th data-options="field:'Nomor'" width="15%">Nomor</th>
-					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
 					<th data-options="field:'Obyek'" width="15%">Obyek</th>
 					<th data-options="field:'Ruang_Lingkup'" width="20%">Ruang Lingkup</th>
 					<th data-options="field:'Dasar'" width="12%">Dasar Audit/Monev</th>
 					<th data-options="field:'Program'" width="7%">Program</th>
 					<th data-options="field:'Jenis'" width="7%">Jenis</th>
 					<th data-options="field:'Tahun'" width="10%">Tahun</th>
-					<th data-options="field:'Mulai'" formatter="formatTanggalMulai" width="9%">Tanggal Mulai</th>
-					<th data-options="field:'Selesai'" formatter="formatTanggalSelesai" width="9%">Tgl Selesai</th>
 					<th data-options="field:'Periode_Audit'" width="15%">Periode Audit</th>
-					<th data-options="field:'Waktu'" width="5%">Waktu</th>
 					<th data-options="field:'Tgl_Pembuaan'" width="12%">Tgl Pembuatan</th>
 					<th data-options="field:'Credit'" width="10%">Credit</th>
 					<th data-options="field:'SET'" formatter="formatProgramTahunan" width="7%">Set</th>
@@ -30,16 +26,6 @@
 				<tr>
 					<th field="Nama_Bag" width="15%">Bagian</th>
 					<th data-options="field:'Detail'" width="7%">Detail</th>
-				</tr>
-			</thead>
-		</table>
-		<table id="dgAuditorProgram" style="width:100%;height:35%;" title="Auditor" rownumbers="true" pagination="false" idField="No_PKPT">
-			<thead>
-				<tr>
-					<th field="No_PKPT" width="7%">No_PKPT</th>
-					<th data-options="field:'Nama'" editor="{type:'combobox',id:'petugasSPK',options:{url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',valueField:'NIP',textField:'Nama'}}" width="20%">Nama Lengkap</th>
-					<th data-options="field:'Jabatan'" width="7%">Jabatan</th>
-					<th data-options="field:'Index_Karyawan'" align="right"  width="10%">Index</th>
 				</tr>
 			</thead>
 		</table>
@@ -107,7 +93,6 @@
 					</div>
 					<div data-options="region:'center'" style="padding:4px;">
 						<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahProgThn()">Tambah Program Tahunan</a>
-						<a href="#" class="easyui-linkbutton" onclick="daftarCetakPKPT()"><i class="fa fa-print"></i> Cetak PKPT</a>
 					</div>
 				</div>
 		</div>
@@ -116,7 +101,6 @@
 		<input type="hidden" id="buk" value=""/> 
 		<input type="hidden" id="ptg" value=""/> 
 		<input type="hidden" id="fieldPB" value=""/>
-		<div id="jendelaDaftarCetakPKPT" class="easyui-window" title="Cetak PKPT" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:80%; min-height:500px; padding:5px;"> 
 	    <div id="jendelaBuatProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 	    <div id="jendelaUbahProgramTahunan" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
 		</div>
@@ -178,7 +162,6 @@
 				$('#row').val(row.Nomor);
 				//alert(row.KODE);
 				showBagian();
-				showAuditor();
 				showSasaran();
 				showTujuan();
 			},
@@ -224,11 +207,6 @@
 				updateAudit(index);
 			},
 			
-			onBeginEdit:function(index,row){
-				var editors = $('#dgAuditorProgram').datagrid('getEditors', index);
-				var n1 = $(editors[0].target);
-				// var n2 = $(editors[1].target);
-			},
 			onAfterEdit:function(index,row){
 				row.editing = false;
 				updateAudit(index);
@@ -267,86 +245,7 @@
 		
 	});
 
-	$(function(){
-		$("#dgAuditorProgram").datagrid({
-			singleSelect:true,
-			checkOnSelect:false,
-			collapsible:true,
-			pageSize:20,
-			pageList:pList,
-			toolbar:'#tbAuditor',
-			footer:'#ftAuditor',
-			url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarAuditor");?>',
-			method:'post',
-			onDblClickCell: function(index,field,value){
-				$(this).datagrid('beginEdit', index);
-				var ed = $(this).datagrid('getEditor', {index:index,field:field});
-				$(ed.target).focus();
-			},
-			onRowContextMenu : function(e,field){
-				//e.preventDefault();
-				$('#mmUser').menu('show', {
-					left: e.pageX,
-					top: e.pageY
-				});
-			},
-			onClickCell:function(index,field,val){
-				$('#fieldPB').val(field);
-				// alert(index+field+val);
-			},
-			onClickRow:function(index,row){
-				
-			},
-			
-			onBeforeEdit:function(index,row){
-				row.editing = true;
-				updateAudit(index);
-			},
-			
-			onBeginEdit:function(index,row){
-				var editors = $('#dgAuditorProgram').datagrid('getEditors', index);
-				var n1 = $(editors[0].target);
-				// var n2 = $(editors[1].target);
-			},
-			onAfterEdit:function(index,row){
-				row.editing = false;
-				updateAudit(index);
-			},
-			onCancelEdit:function(index,row){
-				row.editing = false;
-				updateAudit(index);
-			},
-			onEndEdit:function(index,row){
-				
-			},
-			showFooter:false
-
-			
-		});
-		$.extend($.fn.datagrid.defaults.editors, { 
-			numberspinner: {
-				init: function(container, options){
-					var input = $('<input type="text">').appendTo(container);
-					return input.numberspinner(options);
-				},
-				destroy: function(target){
-					$(target).numberspinner('destroy');
-				},
-				getValue: function(target){
-					return $(target).numberspinner('getValue');
-				},
-				setValue: function(target, value){
-					$(target).numberspinner('setValue',value);
-				},
-				resize: function(target, width){
-					$(target).numberspinner('resize',width);
-				}
-			}
-		});
-		
-	});
-
-	$(function(){
+		$(function(){
 		$("#dgSasaran").datagrid({
 			singleSelect:true,
 			checkOnSelect:false,
@@ -382,11 +281,6 @@
 				updateAudit(index);
 			},
 			
-			onBeginEdit:function(index,row){
-				var editors = $('#dgAuditorProgram').datagrid('getEditors', index);
-				var n1 = $(editors[0].target);
-				// var n2 = $(editors[1].target);
-			},
 			onAfterEdit:function(index,row){
 				row.editing = false;
 				updateAudit(index);
@@ -461,11 +355,6 @@
 				updateAudit(index);
 			},
 			
-			onBeginEdit:function(index,row){
-				var editors = $('#dgAuditorProgram').datagrid('getEditors', index);
-				var n1 = $(editors[0].target);
-				// var n2 = $(editors[1].target);
-			},
 			onAfterEdit:function(index,row){
 				row.editing = false;
 				updateAudit(index);
@@ -504,19 +393,11 @@
 		
 	});
 	
-	function updateAudit(index){
-		$('#dgAuditorProgram').datagrid('updateRow',{
-			index:index,
-			row:{}
-		});
-	}
 	function getRowIndex(target){
 		var tr = $(target).closest('tr.datagrid-row');
 		return parseInt(tr.attr('datagrid-row-index'));
 	}
-	function editaudit(target){ 
-		$('#dgAuditorProgram').datagrid('beginEdit', getRowIndex(target));
-	}
+
 	function hapusProgram(nomor){ 
 		
 		$.ajax({
@@ -535,7 +416,6 @@
 				alert(response);
 				$('#dgProgramTahunan').datagrid('reload');
 				$('#dgDetailBagian').datagrid('reload');
-				$('#dgAuditorProgram').datagrid('reload');
 				$('#dgSasaran').datagrid('reload');
 				$('#dgTujuan').datagrid('reload');
 			},
@@ -550,12 +430,6 @@
 				$('#dgRekapPerBuku').datagrid('deleteRow', getRowIndex(target));
 			}
 		});
-	}
-	function saveaudit(target){
-		$('#dgAuditorProgram').datagrid('endEdit', getRowIndex(target));
-	}
-	function cancelaudit(target){
-		$('#dgAuditorProgram').datagrid('cancelEdit', getRowIndex(target));
 	}
 	
 	function formatTanggal(tanggal){
@@ -576,12 +450,6 @@
 		});
 	}
 	
-	function showAuditor(){
-		var row = $('#row').val();
-		$('#dgAuditorProgram').datagrid('load',{
-			Nomor: row
-		});
-	}
 
 	function showSasaran(){
 		var row = $('#row').val();
@@ -625,26 +493,6 @@
 		});
 	}
 
-function daftarCetakPKPT(){
-		var target = "#jendelaDaftarCetakPKPT";
-		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/viewDaftarCetakPKPT", 
-			type		: "POST", 
-			dataType	: "html",
-			beforeSend	: function(){
-				$(target).html('Loading . . . ');
-			},
-			success: function(response){
-				$(target).html(response);
-				$.parser.parse(target);
-				$(target).window('open');
-			},
-			error: function(){
-				alert('error');
-			}
-		});
-	}
-	
 	function ubahProgThn(){
 		var target = "#jendelaUbahProgramTahunan";
 		var nompk = $('#row').val();

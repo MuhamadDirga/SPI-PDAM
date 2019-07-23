@@ -3,7 +3,7 @@
 		<div data-options="region:'north'">
 			<table id="dgTambahAuditor" style="width:100%;height:100%;">
 				<tr>
-					<td>Nomor PKPT:</td>
+					<td>Nomor Auditor:</td>
                 	<td><input name="txtPKPT" id="txtPKPT" class="f1 easyui-textbox" style="width:100%"></input></td>
             	</tr>
             	<tr>

@@ -47,14 +47,14 @@
 						</tr>
 					</table>
 				</div>
-				<div title="Temuan" style="padding:10px;" id="bagianTab">
+				<div title="KKA" style="padding:10px;" id="bagianTab">
 					<table id="dgDaftarTemuan" style="width:100%;height:300px;" title="Daftar Temuan :" rownumbers="true" pagination="false">
 						<thead>
 							<tr>
 								<th data-options="field:'Urut'" width="5%">No</th>
 								<th data-options="field:'Kd_Bag'" width="5%" hidden="true"	>Kode</th>
 								<th data-options="field:'Nama_Bag'" width="15%">Bagian</th>
-								<th data-options="field:'Isi'" width="70%" editor="{type:'textbox'}">Isi Temuan</th>
+								<th data-options="field:'Isi'" width="70%" editor="{type:'textbox'}">Isi KKA</th>
 								<th data-options="field:'SET'" formatter="formatTemuan" width="10%">Set</th>
 							</tr>
 						</thead>
@@ -63,9 +63,9 @@
 						<div class="easyui-layout" style="width:100%; height:36px;">
 							<div data-options="region:'east'" style="width:100%; text-align:right; padding:4px;">
 								<form id="formFilterTemuan">
-								File (softcopy) Temuan&nbsp; : &nbsp;&nbsp;	
+								File (softcopy) KKA&nbsp; : &nbsp;&nbsp;	
 								<input id="fileTemuan" class="easyui-filebox" name="fileTemuan" data-options="prompt:'Choose a file...'" style="width:30%" accept=".pdf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahBaris()">Tambah Temuan</a>
+								<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="tambahBaris()">Tambah KKA</a>
 								</form>
 							</div>
 						</div>

@@ -7,7 +7,7 @@
 		<table id="dgAuditor" style="width:100%;height:100%;" title="Auditor" rownumbers="true" pagination="false">
 			<thead>
 				<tr>
-					<th data-options="field:'No_PKPT'" width="10%">No PKPT</th>
+					<th data-options="field:'No_PKPT'" width="10%">No Auditor</th>
 					<th data-options="field:'Nama'" editor="{type:'textbox'}" width="50%">Nama Lengkap</th>
 					<th data-options="field:'SET'" formatter="formatAction" field="productid" width="15%">Set</th>
 				</tr>

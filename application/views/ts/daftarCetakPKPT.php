@@ -79,7 +79,7 @@
 			pageList:pList,
 			toolbar:'#tbCetakPKPT',
 			footer:'#ftCetakPKPT',
-			url:'<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSPITSDesc");?>',
+			url:'<?php echo base_url("index.php/ts/surat_tugas_ts/daftarSuratTugasDesc");?>',
 			method:'post',
 			onRowContextMenu : function(e,field){
 				//e.preventDefault();

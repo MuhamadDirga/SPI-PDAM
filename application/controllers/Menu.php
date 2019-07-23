@@ -38,6 +38,10 @@ class Menu extends CI_Controller {
 						"attributes":"ts/kelola_spi_ts"
 					},{
 						"id":22,
+						"text":"Surat Tugas",
+						"attributes":"ts/surat_tugas_ts"
+					},{
+						"id":22,
 						"text":"Temuan",
 						"attributes":"ts/temuan_ts"
 					},{
