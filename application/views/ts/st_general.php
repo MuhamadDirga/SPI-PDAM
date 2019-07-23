@@ -99,7 +99,6 @@
 			onClickRow:function(index,row){
 				$('#row').val(row.Nomor);
 				//alert(row.KODE);
-				showBagian();
 				showAuditor();
 				showSasaran();
 				showTujuan();
@@ -109,7 +108,6 @@
 		});
 		
 	});
-
 	$(function(){
 		$("#dgAuditorProgram").datagrid({
 			singleSelect:true,
@@ -163,7 +161,6 @@
 				
 			},
 			showFooter:false
-
 			
 		});
 		$.extend($.fn.datagrid.defaults.editors, { 
@@ -253,7 +250,6 @@
 		var bulan = bulan[m];
 		return d+' '+bulan+' '+y;
 	}
-
 	function showAuditor(){
 		var row = $('#row').val();
 		$('#dgAuditorProgram').datagrid('load',{
@@ -288,7 +284,6 @@
 			},
 		});
 	}
-
 	function daftarCetakPKPT(){
 		var target = "#jendelaDaftarCetakPKPT";
 		$.ajax({

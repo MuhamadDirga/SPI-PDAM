@@ -75,7 +75,6 @@
 	for(var i=0;i<100;i++){
 		pList[i]=i+1;
 	}
-
 	$(function(){
 		$("#dgTemu").datagrid({
 			singleSelect:true,
@@ -142,7 +141,6 @@
 		});
 		
 	});
-
 	function getRowIndex(target){
 		var tr = $(target).closest('tr.datagrid-row');
 		return parseInt(tr.attr('datagrid-row-index'));
