@@ -259,17 +259,6 @@ $(function(){
 			for (var i = 1; i < (totalTujuan+1); i++) {
 				tujuan.push($("#txtTujuan"+i).val());
 			}
-			var tgl = moment(mulai, "DD-MM-YYYY","id");
-			var tgl2 = moment(selesai, "DD-MM-YYYY","id");
-			var weekdayCounter = 0;
-			while (tgl <= tgl2) {
-				if (tgl.format('ddd') !== 'Sab' && tgl.format('ddd') !== 'Min'){
-					weekdayCounter++; //add 1 to your counter if its not a weekend day
-				}
-				tgl = moment(tgl, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
-			}
-			mulai = moment(mulai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
-			selesai = moment(selesai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
 			
 			$.ajax({
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
