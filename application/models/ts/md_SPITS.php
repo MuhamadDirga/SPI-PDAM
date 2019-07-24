@@ -87,7 +87,7 @@ class Md_SPITS extends CI_Model {
 		return $this->db->get();
     }
 	
-	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$periode,$tugas,$tgl_mulai,$tgl_selesai,$waktu,$dasar,$credit){
+	function simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$dasar,$credit){
 		$data = array(
         	'Nomor' => $nomor,
         	'Kd_Tahun' => $tahun,
@@ -95,17 +95,23 @@ class Md_SPITS extends CI_Model {
         	'Kd_Program' => $program,
         	'Obyek' => $obyek,
         	'Ruang_Lingkup' => $ruang,
-        	'Periode_Audit' => $periode,
-        	'No_Tugas' => $tugas,
-        	'Tgl_Mulai' => $tgl_mulai,
-        	'Tgl_Selesai' => $tgl_selesai,
-        	'Waktu' => $waktu,
         	'Dasar' => $dasar,
         	'Status' => '1',
         	'Credit' => $credit
 		);
 
 		$this->db->insert('Program_Tahunan', $data);
+	}
+
+	function updateSuratTugas($nomor,$periode,$tugas,$mulai,$selesai){
+		$data = array(
+        	'No_Tugas' => $tugas,
+        	'Tgl_Mulai' => $mulai,
+        	'Tgl_Selesai' => $selesai,
+        	'Periode_Audit' => $periode
+		);
+		$this->db->where('Nomor', $nomor);
+		$this->db->update('Program_Tahunan', $data);
 	}
 
 	function ubahProgTahunan($nomor,$obyek,$ruang,$dasar,$periode){

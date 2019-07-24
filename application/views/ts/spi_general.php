@@ -14,7 +14,6 @@
 					<th data-options="field:'Program'" width="7%">Program</th>
 					<th data-options="field:'Jenis'" width="7%">Jenis</th>
 					<th data-options="field:'Tahun'" width="10%">Tahun</th>
-					<th data-options="field:'Periode_Audit'" width="15%">Periode Audit</th>
 					<th data-options="field:'Tgl_Pembuaan'" width="12%">Tgl Pembuatan</th>
 					<th data-options="field:'Credit'" width="10%">Credit</th>
 					<th data-options="field:'SET'" formatter="formatProgramTahunan" width="7%">Set</th>

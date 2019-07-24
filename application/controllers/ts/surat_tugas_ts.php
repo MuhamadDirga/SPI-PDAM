@@ -88,18 +88,6 @@ function __construct(){
 		echo '{"total":1,"rows":'.json_encode($query->result()).',"footer":[]}';
 	}
 	
-	public function daftarJenis(){
-		$query = $this->md_jenis->ambilJenis();
-		echo json_encode($query->result());
-	}
-	public function daftarTahun(){
-		$query = $this->md_tahun->ambilTahun();
-		echo json_encode($query->result());
-	}
-	public function daftarProgram(){
-		$query = $this->md_program->ambilProgram();
-		echo json_encode($query->result());
-	}
 	public function daftarSemuaAuditor(){
 		$query = $this->md_auditor->ambilAuditor();
 		echo json_encode($query->result());
@@ -109,13 +97,8 @@ function __construct(){
 		$query = $this->md_auditor->ambilAuditorBy($pkpt);
 		echo json_encode($query->result());
 	}
-	public function ambilProgramBy(){
-		$nomor = $_POST['nomor'];
-		$query = $this->md_SPITS->ambilProgramBy($nomor);
-		echo json_encode($query->result());
-	}
 	
-	public function formTambahProgram(){
+	public function formTambahST(){
 		$view = $this->load->view('ts/formTambahST',null,true);
 		echo $view;
 	}
@@ -125,7 +108,7 @@ function __construct(){
 		echo json_encode($query->result());
 	}
 	
-	public function formUbahProgram(){
+	public function formUbahST(){
 		$data['nomor'] = $_POST['nomor'];
 		$view = $this->load->view('ts/formUbahSPI',$data,true);
 		echo $view;
@@ -143,23 +126,16 @@ function __construct(){
 		}
 	}
 
-	public function tambahProgramTahunan(){
+	public function tambahSuratTugas(){
 		
 		if($_POST){
 			$nomor = $_POST['nomor'];
-			$program = $_POST['program'];
-			$jenis = $_POST['jenis'];
-			$tahun = $_POST['tahun'];
-			$obyek = $_POST['obyek'];
-			$ruang = $_POST['ruang'];
 			$periode = $_POST['periode'];
 			$tugas = $_POST['tugas'];
 			$tgl_mulai = $_POST['tgl_mulai'];
 			$tgl_selesai = $_POST['tgl_selesai'];
 			$waktu = $_POST['waktu'];
-			$dasar = $_POST['dasar'];
-			$credit = $_POST['credit'];
-			$this->md_SPITS->simpanProgTahunan($nomor,$program,$jenis,$tahun,$obyek,$ruang,$periode,$tugas,$tgl_mulai,$tgl_selesai,$waktu,$dasar,$credit);
+			$this->md_SPITS->updateSuratTugas($nomor,$periode,$tugas,$tgl_mulai,$tgl_selesai);
 			
 			echo '1';
 		}else{
@@ -186,36 +162,6 @@ function __construct(){
 		if($_POST){
 			$nomor = $_POST['nomor'];
 			$this->md_auditor_tahunan->hapusAuditorTahunan($nomor);
-			
-			echo 'Data Berhasil Dihapus';
-		}else{
-			echo "Data tidak valid.";
-		}
-		
-	}
-
-	public function ubahProgram(){
-		
-		if($_POST){
-			$nomor = $_POST['nomor'];
-			$obyek = $_POST['obyek'];
-			$ruang = $_POST['ruang'];
-			$dasar = $_POST['dasar'];
-			$periode = $_POST['periode'];
-			$this->md_SPITS->ubahProgTahunan($nomor,$obyek,$ruang,$dasar,$periode);
-			
-			echo 'Data Berhasil Diubah';
-		}else{
-			echo "Data tidak valid.";
-		}
-		
-	}
-
-	public function hapusProgramTahunan(){
-		
-		if($_POST){
-			$nomor = $_POST['nomor'];
-			$this->md_SPITS->hapusProgramTahunan($nomor);
 			
 			echo 'Data Berhasil Dihapus';
 		}else{

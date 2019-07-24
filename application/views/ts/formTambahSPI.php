@@ -61,12 +61,6 @@
 					<div align="right">
      					<button type="button" id="addTujuan" style="margin-right: 10px">Tambah tujuan</button>
     				</div>
-    				<table width="100%" border="0" cellpadding="2">
-						<tr>
-							<td width="20%">Periode Audit</td>
-							<td><input class="easyui-textbox" id="periode" style="width:40%;" required=""></td>
-						</tr>
-					</table>
 				</div>
 				
 				<div title="BAGIAN" style="padding:10px;" id="bagianTab">
@@ -92,146 +86,6 @@
 						<?php } ?>
 						</tr>
 						</tbody>
-					</table>
-				</div>
-				
-				<div title="AUDITOR" style="padding:10px;" id="petaTab">
-					<table border="0" width="60%">
-						<tr>
-							<td>Pengawas</td>
-							<td>:</td>
-							<td>
-								<select id="cbPengawas" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'No_PKPT',
-				                    textField: 'Nama',
-				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
-				                    columns: [[
-				                    	{field:'No_PKPT',title:'No PKPT'},
-				                        {field:'NIP',title:'NIP'},
-				                        {field:'Nama',title:'Nama Lengkap'},
-				                        {field:'Index_Karyawan',title:'Index'}
-				                    ]],
-				                    fitColumns: true
-				                	">
-				            	</select>
-							</td>
-							<td><input style="width: 60px" class="easyui-textbox" id="txtPengawas" readonly="true"></td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-							<td><span id="nipPengawas"></span></td>
-						</tr>
-						<tr>
-							<td>Ketua</td>
-							<td>:</td>
-							<td>
-								<select id="cbKetua" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'No_PKPT',
-				                    textField: 'Nama',
-				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
-				                    columns: [[
-				                    	{field:'No_PKPT',title:'No PKPT'},
-				                        {field:'NIP',title:'NIP'},
-				                        {field:'Nama',title:'Nama Lengkap'},
-				                        {field:'Index_Karyawan',title:'Index'}
-				                    ]],
-				                    fitColumns: true
-				                	">
-				            	</select>
-							</td>
-							<td><input style="width: 60px" class="easyui-textbox" id="txtKetua" readonly="true"></td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-							<td><span id="nipKetua"></span></td>
-						</tr>
-						<tr>
-							<td>Anggota 1</td>
-							<td>:</td>
-							<td>
-								<select id="cbAnggota1" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'No_PKPT',
-				                    textField: 'Nama',
-				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
-				                    columns: [[
-				                    	{field:'No_PKPT',title:'No PKPT'},
-				                        {field:'NIP',title:'NIP'},
-				                        {field:'Nama',title:'Nama Lengkap'},
-				                        {field:'Index_Karyawan',title:'Index'}
-				                    ]],
-				                    fitColumns: true
-				                	">
-				            	</select>
-							</td>
-							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota1" readonly="true"></td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-							<td><span id="nipAnggota1"></span></td>
-						</tr>
-						<tr>
-							<td>Anggota 2</td>
-							<td>:</td>
-							<td>
-								<select id="cbAnggota2" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'No_PKPT',
-				                    textField: 'Nama',
-				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
-				                    columns: [[
-				                    	{field:'No_PKPT',title:'No PKPT'},
-				                        {field:'NIP',title:'NIP'},
-				                        {field:'Nama',title:'Nama Lengkap'},
-				                        {field:'Index_Karyawan',title:'Index'}
-				                    ]],
-				                    fitColumns: true
-				                	">
-				            	</select>
-							</td>
-							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota2" readonly="true"></td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-							<td><span id="nipAnggota2"></span></td>
-						</tr>
-						<tr>
-							<td>Anggota 3</td>
-							<td>:</td>
-							<td>
-								<select id="cbAnggota3" class="easyui-combogrid" style="width:100%" data-options="
-				                    idField: 'No_PKPT',
-				                    textField: 'Nama',
-				                    url: '<?php echo base_url("index.php/ts/kelola_spi_ts/daftarSemuaAuditor");?>',
-				                    columns: [[
-				                    	{field:'No_PKPT',title:'No PKPT'},
-				                        {field:'NIP',title:'NIP'},
-				                        {field:'Nama',title:'Nama Lengkap'},
-				                        {field:'Index_Karyawan',title:'Index'}
-				                    ]],
-				                    fitColumns: true
-				                	">
-				            	</select>
-							</td>
-							<td><input style="width: 60px" class="easyui-textbox" id="txtAnggota3" readonly="true"></td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-							<td><span id="nipAnggota3"></span></td>
-						</tr>
-						<?php $anggota=1; ?>
-					</table>
-					<table width="100%" border="0" cellpadding="2">
-						<tr>
-							<td width="10%">Tanggal Mulai</td>
-							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_mulai" required=""></td>
-						</tr>
-						<tr>
-							<td width="10%">Tanggal Selesai</td>
-							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_selesai" required=""></td>
-						</tr>
-						<tr>
-							<td width="10%">Nomor Tugas</td>
-							<td><input style="width: 230px" class="easyui-textbox" id="txtNoTugas" required=""></td>
-						</tr>
 					</table>
 				</div>
 			</div>
@@ -289,39 +143,6 @@ $(function(){
 	        }
 	    }]
 	});
-	$('#txtNoTugas').textbox({
-	    editable:false,
-	    icons:[{
-	    	iconCls:'icon-ok',
-	        handler:function(){
-	        	var nomor = "";
-	        	var mulai = $("#tgl_mulai").datebox('getValue');
-	        	var ss = mulai.split('/');
-				var y = parseInt(ss[2],10);
-				var m = parseInt(ss[1],10);
-				m = ("0" + m).slice(-2);
-	        	nomor += 'ST/'+y+'/'+m+'/';
-    			$.ajax({
-					url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/genNoTugas", 
-					type		: "POST", 
-					dataType	: "json",
-					data		: {tugas:nomor},
-					success: function(response){
-						if (!$.trim(response)){
-							nomor += '001';
-							$("#txtNoTugas").textbox('setValue',nomor);
-						}else{
-							var last = response[0].No_Tugas.substr(response[0].No_Tugas.length - 3);
-							last++;
-							var number = ("00" + last).slice(-3);
-							nomor += number;
-							$("#txtNoTugas").textbox('setValue',nomor);
-						}
-					},
-				});
-	        }
-	    }]
-	});
 	$("input:radio[name='select']").change(function(){
         var flag = $(this).val();
         if(flag == 'select'){
@@ -335,30 +156,6 @@ $(function(){
     	onSelect: function(index,row){
 			$("#txtPengawas").textbox('setValue',row.Index_Karyawan);
 			$('#nipPengawas').html(row.NIP);
-		}
-	});
-	$("#cbKetua").combogrid({
-    	onSelect: function(index,row){
-			$("#txtKetua").textbox('setValue',row.Index_Karyawan);
-			$('#nipKetua').html(row.NIP);
-		}
-	});
-	$("#cbAnggota1").combogrid({
-    	onSelect: function(index,row){
-			$("#txtAnggota1").textbox('setValue',row.Index_Karyawan);
-			$('#nipAnggota1').html(row.NIP);
-		}
-	});
-	$("#cbAnggota2").combogrid({
-    	onSelect: function(index,row){
-			$("#txtAnggota2").textbox('setValue',row.Index_Karyawan);
-			$('#nipAnggota2').html(row.NIP);
-		}
-	});
-	$("#cbAnggota3").combogrid({
-    	onSelect: function(index,row){
-			$("#txtAnggota3").textbox('setValue',row.Index_Karyawan);
-			$('#nipAnggota3').html(row.NIP);
 		}
 	});
 
@@ -446,15 +243,8 @@ $(function(){
 			var tahun 				= $("#cbTahun").combobox('getValue');
 			var obyek 				= $("#oby").textbox('getValue');
 			var ruang 				= $("#ruang_lingkup").textbox('getValue');
-			var periode 			= $("#periode").textbox('getValue');
-			var mulai 				= $("#tgl_mulai").datebox('getValue');
-			var selesai 			= $("#tgl_selesai").datebox('getValue');
-			var tugas 				= $("#txtNoTugas").textbox('getValue');
 			var dasar 				= $("#dasar").textbox('getValue');
 			var credit 				= $("#credit").val();
-			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
-			var ketua				= $("#cbKetua").combogrid('getValue');
-			var anggota 			= [$("#cbAnggota1").combogrid('getValue'),$("#cbAnggota2").combogrid('getValue'),$("#cbAnggota3").combogrid('getValue')];
 			var all_bagian_id = document.querySelectorAll('input[name="bagian[]"]:checked');
 			var aIds = [];
 			for(var x = 0, l = all_bagian_id.length; x < l;  x++)
@@ -485,7 +275,7 @@ $(function(){
 				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahProgramTahunan", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,periode:periode,tugas:tugas,tgl_mulai:mulai,tgl_selesai:selesai,waktu:weekdayCounter,dasar:dasar,credit:credit},
+				data		: {nomor:nomor,program:program,jenis:jenis,tahun:tahun,obyek:obyek,ruang:ruang,dasar:dasar,credit:credit},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',
@@ -497,17 +287,6 @@ $(function(){
 						$('#dgProgramTahunan').datagrid('reload');
 						$.messager.progress('close'); 
 						$('#jendelaBuatProgramTahunan').window('close');
-						if (!isEmptyOrSpaces(pengawas)) {
-							simpanAuditorProgramTahunan(pengawas,nomor,1);
-						}
-						if (!isEmptyOrSpaces(ketua)) {
-							simpanAuditorProgramTahunan(ketua,nomor,2);
-						}
-						for (var i = 0; i < anggota.length; i++) {
-							if (!isEmptyOrSpaces(anggota[i])) {
-								simpanAuditorProgramTahunan(anggota[i],nomor,3);
-							}
-						}
 						for (var i = 0; i < aIds.length; i++) {
 							simpanBagianProgramTahunan(nomor,aIds[i]);
 						}
@@ -523,26 +302,6 @@ $(function(){
 				},
 				error: function(){
 					alert('error');
-				},
-			});
-	}
-
-	function simpanAuditorProgramTahunan(pkpt,nomor,jab){
-			
-			$.ajax({
-				url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/tambahAuditorProgram", 
-				type		: "POST", 
-				dataType	: "html",
-				data		: {pkpt:pkpt,nomor:nomor,jab:jab},
-				success: function(response){
-					if(response==1){
-						$('#dgAuditorProgram').datagrid('reload');
-					}else{
-						alert("error ketika menyimpan auditor");
-					}
-				},
-				error: function(){
-					alert('gagal menyimpan auditor');
 				},
 			});
 	}

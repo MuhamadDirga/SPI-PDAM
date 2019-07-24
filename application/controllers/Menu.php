@@ -41,11 +41,11 @@ class Menu extends CI_Controller {
 						"text":"Surat Tugas",
 						"attributes":"ts/surat_tugas_ts"
 					},{
-						"id":22,
+						"id":23,
 						"text":"Temuan",
 						"attributes":"ts/temuan_ts"
 					},{
-						"id":23,
+						"id":24,
 						"text":"Ekspedisi",
 						"attributes":"ts/ekspedisi_ts"
 					}]

@@ -48,7 +48,7 @@
 					</table>
 				</div>
 				<div title="KKA" style="padding:10px;" id="bagianTab">
-					<table id="dgDaftarTemuan" style="width:100%;height:300px;" title="Daftar Temuan :" rownumbers="true" pagination="false">
+					<table id="dgDaftarTemuan" style="width:100%;height:300px;" title="Daftar KKA :" rownumbers="true" pagination="false">
 						<thead>
 							<tr>
 								<th data-options="field:'Urut'" width="5%">No</th>

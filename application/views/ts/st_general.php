@@ -9,6 +9,7 @@
 				<tr>
 					<th data-options="field:'Nomor'" width="15%">Nomor</th>
 					<th data-options="field:'No_Tugas'" width="10%">Nomor Tugas</th>
+					<th data-options="field:'Periode_Audit'" width="15%">Periode Audit</th>
 					<th data-options="field:'Mulai'" formatter="formatTanggalMulai" width="9%">Tanggal Mulai</th>
 					<th data-options="field:'Selesai'" formatter="formatTanggalSelesai" width="9%">Tgl Selesai</th>
 					<th data-options="field:'Waktu'" width="5%">Waktu</th>
@@ -38,9 +39,9 @@
 		<input type="hidden" id="buk" value=""/> 
 		<input type="hidden" id="ptg" value=""/> 
 		<input type="hidden" id="fieldPB" value=""/> 
-	    <div id="jendelaBuatSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
-	    <div id="jendelaDaftarCetakPKPT" class="easyui-window" title="Cetak PKPT" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:80%; min-height:500px; padding:5px;">
-	    <div id="jendelaUbahSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:630px; padding:5px;">
+	    <div id="jendelaBuatSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:800px; min-height:330px; padding:5px;">
+	    <div id="jendelaDaftarCetakPKPT" class="easyui-window" title="Cetak Surat Tugas" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:80%; min-height:500px; padding:5px;">
+	    <div id="jendelaUbahSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:330px; padding:5px;">
 		</div>
 	</div>
 </div>
@@ -100,8 +101,6 @@
 				$('#row').val(row.Nomor);
 				//alert(row.KODE);
 				showAuditor();
-				showSasaran();
-				showTujuan();
 			},
 			showFooter:true
 			
@@ -199,40 +198,6 @@
 	function editaudit(target){ 
 		$('#dgAuditorProgram').datagrid('beginEdit', getRowIndex(target));
 	}
-	function hapusProgram(nomor){ 
-		
-		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/hapusProgramTahunan", 
-			type		: "POST", 
-			dataType	: "html",
-			data		: {nomor:nomor},
-			beforeSend	: function(){
-					var win = $.messager.progress({
-							title:'Mohon tunggu',
-							msg:'Dalam proses...'
-						});
-			},
-			success: function(response){
-				$.messager.progress('close'); 
-				alert(response);
-				$('#dgProgramTahunan').datagrid('reload');
-				$('#dgDetailBagian').datagrid('reload');
-				$('#dgAuditorProgram').datagrid('reload');
-				$('#dgSasaran').datagrid('reload');
-				$('#dgTujuan').datagrid('reload');
-			},
-			error: function(){
-				alert('error');
-			}
-		});
-	}
-	function deleterow(target){
-		$.messager.confirm('Confirm','Are you sure?',function(r){
-			if (r){
-				$('#dgRekapPerBuku').datagrid('deleteRow', getRowIndex(target));
-			}
-		});
-	}
 	function saveaudit(target){
 		$('#dgAuditorProgram').datagrid('endEdit', getRowIndex(target));
 	}
@@ -268,7 +233,7 @@
 	function tambahSuratTugas(){
 		var target = "#jendelaBuatSuratTugas";
 		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/formTambahProgram", 
+			url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/formTambahST", 
 			type		: "POST", 
 			dataType	: "html",
 			beforeSend	: function(){
@@ -308,7 +273,7 @@
 		var target = "#jendelaUbahProgramTahunan";
 		var nompk = $('#row').val();
 		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/formUbahProgram", 
+			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/formUbahST", 
 			type		: "POST", 
 			dataType	: "html",
 			data 		: {nomor:nompk},
