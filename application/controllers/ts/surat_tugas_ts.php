@@ -110,7 +110,7 @@ function __construct(){
 	
 	public function formUbahST(){
 		$data['nomor'] = $_POST['nomor'];
-		$view = $this->load->view('ts/formUbahSPI',$data,true);
+		$view = $this->load->view('ts/formUbahST',$data,true);
 		echo $view;
 	}
 
@@ -135,7 +135,7 @@ function __construct(){
 			$tgl_mulai = $_POST['tgl_mulai'];
 			$tgl_selesai = $_POST['tgl_selesai'];
 			$waktu = $_POST['waktu'];
-			$this->md_SPITS->updateSuratTugas($nomor,$periode,$tugas,$tgl_mulai,$tgl_selesai);
+			$this->md_SPITS->updateSuratTugas($nomor,$periode,$tugas,$tgl_mulai,$tgl_selesai,$waktu);
 			
 			echo '1';
 		}else{

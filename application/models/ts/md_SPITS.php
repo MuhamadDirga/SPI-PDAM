@@ -103,12 +103,13 @@ class Md_SPITS extends CI_Model {
 		$this->db->insert('Program_Tahunan', $data);
 	}
 
-	function updateSuratTugas($nomor,$periode,$tugas,$mulai,$selesai){
+	function updateSuratTugas($nomor,$periode,$tugas,$mulai,$selesai,$waktu){
 		$data = array(
         	'No_Tugas' => $tugas,
         	'Tgl_Mulai' => $mulai,
         	'Tgl_Selesai' => $selesai,
-        	'Periode_Audit' => $periode
+        	'Periode_Audit' => $periode,
+        	'Waktu' => $waktu
 		);
 		$this->db->where('Nomor', $nomor);
 		$this->db->update('Program_Tahunan', $data);
