@@ -157,6 +157,20 @@ function __construct(){
 		}
 	}
 
+	public function ubahSuratTugas(){
+		
+		if($_POST){
+			$nomor = $_POST['nomor'];
+			$periode = $_POST['periode'];
+			$this->md_SPITS->ubahSuratTugas($nomor,$periode);
+			
+			echo 'Data Berhasil Diubah';
+		}else{
+			echo "Data tidak valid.";
+		}
+		
+	}
+
 	public function hapusAuditorProgram(){
 		
 		if($_POST){

@@ -1,31 +1,19 @@
 <div class="easyui-layout" style="width:100%; min-height:100%; margin-bottom:5px;">
-	<form id="formTambahST" class="easyui-form" method="post" data-options="">
+	<form id="formUbahST" class="easyui-form" method="post" data-options="">
 		<input type="hidden" id="credit" value="<?php echo $this->session->userdata('nama_lengkap');?>"/>
 		<div data-options="region:'north'" style="padding:4px;height:590px">
+			<table width="100%" border="0" style="margin:10px">
+				<tr>
+					<td width="7%">Nomor : </td>
+					<td><input style="width: 230px" class="easyui-textbox" id="txtNomor" value="<?php echo $nomor; ?>" readonly></td>
+				</tr>
+			</table>
 			<div class="easyui-tabs" style="width:100%;">
 				<div title="SURAT TUGAS" style="padding:10px">
-					<table width="100%" border="0" cellpadding="2">
-						<tr>
-							<td width="20%">PKPT</td>
-							<td><input style="width: 240px" id="nomor" class="easyui-combobox" name="nomor" data-options="valueField:'Nomor',textField:'Nomor',url:'<?php echo base_url("index.php/ts/temuan_ts/daftarNomorTugas");?>'" required=""></input></td>
-						</tr>
-						<tr>
-							<td width="20%">Tanggal Mulai</td>
-							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_mulai" required=""></td>
-						</tr>
-						<tr>
-							<td width="20%">Tanggal Selesai</td>
-							<td><input class="easyui-datebox" style="width:30%; height:28px;" id="tgl_selesai" required=""></td>
-						</tr>
-						<tr>
-							<td width="20%">Nomor Tugas</td>
-							<td><input style="width: 130px" class="easyui-textbox" id="txtNoTugas" required=""></td>
-						</tr>
-					</table>
     				<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td width="20%">Periode Audit</td>
-							<td><input class="easyui-textbox" id="periode" style="width:80%;" required=""></td>
+							<td><input class="easyui-textbox" id="periodeU" style="width:80%;" required=""></td>
 						</tr>
 					</table>
 				</div>
@@ -327,47 +315,28 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:20px;">
-				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="validation()">SIMPAN</a>
-				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaBuatSuratTugas').window('close')">BATAL</a>
+				<a href="#" class="easyui-linkbutton" id="simpanBtn" iconCls="icon-ok" onclick="ubahSuratTugas()">UBAH</a>
+				<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="$('#jendelaUbahSuratTugas').window('close')">BATAL</a>
 			</div>
 		</div>
 	</form>
 </div>
 <div id="piihBPB"></div>
 <script type="text/javascript">
+$("#formUbahST").trigger('reset');
 $(function(){
-	$('#txtNoTugas').textbox({
-	    editable:false,
-	    icons:[{
-	    	iconCls:'icon-ok',
-	        handler:function(){
-	        	var nomor = "";
-	        	var mulai = $("#tgl_mulai").datebox('getValue');
-	        	var ss = mulai.split('/');
-				var y = parseInt(ss[2],10);
-				var m = parseInt(ss[1],10);
-				m = ("0" + m).slice(-2);
-	        	nomor += 'ST/'+y+'/'+m+'/';
-    			$.ajax({
-					url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/genNoTugas", 
-					type		: "POST", 
-					dataType	: "json",
-					data		: {tugas:nomor},
-					success: function(response){
-						if (!$.trim(response)){
-							nomor += '001';
-							$("#txtNoTugas").textbox('setValue',nomor);
-						}else{
-							var last = response[0].No_Tugas.substr(response[0].No_Tugas.length - 3);
-							last++;
-							var number = ("00" + last).slice(-3);
-							nomor += number;
-							$("#txtNoTugas").textbox('setValue',nomor);
-						}
-					},
-				});
-	        }
-	    }]
+	var no = $("#txtNomor").val();
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/ambilProgramBy", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			$("#periodeU").textbox('setValue',response[0].Periode_Audit);
+		},
+		error: function(){
+			
+		},
 	});
     $("#cbPengawas").combogrid({
     	onSelect: function(index,row){
@@ -441,6 +410,28 @@ $(function(){
 			$('#nipAnggota10').html(row.NIP);
 		}
 	});
+	$.ajax({
+		url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/ambilAuditorByNomor", 
+		type		: "POST", 
+		dataType	: "json",
+		data		: {nomor:no},
+		success: function(response){
+			var a = 1;
+			for (var i = 0; i < response.length; i++) {
+				if (response[i].Kd_Jab == 1) {
+					$('#cbPengawas').combogrid('setValue', response[i].No_PKPT);
+				}else if (response[i].Kd_Jab == 2) {
+					$('#cbKetua').combogrid('setValue', response[i].No_PKPT);
+				}else {
+					$('#cbAnggota'+a).combogrid('setValue', response[i].No_PKPT);
+					a++;
+				}
+			}
+		},
+		error: function(){
+			
+		},
+	});
 });
 
 $(function(){
@@ -468,51 +459,21 @@ $(function(){
 	});
 	
 });
-
-	function validation(){
-		var statusForm = false;
-		$('#formTambahST').form('submit',{
-			onSubmit:function(){
-				statusForm = $(this).form('enableValidation').form('validate');
-				return false;
-			}
-		});
-		if(statusForm){
-			simpanSuratTugas();
-		}else{
-			alert("Pastikan semua field isian di isi terlebih dahulu.");
-		}
-	}
-	function simpanSuratTugas(){
-			var nomor 				= $("#nomor").combobox('getValue');
+	function ubahSuratTugas(){
+			var nomor 				= $("#txtNomor").textbox('getValue');
 			var periode 			= $("#periode").textbox('getValue');
-			var mulai 				= $("#tgl_mulai").datebox('getValue');
-			var selesai 			= $("#tgl_selesai").datebox('getValue');
-			var tugas 				= $("#txtNoTugas").textbox('getValue');
 			var pengawas			= $("#cbPengawas").combogrid('getValue'); 
 			var ketua				= $("#cbKetua").combogrid('getValue');
 			var anggota 			= [$("#cbAnggota1").combogrid('getValue')];
 			for (var i = 2; i <= 10; i++) {
 				anggota.push($("#cbAnggota"+i).combogrid('getValue'));
 			}
-			var tgl = moment(mulai, "DD-MM-YYYY","id");
-			var tgl2 = moment(selesai, "DD-MM-YYYY","id");
-			var weekdayCounter = 0;
-			while (tgl <= tgl2) {
-				if (tgl.format('ddd') !== 'Sab' && tgl.format('ddd') !== 'Min'){
-					weekdayCounter++; //add 1 to your counter if its not a weekend day
-				}
-				tgl = moment(tgl, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
-			}
-			mulai = moment(mulai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
-			selesai = moment(selesai, "DD-MM-YYYY","id").format('YYYY-MM-DD');
-			console.log(anggota);
 			
 			$.ajax({
-				url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/tambahSuratTugas", 
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/ubahSuratTugas", 
 				type		: "POST", 
 				dataType	: "html",
-				data		: {nomor:nomor,periode:periode,tugas:tugas,tgl_mulai:mulai,tgl_selesai:selesai,waktu:weekdayCounter},
+				data		: {nomor:nomor,periode:periode},
 				beforeSend	: function(){
 					var win = $.messager.progress({
 						title:'Mohon tunggu',
@@ -520,10 +481,11 @@ $(function(){
 					});
 				},
 				success: function(response){
-					if(response==1){
+					if(response=='Data Berhasil Diubah'){
 						$('#dgSuratTugas').datagrid('reload');
 						$.messager.progress('close'); 
-						$('#jendelaBuatSuratTugas').window('close');
+						$('#jendelaUbahSuratTugas').window('close');
+						hapusSemuaAuditor(nomor);
 						if (!isEmptyOrSpaces(pengawas)) {
 							simpanAuditorProgramTahunan(pengawas,nomor,1);
 						}
@@ -552,6 +514,7 @@ $(function(){
 				type		: "POST", 
 				dataType	: "html",
 				data		: {pkpt:pkpt,nomor:nomor,jab:jab},
+				async		: false,
 				success: function(response){
 					if(response==1){
 						$('#dgAuditorProgram').datagrid('reload');
@@ -565,7 +528,20 @@ $(function(){
 			});
 	}
 
-	function isEmptyOrSpaces(str){
-	    return str === null || str.match(/^ *$/) !== null;
+	function hapusSemuaAuditor(nomor){
+			
+			$.ajax({
+				url			: "<?php echo base_url(); ?>"+"index.php/ts/simpan_tugas_ts/hapusAuditorProgram", 
+				type		: "POST", 
+				dataType	: "html",
+				data		: {nomor:nomor},
+				async		: false,
+				success: function(response){
+					
+				},
+				error: function(){
+					alert('gagal update auditor');
+				},
+			});
 	}
 </script>

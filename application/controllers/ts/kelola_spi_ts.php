@@ -230,33 +230,6 @@ function __construct(){
 		}
 	}
 
-	public function tambahAuditorProgram(){
-		
-		if($_POST){
-			$pkpt = $_POST['pkpt'];
-			$nomor = $_POST['nomor'];
-			$jab = $_POST['jab'];
-			$this->md_SPITS->simpanAuditorProgram($pkpt,$nomor,$jab);
-			
-			echo '1';
-		}else{
-			echo "Data tidak valid.";
-		}
-	}
-
-	public function hapusAuditorProgram(){
-		
-		if($_POST){
-			$nomor = $_POST['nomor'];
-			$this->md_auditor_tahunan->hapusAuditorTahunan($nomor);
-			
-			echo 'Data Berhasil Dihapus';
-		}else{
-			echo "Data tidak valid.";
-		}
-		
-	}
-
 	public function tambahBagianProgram(){
 		
 		if($_POST){

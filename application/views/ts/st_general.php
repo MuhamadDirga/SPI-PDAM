@@ -39,17 +39,16 @@
 		<input type="hidden" id="buk" value=""/> 
 		<input type="hidden" id="ptg" value=""/> 
 		<input type="hidden" id="fieldPB" value=""/> 
-	    <div id="jendelaBuatSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:800px; min-height:330px; padding:5px;">
+	    <div id="jendelaBuatSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:800px; min-height:530px; padding:5px;">
 	    <div id="jendelaDaftarCetakPKPT" class="easyui-window" title="Cetak Surat Tugas" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:80%; min-height:500px; padding:5px;">
-	    <div id="jendelaUbahSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:1000px; min-height:330px; padding:5px;">
+	    <div id="jendelaUbahSuratTugas" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-print'" style="width:800px; min-height:330px; padding:5px;">
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	function formatSuratTugas(value,row,index){
-		var e = '<a href="#" onclick="ubahProgThn()">Set</a>';
-		var d = ' | <a href="#" onclick="if(confirm(&quot;Yakin akan dihapus?&quot;)){hapusProgram(&quot;'+row.Nomor+'&quot;)}">Hapus</a> ';
-		return e+d;
+		var e = '<a href="#" onclick="ubahSuratTugas()">Set</a>';
+		return e;
 	}
 </script>
 <script type="text/javascript">
@@ -91,7 +90,7 @@
 				});
 			},
 			onDblClickCell: function(index,field,value){
-				ubahProgThn();
+				ubahSuratTugas();
 			},
 			onClickCell:function(index,field,val){
 				$('#col').val(field);
@@ -273,7 +272,7 @@
 		var target = "#jendelaUbahProgramTahunan";
 		var nompk = $('#row').val();
 		$.ajax({
-			url			: "<?php echo base_url(); ?>"+"index.php/ts/kelola_spi_ts/formUbahST", 
+			url			: "<?php echo base_url(); ?>"+"index.php/ts/surat_tugas_ts/formUbahST", 
 			type		: "POST", 
 			dataType	: "html",
 			data 		: {nomor:nompk},

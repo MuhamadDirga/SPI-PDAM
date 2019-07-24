@@ -126,6 +126,14 @@ class Md_SPITS extends CI_Model {
 		$this->db->update('Program_Tahunan', $data);
 	}
 
+	function ubahSuratTugas($nomor,$periode){
+		$data = array(
+        	'Periode_Audit' => $periode
+		);
+		$this->db->where('Nomor', $nomor);
+		$this->db->update('Program_Tahunan', $data);
+	}
+
 	function simpanAuditorProgram($nopkpt,$nomor,$jab){
 		$data = array(
         	'No_PKPT' => $nopkpt,
