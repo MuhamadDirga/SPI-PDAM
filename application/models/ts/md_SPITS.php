@@ -97,6 +97,7 @@ class Md_SPITS extends CI_Model {
         	'Ruang_Lingkup' => $ruang,
         	'Dasar' => $dasar,
         	'Status' => '1',
+        	'No_Tugas' => $nomor,
         	'Credit' => $credit
 		);
 
