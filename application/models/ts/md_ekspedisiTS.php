@@ -26,6 +26,7 @@ class Md_ekspedisiTS extends CI_Model {
     function ambilNoProgram(){
 		$this->db->select("Nomor,No_Tugas");
 		$this->db->from("Program_Tahunan");
+        $this->db->where('Disposisi_Direksi', null, false);
 		$this->db->order_by('Nomor', 'desc');
 		return $this->db->get();
     }
