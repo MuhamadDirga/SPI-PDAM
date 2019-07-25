@@ -54,15 +54,23 @@
 <script type="text/javascript">
 	function formatTanggalMulai(value,row,index){
 		var s = row.Tgl_Mulai;
-		s = formatTanggal(String(s));
-		return s;
+		if (s == null) {
+			return '';
+		}else{
+			s = formatTanggal(String(s));
+			return s;
+		}
 	}
 </script>
 <script type="text/javascript">
 	function formatTanggalSelesai(value,row,index){
 		var s = row.Tgl_Selesai;
-		s = formatTanggal(String(s));
-		return s;
+		if (s == null) {
+			return '';
+		}else{
+			s = formatTanggal(String(s));
+			return s;
+		}
 	}
 </script>
 <script>
